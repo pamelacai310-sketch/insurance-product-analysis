@@ -1,0 +1,33 @@
+[submodule "external/chainladder-python"]
+	path = external/chainladder-python
+	url = https://github.com/casact/chainladder-python.git
+[submodule "external/lifelib"]
+	path = external/lifelib
+	url = https://github.com/lifelib-dev/lifelib.git
+[submodule "external/modelx"]
+	path = external/modelx
+	url = https://github.com/fumitoh/modelx.git
+[submodule "external/FASLR"]
+	path = external/FASLR
+	url = https://github.com/casact/FASLR.git
+[submodule "external/cashflower"]
+	path = external/cashflower
+	url = https://github.com/acturtle/cashflower.git
+[submodule "external/aggregate"]
+	path = external/aggregate
+	url = https://github.com/mynl/aggregate.git
+[submodule "external/insurancerating"]
+	path = external/insurancerating
+	url = https://github.com/MHaringa/insurancerating.git
+[submodule "external/JuliaActuary/LifeContingencies.jl"]
+	path = external/JuliaActuary/LifeContingencies.jl
+	url = https://github.com/JuliaActuary/LifeContingencies.jl.git
+[submodule "external/JuliaActuary/ActuaryUtilities.jl"]
+	path = external/JuliaActuary/ActuaryUtilities.jl
+	url = https://github.com/JuliaActuary/ActuaryUtilities.jl.git
+[submodule "external/JuliaActuary/ExperienceAnalysis.jl"]
+	path = external/JuliaActuary/ExperienceAnalysis.jl
+	url = https://github.com/JuliaActuary/ExperienceAnalysis.jl.git
+[submodule "external/JuliaActuary/MortalityTables.jl"]
+	path = external/JuliaActuary/MortalityTables.jl
+	url = https://github.com/JuliaActuary/MortalityTables.jl.git

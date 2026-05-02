@@ -149,13 +149,52 @@ r 即为产品隐含预定利率
 
 ## 相关开源资源
 
-| 项目 | 用途 |
-|------|------|
-| [lifelib](https://github.com/actuarialopensource/lifelib) | 寿险精算建模，完整生命表 |
-| [TmVal](https://github.com/genedan/TmVal) | 年金现值、IRR精确计算 |
-| [chainladder-python](https://github.com/chainladder-community/chainladder-python) | 准备金三角形分析 |
-| [InsQABench](https://github.com/Spico/InsQABench) | 中文保险条款QA基准数据集 |
-| [insurancerating](https://github.com/mharinga/insurancerating) | GLM费率厘定（R语言） |
+本项目已集成以下保险精算相关开源项目作为 Git Submodules：
+
+### Python 精算库
+
+| 项目 | 用途 | 路径 |
+|------|------|------|
+| [chainladder-python](https://github.com/casact/chainladder-python) | 准备金三角形分析，损失准备金评估 | `external/chainladder-python` |
+| [lifelib](https://github.com/lifelib-dev/lifelib) | 寿险精算建模，完整生命表，产品定价 | `external/lifelib` |
+| [modelx](https://github.com/fumitoh/modelx) | 精算模型框架，Excel 类建模工具 | `external/modelx` |
+| [cashflower](https://github.com/acturtle/cashflower) | 现金流建模工具，用于精算模拟 | `external/cashflower` |
+| [aggregate](https://github.com/mynl/aggregate) | 聚合损失分布建模 | `external/aggregate` |
+| [insurancerating](https://github.com/MHaringa/insurancerating) | GLM 费率厘定（R/Python） | `external/insurancerating` |
+
+### Julia 精算库
+
+| 项目 | 用途 | 路径 |
+|------|------|------|
+| [LifeContingencies.jl](https://github.com/JuliaActuary/LifeContingencies.jl) | 生命事件精算建模 | `external/JuliaActuary/LifeContingencies.jl` |
+| [ActuaryUtilities.jl](https://github.com/JuliaActuary/ActuaryUtilities.jl) | 精算实用工具集 | `external/JuliaActuary/ActuaryUtilities.jl` |
+| [MortalityTables.jl](https://github.com/JuliaActuary/MortalityTables.jl) | 生命表处理和分析 | `external/JuliaActuary/MortalityTables.jl` |
+| [ExperienceAnalysis.jl](https://github.com/JuliaActuary/ExperienceAnalysis.jl) | 经验数据分析 | `external/JuliaActuary/ExperienceAnalysis.jl` |
+
+### R 语言精算库
+
+| 项目 | 用途 | 路径 |
+|------|------|------|
+| [FASLR](https://github.com/casact/FASLR) | 损失准备金统计报告 | `external/FASLR` |
+
+### 其他相关资源
+
+- [TmVal](https://github.com/genedan/TmVal) - 年金现值、IRR精确计算
+- [InsQABench](https://github.com/Spico/InsQABench) - 中文保险条款QA基准数据集
+
+### 使用子模块
+
+初始化并更新所有子模块：
+
+```bash
+git submodule update --init --recursive
+```
+
+更新子模块到最新版本：
+
+```bash
+git submodule update --remote
+```
 
 ## 使用限制
 
