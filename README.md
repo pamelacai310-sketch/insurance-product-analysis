@@ -201,6 +201,38 @@ report = analyzer.analyze()
 - 📊 **库功能详解**: [LIBRARIES_SUMMARY.md](LIBRARIES_SUMMARY.md)
 - 🔧 **API文档**: `docs/API.md`（待完善）
 
+## 🆕 与 insurance-clause-insights 集成
+
+本项目现已与 [insurance-clause-insights](https://github.com/pamelacai310-sketch/insurance-clause-insights) 完全集成，实现从PDF到精算分析的完整自动化流程！
+
+### 完整工作流
+
+```bash
+# 步骤1：使用 insurance-clause-insights 提取条款信息
+cd insurance-clause-insights
+insurance-clause-insights run --category 年金保险 --min-products 20
+
+# 步骤2：自动生成精算分析
+cd ../insurance-product-analysis
+python unified_analysis.py \
+  --clause-report ../insurance-clause-insights/outputs/run_XXX/reports/comparison_report.json \
+  --export-table
+
+# 步骤3：查看结果
+cat outputs/unified_analysis_comparison.md
+```
+
+### 主要优势
+
+| 功能 | 手动方式 | 集成方式 |
+|------|----------|----------|
+| 数据输入 | 手动创建 ProductSpec | 自动从PDF提取 |
+| 批量分析 | ❌ 不支持 | ✅ 支持批量分析 |
+| 产品对比 | 手动对比 | 自动生成对比报告 |
+| 参数完整性 | 100%必需 | 60%+可补充 |
+
+**详细文档**: [INTEGRATION_WITH_CLAUSE_INSIGHTS.md](INTEGRATION_WITH_CLAUSE_INSIGHTS.md)
+
 ## 精算方法论
 
 ### IRR 计算
