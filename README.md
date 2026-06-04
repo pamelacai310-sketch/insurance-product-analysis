@@ -222,6 +222,21 @@ python unified_analysis.py \
 cat outputs/unified_analysis_comparison.md
 ```
 
+### 公开材料版 IRR 分析
+
+当条款分析缺少“年交保费、基本保险金额、领取金额”组合时，可使用 `material_irr_analysis.py`
+从公开产品说明书的投保示例补齐数值现金流，并支持读取爬虫下载的 PDF / Excel 费率表和现金价值表。
+
+```bash
+python material_irr_analysis.py \
+  --analysis-json ../insurance-clause-insights/outputs/huiyingfengnian_20260603_analysis/huiyingfengnian_20260603_analysis.json \
+  --output-json reports/huiyingfengnian_material_irr_20260604.json \
+  --output-md reports/huiyingfengnian_material_irr_20260604.md
+```
+
+模块会优先采用公开说明书投保示例；Cigna 信诺产品会自动从公开披露接口补齐产品说明书、费率表、现金价值表链接。
+输出报告会列出保守 / 中性 / 乐观三情景 IRR、回本年度、评级和每个产品的现金流规则来源。
+
 ### 主要优势
 
 | 功能 | 手动方式 | 集成方式 |
