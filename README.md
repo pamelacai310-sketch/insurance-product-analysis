@@ -237,6 +237,20 @@ python material_irr_analysis.py \
 模块会优先采用公开说明书投保示例；Cigna 信诺产品会自动从公开披露接口补齐产品说明书、费率表、现金价值表链接。
 输出报告会列出保守 / 中性 / 乐观三情景 IRR、回本年度、评级和每个产品的现金流规则来源。
 
+新增费率表引用能力：
+
+- `premium_table_ref`：为每个产品匹配可核验费率表，保留标题、URL/本地路径、版本标签、内容哈希和匹配置信度，供正式投保计划生成引用。
+- `formal_plan_input`：检查投保年龄、性别、交费期、保费、基本金额和 `premium_table_ref` 是否齐备；全部齐备时 `ready=true`。
+- `material_version_refs` / `version_changes`：记录条款和费率表版本签名，可通过 `--previous-json` 对比上一版报告识别新增、移除或变更。
+
+```bash
+python material_irr_analysis.py \
+  --analysis-json ../insurance-clause-insights/outputs/huiyingfengnian_20260603_analysis/huiyingfengnian_20260603_analysis.json \
+  --previous-json reports/huiyingfengnian_material_irr_20260604.json \
+  --output-json reports/huiyingfengnian_material_irr_next.json \
+  --output-md reports/huiyingfengnian_material_irr_next.md
+```
+
 ### 分析治理与外部风险审计
 
 `analysis_governance.py` 提供可复用报告治理函数，避免单个目标产品硬编码满分或把行业通用功能写成独特优势。

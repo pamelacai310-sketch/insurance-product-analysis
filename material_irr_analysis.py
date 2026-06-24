@@ -24,6 +24,12 @@ import pdfplumber
 import requests
 
 from actuarial_calculator import calculate_irr, generate_rating
+from premium_table_reference import (
+    build_formal_plan_input,
+    build_material_version_refs,
+    detect_version_changes,
+    match_premium_table_ref,
+)
 
 
 CIGNA_API_URL = "https://www.cignacmb.com/projects/api/index.php?m=WbProductClause&c=getClauseList"
@@ -89,6 +95,9 @@ class MaterialIrrResult:
     breakeven_year: Optional[int] = None
     rating_grade: str = ""
     rating_score: Optional[float] = None
+    premium_table_ref: Optional[dict] = None
+    formal_plan_input: Optional[dict] = None
+    material_version_refs: list[dict] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
     unresolved_reason: str = ""
 
@@ -652,6 +661,31 @@ def analyze_scenario(company: str, scenario: ScenarioSpec) -> MaterialIrrResult:
     )
 
 
+def attach_material_refs(
+    result: MaterialIrrResult,
+    docs: list[MaterialDocument],
+    product_name: str,
+) -> MaterialIrrResult:
+    premium_ref = match_premium_table_ref(product_name, docs)
+    version_refs = build_material_version_refs(docs)
+    result.premium_table_ref = premium_ref.to_dict() if premium_ref else None
+    result.material_version_refs = [ref.to_dict() for ref in version_refs]
+    result.formal_plan_input = build_formal_plan_input(
+        product_name=product_name,
+        entry_age=result.entry_age,
+        gender=result.gender,
+        payment_period=result.payment_period,
+        annual_premium=result.annual_premium,
+        base_amount=result.base_amount,
+        premium_table_ref=premium_ref,
+    ).to_dict()
+    if premium_ref:
+        result.notes.append(
+            f"premium_table_ref命中：{premium_ref.matched_title}；置信度{premium_ref.confidence:.2f}。"
+        )
+    return result
+
+
 def fallback_existing_result(product: dict) -> Optional[MaterialIrrResult]:
     if not product.get("analyzed"):
         return None
@@ -676,7 +710,19 @@ def fallback_existing_result(product: dict) -> Optional[MaterialIrrResult]:
     )
 
 
-def analyze_products(analysis_json: Path, download_dir: Path) -> dict:
+def load_previous_material_version_refs(previous_json: Optional[Path]) -> list[dict]:
+    if not previous_json or not previous_json.exists():
+        return []
+    payload = json.loads(previous_json.read_text(encoding="utf-8"))
+    if payload.get("material_version_refs"):
+        return payload["material_version_refs"]
+    refs = []
+    for product in payload.get("products", []):
+        refs.extend(product.get("material_version_refs") or [])
+    return refs
+
+
+def analyze_products(analysis_json: Path, download_dir: Path, previous_json: Optional[Path] = None) -> dict:
     products = load_analysis_products(analysis_json)
     analysis_dir = analysis_json.parent
 
@@ -689,29 +735,31 @@ def analyze_products(analysis_json: Path, download_dir: Path) -> dict:
         product_name = product.get("product_name", "")
         docs = documents_from_product(product, analysis_dir)
         docs.extend(cigna_supplements.get(product_name, []))
-        essential_docs = select_preferred_documents(docs, {"条款", "产品说明书"})
+        essential_docs = select_preferred_documents(docs, {"条款", "产品说明书", "费率表"})
         essential_docs = [download_document(doc, download_dir) for doc in essential_docs]
-        texts = build_material_texts(essential_docs, analysis_dir)
+        text_docs = [doc for doc in essential_docs if doc.category in {"条款", "产品说明书"}]
+        texts = build_material_texts(text_docs, analysis_dir)
         manual_text = texts.get("产品说明书", "")
         terms_text = texts.get("条款", "")
 
         scenario = extract_scenario_from_text(product_name, manual_text, terms_text)
         if scenario:
             scenario = apply_product_rule(scenario, terms_text, manual_text)
-            results.append(analyze_scenario(company, scenario))
+            results.append(attach_material_refs(analyze_scenario(company, scenario), essential_docs, product_name))
             continue
 
         fallback = fallback_existing_result(product)
         if fallback:
-            results.append(fallback)
+            results.append(attach_material_refs(fallback, essential_docs, product_name))
         else:
-            results.append(MaterialIrrResult(
+            unresolved = MaterialIrrResult(
                 company=company,
                 product_name=product_name,
                 analyzed=False,
                 source_quality="未形成数值现金流",
                 unresolved_reason=product.get("skip_reason", "未能从公开说明书/费率表抽取完整现金流参数。"),
-            ))
+            )
+            results.append(attach_material_refs(unresolved, essential_docs, product_name))
 
     analyzed = [r for r in results if r.analyzed and r.irr_neutral is not None]
     ranked = sorted(analyzed, key=lambda item: item.irr_neutral or -99, reverse=True)
@@ -719,14 +767,24 @@ def analyze_products(analysis_json: Path, download_dir: Path) -> dict:
     target_rank = next((idx + 1 for idx, item in enumerate(ranked) if item.product_name == target_name), None)
     target = next((item for item in results if item.product_name == target_name), None)
 
+    material_version_refs = [
+        ref
+        for result in results
+        for ref in result.material_version_refs
+    ]
+    previous_refs = load_previous_material_version_refs(previous_json)
+
     return {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "source_analysis_json": str(analysis_json),
+        "previous_material_json": str(previous_json) if previous_json else "",
         "total_products": len(results),
         "analyzed_count": len(analyzed),
         "unresolved_count": len(results) - len(analyzed),
         "target_rank_by_neutral_irr": target_rank,
         "target_neutral_irr": target.irr_neutral if target else None,
+        "material_version_refs": material_version_refs,
+        "version_changes": detect_version_changes(previous_refs, material_version_refs) if previous_refs else [],
         "products": [asdict(r) for r in results],
     }
 
@@ -756,6 +814,8 @@ def write_markdown_report(payload: dict, output_path: Path) -> None:
         lines.append(
             f"- 目标产品中性 IRR：{fmt_pct(target.irr_neutral)}；排名：{payload.get('target_rank_by_neutral_irr')}/{len(ranked)}；评级：{target.rating_grade}"
         )
+    if payload.get("version_changes"):
+        lines.append(f"- 条款/费率表版本变更：{len(payload['version_changes'])} 项")
     lines.extend([
         "",
         "## IRR 排名",
@@ -771,6 +831,22 @@ def write_markdown_report(payload: dict, output_path: Path) -> None:
             f"{item.breakeven_year or ''} | {item.rating_grade} |"
         )
 
+    lines.extend([
+        "",
+        "## 费率表引用与正式投保计划准备度",
+        "",
+        "| 公司 | 产品 | premium_table_ref | 匹配置信度 | formal_plan_ready | 缺失字段 |",
+        "|---|---|---|---:|---|---|",
+    ])
+    for item in products:
+        ref = item.premium_table_ref or {}
+        plan = item.formal_plan_input or {}
+        lines.append(
+            f"| {item.company} | {item.product_name} | {ref.get('matched_title', '')} | "
+            f"{ref.get('confidence', '')} | {plan.get('ready', False)} | "
+            f"{', '.join(plan.get('missing_fields', []) or [])} |"
+        )
+
     lines.extend(["", "## 关键说明", ""])
     for item in ranked:
         if item.notes:
@@ -780,6 +856,15 @@ def write_markdown_report(payload: dict, output_path: Path) -> None:
         lines.extend(["", "## 仍未形成数值 IRR 的产品", ""])
         for item in unresolved:
             lines.append(f"- {item.company} / {item.product_name}：{item.unresolved_reason}")
+
+    if payload.get("version_changes"):
+        lines.extend(["", "## 条款/费率表版本变更", ""])
+        for change in payload["version_changes"]:
+            current = change.get("current") or {}
+            previous = change.get("previous") or {}
+            label = current.get("title") or previous.get("title")
+            category = current.get("category") or previous.get("category")
+            lines.append(f"- {change['change_type']} / {category} / {label}")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -791,9 +876,10 @@ def main() -> None:
     parser.add_argument("--download-dir", type=Path, default=DEFAULT_DOWNLOAD_DIR)
     parser.add_argument("--output-json", type=Path, default=DEFAULT_REPORT_JSON)
     parser.add_argument("--output-md", type=Path, default=DEFAULT_REPORT_MD)
+    parser.add_argument("--previous-json", type=Path, help="上一版材料IRR JSON，用于识别条款/费率表版本变更")
     args = parser.parse_args()
 
-    payload = analyze_products(args.analysis_json, args.download_dir)
+    payload = analyze_products(args.analysis_json, args.download_dir, args.previous_json)
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_json.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     write_markdown_report(payload, args.output_md)
