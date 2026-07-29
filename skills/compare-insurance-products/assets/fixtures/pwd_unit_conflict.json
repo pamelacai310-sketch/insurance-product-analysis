@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "comparison": {
+    "currency": "CNY",
+    "entry_age": 30,
+    "gender": "M",
+    "underwriting_class": "混合标准体",
+    "payment_period_years": 10,
+    "annual_premium": 100000,
+    "selected_policy_years": [10],
+    "primary_policy_year": 10,
+    "product_category": "whole_life",
+    "death_scenario": "ordinary_death",
+    "primary_metrics": ["cash_value", "surrender_irr"]
+  },
+  "products": [
+    {
+      "name": "PWD Profitable Generation 2025",
+      "code": "PWD-CONFLICT",
+      "category": "whole_life",
+      "source_refs": [
+        {
+          "id": "rate",
+          "kind": "premium_rate_table",
+          "title": "PWD premium rate table (unit-audit fixture)",
+          "location": "fixture://pwd-rates",
+          "page": 1,
+          "row_label": "男性30周岁、10年交",
+          "column_label": "混合标准体",
+          "unit_text": "每1000元年交保险费对应的基本保险金额",
+          "version": "2025",
+          "fixture": true
+        },
+        {
+          "id": "cash",
+          "kind": "cash_value_table",
+          "title": "PWD cash value table (contradictory unit fixture)",
+          "location": "fixture://pwd-cash-values",
+          "page": 1,
+          "row_label": "第10保单年度末",
+          "column_label": "男性30周岁、10年交",
+          "unit_text": "每1000元年交保险费的现金价值",
+          "version": "2025",
+          "fixture": true
+        }
+      ],
+      "rate": {
+        "basis": "base_per_1000_premium",
+        "value": 18.5,
+        "unit_text": "每1000元年交保险费对应的基本保险金额",
+        "source_ref": "rate"
+      },
+      "cash_value": {
+        "basis": "per_1000_base",
+        "unit_text": "每1000元年交保险费的现金价值",
+        "source_ref": "cash",
+        "values": {"10": 520.0}
+      },
+      "dividend": {
+        "guaranteed_schedule": {"10": 0},
+        "actual_schedule": null,
+        "illustrated_scenarios": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "多保险产品精算对比"
+  short_description: "同条件核算多只保险产品现金价值、身故保险金和保证IRR"
+  default_prompt: "使用 $compare-insurance-products，根据费率表、现金价值表和条款，在相同投保条件下比较产品的现金价值、身故保险金与保证IRR。"

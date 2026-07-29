@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "comparison": {
+    "currency": "CNY",
+    "entry_age": 30,
+    "gender": "M",
+    "underwriting_class": "混合标准体",
+    "payment_period_years": 10,
+    "annual_premium": 103980,
+    "selected_policy_years": [10],
+    "primary_policy_year": 10,
+    "product_category": "whole_life",
+    "death_scenario": "ordinary_death",
+    "primary_metrics": ["cash_value", "surrender_irr", "death_benefit"]
+  },
+  "products": [
+    {
+      "name": "WWA Fortune Life 2025",
+      "code": "WWA",
+      "category": "whole_life",
+      "source_refs": [
+        {
+          "id": "rate",
+          "kind": "premium_rate_table",
+          "title": "WWA 2025 whole life premium rate table (fixture extract)",
+          "location": "fixture://wwa-rates",
+          "page": 1,
+          "row_label": "男性30周岁、10年交",
+          "column_label": "混合标准体",
+          "unit_text": "每1000元基本保险金额的年交保险费",
+          "version": "2025",
+          "fixture": true
+        },
+        {
+          "id": "cash",
+          "kind": "cash_value_table",
+          "title": "WWA 2025 whole life cash value table (fixture extract)",
+          "location": "fixture://wwa-cash-values",
+          "page": 1,
+          "row_label": "第10保单年度末",
+          "column_label": "男性30周岁、10年交、混合标准体",
+          "unit_text": "每1000元基本保险金额的现金价值",
+          "version": "2025",
+          "fixture": true
+        },
+        {
+          "id": "terms",
+          "kind": "policy_terms",
+          "title": "WWA 2025 death benefit rule (fixture extract)",
+          "location": "fixture://wwa-terms",
+          "page": 1,
+          "row_label": "身故保险金",
+          "column_label": "交费期满后",
+          "unit_text": "人民币元",
+          "version": "2025",
+          "fixture": true
+        }
+      ],
+      "rate": {
+        "basis": "premium_per_1000_base",
+        "value": 51.99,
+        "unit_text": "每1000元基本保险金额的年交保险费",
+        "source_ref": "rate"
+      },
+      "cash_value": {
+        "basis": "per_1000_base",
+        "unit_text": "每1000元基本保险金额的现金价值",
+        "source_ref": "cash",
+        "values": {"10": 491.41}
+      },
+      "death_benefit": {
+        "age_at_policy_year_end": "entry_age_plus_year_minus_one",
+        "source_ref": "terms",
+        "phases": [
+          {
+            "name": "交费期满后",
+            "when": {"payment_status": "completed"},
+            "expression": {
+              "op": "max",
+              "args": [
+                {
+                  "op": "mul",
+                  "args": [
+                    {"op": "field", "name": "paid_premium"},
+                    {
+                      "op": "age_band",
+                      "bands": [
+                        {"max": 40, "value": 1.6},
+                        {"min": 41, "max": 60, "value": 1.4},
+                        {"min": 61, "value": 1.2}
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "mul",
+                  "args": [
+                    {"op": "field", "name": "base_amount"},
+                    {"op": "const", "value": 1.5}
+                  ]
+                },
+                {"op": "field", "name": "cash_value"}
+              ]
+            }
+          }
+        ]
+      },
+      "dividend": {
+        "guaranteed_schedule": {"10": 0},
+        "actual_schedule": null,
+        "illustrated_scenarios": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "comparison": {
+    "currency": "CNY",
+    "entry_age": 32,
+    "gender": "F",
+    "underwriting_class": "标准体",
+    "payment_period_years": 5,
+    "annual_premium": 46168.8,
+    "selected_policy_years": [1, 2, 3, 4, 5],
+    "primary_policy_year": 5,
+    "product_category": "annuity",
+    "benefit_option": "保障至85周岁、50周岁起额外年金",
+    "death_scenario": "ordinary_death",
+    "primary_metrics": ["cash_value", "surrender_irr"]
+  },
+  "products": [
+    {
+      "name": "汇丰鸿利年年盈C款年金保险（分红型）",
+      "code": "RIC",
+      "category": "annuity",
+      "source_refs": [
+        {
+          "id": "rate",
+          "kind": "premium_rate_table",
+          "title": "RIC保险费率表（脱敏摘录）",
+          "location": "fixture://ric-rates",
+          "page": 1,
+          "row_label": "女性32周岁、5年交、保障至85周岁、50周岁起额外年金",
+          "column_label": "标准体",
+          "unit_text": "每1000元基本保险金额的年交保险费",
+          "version": "C",
+          "fixture": true
+        },
+        {
+          "id": "cash",
+          "kind": "cash_value_table",
+          "title": "RIC现金价值表（脱敏摘录）",
+          "location": "fixture://ric-cash-values",
+          "page": 1,
+          "row_label": "第1至5保单年度末",
+          "column_label": "女性32周岁、5年交、保障至85周岁、50周岁起额外年金",
+          "unit_text": "每1000元基本保险金额的现金价值",
+          "version": "C",
+          "fixture": true
+        }
+      ],
+      "rate": {
+        "basis": "premium_per_1000_base",
+        "value": 15389.6,
+        "unit_text": "每1000元基本保险金额的年交保险费",
+        "source_ref": "rate"
+      },
+      "cash_value": {
+        "basis": "per_1000_base",
+        "unit_text": "每1000元基本保险金额的现金价值",
+        "source_ref": "cash",
+        "values": {
+          "1": 7896.8,
+          "2": 19000.5,
+          "3": 30903.1,
+          "4": 43635.4,
+          "5": 57229.5
+        }
+      },
+      "dividend": {
+        "guaranteed_schedule": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0},
+        "actual_schedule": null,
+        "illustrated_scenarios": {}
+      }
+    }
+  ]
+}
