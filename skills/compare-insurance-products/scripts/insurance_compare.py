@@ -42,6 +42,9 @@ SCENARIO_FIELDS = (
     "payment_period_years",
     "annual_premium",
     "benefit_option",
+    "coverage_option",
+    "annuity_start_age",
+    "annuity_frequency",
     "death_scenario",
 )
 METRIC_FIELDS = {
@@ -50,6 +53,21 @@ METRIC_FIELDS = {
     "surrender_irr": "surrender_irr",
     "death_benefit": "death_benefit",
     "death_leverage": "death_leverage",
+    "guaranteed_benefit": "guaranteed_benefit",
+    "cumulative_guaranteed_benefit": "cumulative_guaranteed_benefit",
+    "guaranteed_benefit_recovery_ratio": "guaranteed_benefit_recovery_ratio",
+    "guaranteed_income_irr": "guaranteed_income_irr",
+}
+OPTION_TYPES = {
+    "policy_loan",
+    "partial_surrender",
+    "paid_up",
+    "annuity_conversion",
+    "beneficiary_change",
+    "policyholder_change",
+    "insured_change",
+    "second_policyholder",
+    "other",
 }
 
 
@@ -247,6 +265,20 @@ def _scenario_key(scenario: Dict[str, Any]) -> str:
     return json.dumps(scenario, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
+def _validate_nonnegative_schedule(
+    schedule: Any,
+    path: str,
+    errors: List[str],
+) -> Dict[str, Any]:
+    if not isinstance(schedule, dict):
+        errors.append(f"{path} 必须是对象")
+        return {}
+    for year_text, value in schedule.items():
+        if not str(year_text).isdigit() or int(year_text) <= 0 or not _is_number(value) or value < 0:
+            errors.append(f"{path}[{year_text!r}] 必须是非负数且年度为正整数")
+    return schedule
+
+
 def validate_case(data: Dict[str, Any]) -> Dict[str, Any]:
     errors: List[str] = []
     warnings: List[str] = []
@@ -279,6 +311,11 @@ def validate_case(data: Dict[str, Any]) -> Dict[str, Any]:
     primary_metrics = comparison.get("primary_metrics", ["cash_value", "surrender_irr", "death_benefit"])
     if not isinstance(primary_metrics, list) or not primary_metrics or any(metric not in METRIC_FIELDS for metric in primary_metrics):
         errors.append(f"comparison.primary_metrics 只能使用：{', '.join(sorted(METRIC_FIELDS))}")
+    longevity_test_age = comparison.get("longevity_test_age")
+    if longevity_test_age is not None and (
+        not isinstance(longevity_test_age, int) or longevity_test_age <= 0
+    ):
+        errors.append("comparison.longevity_test_age 必须是正整数或省略")
 
     products = data.get("products")
     if not isinstance(products, list) or not products:
@@ -385,6 +422,8 @@ def validate_case(data: Dict[str, Any]) -> Dict[str, Any]:
         if not _is_number(rate.get("value")) or rate.get("value", 0) <= 0:
             errors.append(f"{path}.rate.value 必须是正数")
         cash = product.get("cash_value") if isinstance(product.get("cash_value"), dict) else {}
+        if cash.get("value_type") != "guaranteed":
+            errors.append(f"{path}.cash_value.value_type 必须明确为 guaranteed")
         values = cash.get("values")
         if not isinstance(values, dict):
             errors.append(f"{path}.cash_value.values 必须是对象")
@@ -473,6 +512,109 @@ def validate_case(data: Dict[str, Any]) -> Dict[str, Any]:
                     for year_text, value in schedule.items():
                         if not str(year_text).isdigit() or not _is_number(value) or value < 0:
                             errors.append(f"{path}.dividend.{schedule_name}[{year_text!r}] 无效")
+
+        guaranteed_benefits = product.get("guaranteed_benefits")
+        if guaranteed_benefits is not None:
+            if not isinstance(guaranteed_benefits, dict):
+                errors.append(f"{path}.guaranteed_benefits 必须是对象")
+            else:
+                if guaranteed_benefits.get("source_ref") not in ref_ids:
+                    errors.append(f"{path}.guaranteed_benefits.source_ref 未指向有效 source_refs.id")
+                if guaranteed_benefits.get("basis") != "absolute":
+                    errors.append(f"{path}.guaranteed_benefits.basis 必须为 absolute")
+                unit_text = guaranteed_benefits.get("unit_text")
+                if not isinstance(unit_text, str) or not unit_text.strip():
+                    errors.append(f"{path}.guaranteed_benefits.unit_text 必填")
+                elif guaranteed_benefits.get("source_ref") in ref_ids:
+                    selected_ref = next(
+                        ref
+                        for ref in refs
+                        if isinstance(ref, dict)
+                        and ref.get("id") == guaranteed_benefits.get("source_ref")
+                    )
+                    ref_unit = selected_ref.get("unit_text")
+                    if isinstance(ref_unit, str) and _normalize_unit(unit_text) != _normalize_unit(ref_unit):
+                        errors.append(
+                            f"{path}.guaranteed_benefits.unit_text 与所引用证据的 unit_text 不一致"
+                        )
+                _validate_nonnegative_schedule(
+                    guaranteed_benefits.get("values"),
+                    f"{path}.guaranteed_benefits.values",
+                    errors,
+                )
+        elif product.get("category") == "annuity":
+            warnings.append(f"{name}：未提供逐年保证领取表，年金效率和长寿尾部给付不可量化")
+
+        longevity = product.get("longevity")
+        if longevity is not None:
+            if not isinstance(longevity, dict):
+                errors.append(f"{path}.longevity 必须是对象")
+            else:
+                if longevity.get("source_ref") not in ref_ids:
+                    errors.append(f"{path}.longevity.source_ref 未指向有效 source_refs.id")
+                if not isinstance(longevity.get("lifetime_income"), bool):
+                    errors.append(f"{path}.longevity.lifetime_income 必须是布尔值")
+                start_year = longevity.get("income_start_policy_year")
+                if not isinstance(start_year, int) or start_year <= 0:
+                    errors.append(f"{path}.longevity.income_start_policy_year 必须是正整数")
+                end_age = longevity.get("contract_end_age")
+                if end_age is not None and (not isinstance(end_age, int) or end_age <= 0):
+                    errors.append(f"{path}.longevity.contract_end_age 必须是正整数或 null")
+                guaranteed_years = longevity.get("guaranteed_payment_years")
+                if guaranteed_years is not None and (
+                    not isinstance(guaranteed_years, int) or guaranteed_years < 0
+                ):
+                    errors.append(f"{path}.longevity.guaranteed_payment_years 必须是非负整数或 null")
+                convention = longevity.get("age_at_policy_year_end", "entry_age_plus_year_minus_one")
+                if convention not in {"entry_age_plus_year_minus_one", "entry_age_plus_year"}:
+                    errors.append(f"{path}.longevity.age_at_policy_year_end 不受支持")
+
+        options = product.get("contract_options", [])
+        if not isinstance(options, list):
+            errors.append(f"{path}.contract_options 必须是数组")
+        else:
+            option_keys: set = set()
+            for option_index, option in enumerate(options):
+                option_path = f"{path}.contract_options[{option_index}]"
+                if not isinstance(option, dict):
+                    errors.append(f"{option_path} 必须是对象")
+                    continue
+                option_type = option.get("type")
+                if option_type not in OPTION_TYPES:
+                    errors.append(f"{option_path}.type 不受支持：{option_type!r}")
+                option_name = str(option.get("name") or option_type or option_index)
+                if option_name in option_keys:
+                    errors.append(f"{option_path}.name 重复：{option_name}")
+                option_keys.add(option_name)
+                if option.get("source_ref") not in ref_ids:
+                    errors.append(f"{option_path}.source_ref 未指向有效 source_refs.id")
+                if not isinstance(option.get("available"), bool):
+                    errors.append(f"{option_path}.available 必须是布尔值")
+                for ratio_field in ("max_access_ratio", "known_cost_rate"):
+                    ratio = option.get(ratio_field)
+                    if ratio is not None and (
+                        not _is_number(ratio)
+                        or ratio < 0
+                        or (ratio_field == "max_access_ratio" and ratio > 1)
+                    ):
+                        errors.append(f"{option_path}.{ratio_field} 数值无效")
+                scenario_value = option.get("quantified_scenario")
+                if scenario_value is not None:
+                    if not isinstance(scenario_value, dict):
+                        errors.append(f"{option_path}.quantified_scenario 必须是对象")
+                    else:
+                        discount_rate = scenario_value.get("discount_rate")
+                        if not _is_number(discount_rate) or discount_rate <= -1:
+                            errors.append(f"{option_path}.quantified_scenario.discount_rate 必须大于-1")
+                        flows = scenario_value.get("incremental_cash_flows")
+                        if not isinstance(flows, dict) or not flows:
+                            errors.append(f"{option_path}.quantified_scenario.incremental_cash_flows 必须是非空对象")
+                        else:
+                            for time_text, value in flows.items():
+                                if not str(time_text).isdigit() or int(time_text) < 0 or not _is_number(value):
+                                    errors.append(
+                                        f"{option_path}.quantified_scenario.incremental_cash_flows[{time_text!r}] 无效"
+                                    )
 
     if errors:
         raise ValidationError(errors, warnings)
@@ -606,6 +748,144 @@ def _surrender_irr(annual_premium: float, payment_period: int, year: int, cash_v
     return (None if result is None else _ratio(result)), [_money(value) for value in cash_flows]
 
 
+def _guaranteed_income_cash_flows(
+    annual_premium: float,
+    payment_period: int,
+    horizon: int,
+    benefit_schedule: Dict[str, Any],
+) -> List[float]:
+    cash_flows = [0.0 for _ in range(horizon + 1)]
+    for time in range(min(payment_period, horizon)):
+        cash_flows[time] -= annual_premium
+    for year_text, value in benefit_schedule.items():
+        year = int(year_text)
+        if 0 < year <= horizon:
+            cash_flows[year] += float(value)
+    return [_money(value) for value in cash_flows]
+
+
+def _income_breakeven_year(
+    annual_premium: float,
+    payment_period: int,
+    benefit_schedule: Dict[str, Any],
+) -> Optional[int]:
+    if not benefit_schedule:
+        return None
+    horizon = max(payment_period, max(int(year) for year in benefit_schedule))
+    running = 0.0
+    cumulative: List[float] = []
+    for value in (
+        _guaranteed_income_cash_flows(
+            annual_premium,
+            payment_period,
+            horizon,
+            benefit_schedule,
+        )
+    ):
+        running += value
+        cumulative.append(running)
+    for year in range(1, len(cumulative)):
+        if cumulative[year] >= 0 and min(cumulative[year:]) >= 0:
+            return year
+    return None
+
+
+def _calculate_option(option: Dict[str, Any]) -> Dict[str, Any]:
+    result = {
+        "name": option.get("name") or option.get("type"),
+        "type": option.get("type"),
+        "available": option.get("available"),
+        "source_ref": option.get("source_ref"),
+        "max_access_ratio": option.get("max_access_ratio"),
+        "known_cost_rate": option.get("known_cost_rate"),
+        "quantification_status": "not_quantified",
+        "scenario_npv": None,
+        "scenario_cash_flows": None,
+    }
+    scenario = option.get("quantified_scenario")
+    if not isinstance(scenario, dict):
+        return result
+    rate = float(scenario["discount_rate"])
+    flows = {
+        int(time): float(value)
+        for time, value in scenario["incremental_cash_flows"].items()
+    }
+    npv = sum(value / math.pow(1.0 + rate, time) for time, value in flows.items())
+    result.update(
+        {
+            "quantification_status": "explicit_scenario",
+            "scenario_name": scenario.get("name") or "未命名显式情景",
+            "scenario_assumption": scenario.get("assumption") or "",
+            "discount_rate": _ratio(rate),
+            "scenario_npv": _money(npv),
+            "scenario_cash_flows": {str(time): _money(value) for time, value in sorted(flows.items())},
+        }
+    )
+    return result
+
+
+def _calculate_longevity(
+    product: Dict[str, Any],
+    scenario: Dict[str, Any],
+    benefit_schedule: Dict[str, Any],
+    total_premium: float,
+    longevity_test_age: Optional[int],
+) -> Dict[str, Any]:
+    longevity = product.get("longevity")
+    if not isinstance(longevity, dict):
+        return {
+            "status": "missing",
+            "reason": "未提供有来源的长寿责任字段",
+            "tail_benefit": None,
+            "tail_benefit_ratio": None,
+        }
+    convention = longevity.get("age_at_policy_year_end", "entry_age_plus_year_minus_one")
+    entry_age = int(scenario["entry_age"])
+    start_year = int(longevity["income_start_policy_year"])
+    start_age = _attained_age(entry_age, start_year, convention)
+    test_age = longevity_test_age
+    tail_benefit: Optional[float] = None
+    tail_ratio: Optional[float] = None
+    completeness = "not_requested"
+    schedule_coverage_end_age: Optional[int] = None
+    if test_age is not None:
+        schedule_ages = {
+            _attained_age(entry_age, int(year), convention): float(value)
+            for year, value in benefit_schedule.items()
+        }
+        contract_end_age = longevity.get("contract_end_age")
+        schedule_coverage_end_age = max(schedule_ages) if schedule_ages else None
+        if contract_end_age is not None and int(contract_end_age) < int(test_age):
+            tail_benefit = 0.0
+            tail_ratio = 0.0
+            completeness = "contract_ends_before_test_age"
+        elif int(test_age) in schedule_ages:
+            tail_benefit = _money(
+                sum(value for age, value in schedule_ages.items() if age >= test_age)
+            )
+            tail_ratio = None if total_premium <= 0 else _ratio(tail_benefit / total_premium)
+            if contract_end_age is not None and schedule_coverage_end_age >= int(contract_end_age):
+                completeness = "calculated_from_complete_explicit_schedule"
+            else:
+                completeness = "calculated_from_partial_explicit_schedule"
+        else:
+            completeness = "schedule_incomplete_for_test_age"
+    return {
+        "status": "documented",
+        "source_ref": longevity.get("source_ref"),
+        "lifetime_income": longevity.get("lifetime_income"),
+        "income_start_policy_year": start_year,
+        "income_start_age": start_age,
+        "contract_end_age": longevity.get("contract_end_age"),
+        "guaranteed_payment_years": longevity.get("guaranteed_payment_years"),
+        "longevity_test_age": test_age,
+        "schedule_coverage_end_age": schedule_coverage_end_age,
+        "tail_schedule_status": completeness,
+        "tail_benefit": tail_benefit,
+        "tail_benefit_ratio": tail_ratio,
+    }
+
+
 def _schedule_value(schedule: Any, year: int, default: Optional[float]) -> Optional[float]:
     if not isinstance(schedule, dict):
         return default
@@ -662,6 +942,48 @@ def calculate_case(data: Dict[str, Any], validation: Optional[Dict[str, Any]] = 
             "source_refs": copy.deepcopy(product["source_refs"]),
             "years": {},
         }
+        guaranteed_benefits = product.get("guaranteed_benefits") or {}
+        benefit_schedule = guaranteed_benefits.get("values", {})
+        total_premium = _money(annual_premium * payment_period)
+        positive_benefit_years = sorted(
+            int(year)
+            for year, value in benefit_schedule.items()
+            if float(value) > 0
+        )
+        first_income_year = positive_benefit_years[0] if positive_benefit_years else None
+        first_income_amount = (
+            _money(float(benefit_schedule[str(first_income_year)]))
+            if first_income_year is not None
+            else None
+        )
+        product_result["annuity_efficiency"] = {
+            "status": "calculated_from_explicit_schedule" if benefit_schedule else "missing",
+            "source_ref": guaranteed_benefits.get("source_ref"),
+            "first_income_policy_year": first_income_year,
+            "first_income_amount": first_income_amount,
+            "first_income_to_total_premium_ratio": (
+                None
+                if first_income_amount is None or total_premium <= 0
+                else _ratio(first_income_amount / total_premium)
+            ),
+            "income_breakeven_policy_year": _income_breakeven_year(
+                annual_premium,
+                payment_period,
+                benefit_schedule,
+            ),
+        }
+        product_result["longevity"] = _calculate_longevity(
+            product,
+            scenario,
+            benefit_schedule,
+            total_premium,
+            comparison.get("longevity_test_age"),
+        )
+        product_result["contract_options"] = [
+            _calculate_option(option)
+            for option in product.get("contract_options", [])
+        ]
+        product_result["stress_tests"] = []
         dividend = product.get("dividend") or {}
         actual_schedule = dividend.get("actual_schedule")
         product_result["dividend_status"] = {
@@ -671,9 +993,35 @@ def calculate_case(data: Dict[str, Any], validation: Optional[Dict[str, Any]] = 
         }
         for year in years:
             paid_premium = _money(annual_premium * min(year, payment_period))
-            total_premium = _money(annual_premium * payment_period)
             cash_value, cash_formula = _calculate_cash_value(product["cash_value"], year, base_amount, annual_premium)
             irr, cash_flows = _surrender_irr(annual_premium, payment_period, year, cash_value)
+            guaranteed_benefit = _money(float(benefit_schedule.get(str(year), 0.0))) if benefit_schedule else None
+            cumulative_guaranteed_benefit = (
+                _money(
+                    sum(
+                        float(value)
+                        for benefit_year, value in benefit_schedule.items()
+                        if int(benefit_year) <= year
+                    )
+                )
+                if benefit_schedule
+                else None
+            )
+            guaranteed_income_cash_flows = (
+                _guaranteed_income_cash_flows(
+                    annual_premium,
+                    payment_period,
+                    year,
+                    benefit_schedule,
+                )
+                if benefit_schedule
+                else []
+            )
+            guaranteed_income_irr = (
+                _irr(guaranteed_income_cash_flows)
+                if guaranteed_income_cash_flows
+                else None
+            )
             guaranteed_dividend = _schedule_value(dividend.get("guaranteed_schedule"), year, 0.0)
             actual_dividend = _schedule_value(actual_schedule, year, None)
             convention = (product.get("death_benefit") or {}).get("age_at_policy_year_end", "entry_age_plus_year_minus_one")
@@ -722,6 +1070,17 @@ def calculate_case(data: Dict[str, Any], validation: Optional[Dict[str, Any]] = 
                 "recovery_ratio": None if cash_value is None or paid_premium == 0 else _ratio(cash_value / paid_premium),
                 "surrender_irr": irr,
                 "surrender_cash_flows": cash_flows,
+                "guaranteed_benefit": guaranteed_benefit,
+                "cumulative_guaranteed_benefit": cumulative_guaranteed_benefit,
+                "guaranteed_benefit_recovery_ratio": (
+                    None
+                    if cumulative_guaranteed_benefit is None or total_premium <= 0
+                    else _ratio(cumulative_guaranteed_benefit / total_premium)
+                ),
+                "guaranteed_income_irr": (
+                    None if guaranteed_income_irr is None else _ratio(guaranteed_income_irr)
+                ),
+                "guaranteed_income_cash_flows": guaranteed_income_cash_flows,
                 "death_benefit": death_amount,
                 "death_leverage": None if death_amount is None or paid_premium == 0 else _ratio(death_amount / paid_premium),
                 "death_phase": phase_name,
@@ -730,6 +1089,21 @@ def calculate_case(data: Dict[str, Any], validation: Optional[Dict[str, Any]] = 
                 "actual_dividend": actual_dividend,
             }
             product_result["years"][str(year)] = year_result
+            product_result["stress_tests"].append(
+                {
+                    "name": "保证利益/零分红提前退出",
+                    "policy_year": year,
+                    "evidence_basis": "guaranteed_cash_value",
+                    "non_guaranteed_included": False,
+                    "paid_premium": paid_premium,
+                    "exit_value": cash_value,
+                    "loss_amount": (
+                        None if cash_value is None else _money(max(0.0, paid_premium - cash_value))
+                    ),
+                    "recovery_ratio": year_result["recovery_ratio"],
+                    "surrender_irr": irr,
+                }
+            )
         products_output.append(product_result)
 
     ranking_rows: List[Dict[str, Any]] = []
@@ -878,7 +1252,96 @@ def render_markdown(result: Dict[str, Any]) -> str:
                 lines.append("")
                 lines.append(f"- **{product['name']}第{year}年现金价值**：`{values['cash_value_formula']}`。IRR现金流：`{values['surrender_cash_flows']}`。")
         lines.append("")
-    lines.extend(["## 身故保险金与保障杠杆", ""])
+    lines.extend(["## 年金领取效率", ""])
+    lines.extend([
+        "| 产品 | 首次保证领取年度 | 首次保证领取额 | 首次领取/总保费 | 仅靠保证领取回本年度 |",
+        "|---|---:|---:|---:|---:|",
+    ])
+    for product in result["products"]:
+        efficiency = product["annuity_efficiency"]
+        lines.append(
+            f"| {product['name']} | {efficiency.get('first_income_policy_year') or '缺数据'} | "
+            f"{_fmt_money(efficiency.get('first_income_amount'))} | "
+            f"{_fmt_percent(efficiency.get('first_income_to_total_premium_ratio'))} | "
+            f"{efficiency.get('income_breakeven_policy_year') or '未回本/缺数据'} |"
+        )
+    lines.append("")
+    for year in comparison["selected_policy_years"]:
+        lines.extend([
+            f"### 第{year}保单年度末保证领取",
+            "",
+            "| 产品 | 当年保证领取 | 累计保证领取 | 累计领取/总保费 | 保证领取现金流IRR |",
+            "|---|---:|---:|---:|---:|",
+        ])
+        for product in result["products"]:
+            values = product["years"][str(year)]
+            lines.append(
+                f"| {product['name']} | {_fmt_money(values['guaranteed_benefit'])} | "
+                f"{_fmt_money(values['cumulative_guaranteed_benefit'])} | "
+                f"{_fmt_percent(values['guaranteed_benefit_recovery_ratio'])} | "
+                f"{_fmt_percent(values['guaranteed_income_irr'])} |"
+            )
+        lines.append("")
+
+    lines.extend(["## 长寿风险转移", ""])
+    lines.extend([
+        "| 产品 | 终身领取 | 首次领取年龄 | 合同终止年龄 | 保证领取年数 | 长寿测试年龄 | 测试年龄后保证领取/总保费 | 状态 |",
+        "|---|---|---:|---:|---:|---:|---:|---|",
+    ])
+    for product in result["products"]:
+        longevity = product["longevity"]
+        lifetime = "是" if longevity.get("lifetime_income") is True else ("否" if longevity.get("lifetime_income") is False else "缺数据")
+        lines.append(
+            f"| {product['name']} | {lifetime} | {longevity.get('income_start_age') or '缺数据'} | "
+            f"{longevity.get('contract_end_age') or '终身/缺数据'} | "
+            f"{longevity.get('guaranteed_payment_years') if longevity.get('guaranteed_payment_years') is not None else '缺数据'} | "
+            f"{longevity.get('longevity_test_age') or '未指定'} | "
+            f"{_fmt_percent(longevity.get('tail_benefit_ratio'))} | {longevity.get('tail_schedule_status') or longevity.get('reason')} |"
+        )
+    lines.extend([
+        "",
+        "长寿尾部指标只使用输入中逐年列明的保证领取，不用生命表或未披露假设补齐。",
+        "",
+        "## 合同选择权",
+        "",
+        "| 产品 | 选择权 | 是否可用 | 最大可动用比例 | 已知成本率 | 量化状态 | 显式情景NPV |",
+        "|---|---|---|---:|---:|---|---:|",
+    ])
+    option_rows = 0
+    for product in result["products"]:
+        for option in product["contract_options"]:
+            option_rows += 1
+            lines.append(
+                f"| {product['name']} | {option.get('name')} | {'是' if option.get('available') else '否'} | "
+                f"{_fmt_percent(option.get('max_access_ratio'))} | {_fmt_percent(option.get('known_cost_rate'))} | "
+                f"{option.get('quantification_status')} | {_fmt_money(option.get('scenario_npv'))} |"
+            )
+    if not option_rows:
+        lines.append("| 全部产品 | 缺少有来源的合同选择权数据 | 缺数据 | 缺数据 | 缺数据 | 不量化 | 缺数据 |")
+    lines.extend([
+        "",
+        "未提供显式增量现金流和折现率时，只确认选择权存在，不把功能存在性换算成分数。",
+        "",
+        "## 可验证压力测试",
+        "",
+        "| 产品 | 保单年度 | 情景 | 累计保费 | 保证退出价值 | 损失额 | 回收率 | 保证退保IRR |",
+        "|---|---:|---|---:|---:|---:|---:|---:|",
+    ])
+    for product in result["products"]:
+        for stress in product["stress_tests"]:
+            lines.append(
+                f"| {product['name']} | {stress['policy_year']} | {stress['name']} | "
+                f"{_fmt_money(stress['paid_premium'])} | {_fmt_money(stress['exit_value'])} | "
+                f"{_fmt_money(stress['loss_amount'])} | {_fmt_percent(stress['recovery_ratio'])} | "
+                f"{_fmt_percent(stress['surrender_irr'])} |"
+            )
+    lines.extend([
+        "",
+        "压力测试仅采用正式保证现金价值并排除全部非保证红利；不使用随机ALM、VaR或公司资产假设冒充产品证据。",
+        "",
+        "## 身故保险金与保障杠杆",
+        "",
+    ])
     for year in comparison["selected_policy_years"]:
         lines.extend([
             f"### 第{year}保单年度末",
@@ -916,7 +1379,7 @@ def render_markdown(result: Dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def _write_outputs(result: Dict[str, Any], output_dir: Path) -> Tuple[Path, Path]:
+def write_outputs(result: Dict[str, Any], output_dir: Path) -> Tuple[Path, Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     json_path = output_dir / "comparison.json"
     markdown_path = output_dir / "comparison.md"
@@ -958,6 +1421,74 @@ def run_self_test() -> None:
     if ric["products"][0]["dividend_status"]["actual"] != "unknown":
         raise AssertionError("RIC actual dividend must remain unknown")
     checks.append("RIC现金价值与红利案例")
+
+    advantage_data = copy.deepcopy(ric_data)
+    advantage_data["comparison"]["longevity_test_age"] = 35
+    advantage_data["comparison"]["primary_metrics"] = [
+        "cash_value",
+        "guaranteed_benefit_recovery_ratio",
+    ]
+    advantage_product = advantage_data["products"][0]
+    advantage_product["source_refs"].append(
+        {
+            "id": "terms",
+            "kind": "policy_terms",
+            "title": "RIC保证领取与合同选择权（脱敏摘录）",
+            "location": "fixture://ric-terms",
+            "page": 1,
+            "row_label": "保证领取、长寿责任与保单贷款",
+            "column_label": "合同责任",
+            "unit_text": "人民币元",
+            "version": "C",
+            "fixture": True,
+        }
+    )
+    advantage_product["guaranteed_benefits"] = {
+        "source_ref": "terms",
+        "basis": "absolute",
+        "unit_text": "人民币元",
+        "values": {"1": 100, "2": 200, "3": 300, "4": 400, "5": 500},
+    }
+    advantage_product["longevity"] = {
+        "source_ref": "terms",
+        "lifetime_income": True,
+        "income_start_policy_year": 1,
+        "contract_end_age": 85,
+        "guaranteed_payment_years": 20,
+    }
+    advantage_product["contract_options"] = [
+        {
+            "name": "保单贷款",
+            "type": "policy_loan",
+            "source_ref": "terms",
+            "available": True,
+            "max_access_ratio": 0.8,
+            "known_cost_rate": 0.05,
+            "quantified_scenario": {
+                "name": "第5年借款并于第6年偿还",
+                "assumption": "仅用于验证显式情景NPV",
+                "discount_rate": 0.03,
+                "incremental_cash_flows": {"5": 1000, "6": -1050},
+            },
+        }
+    ]
+    advantage = calculate_case(advantage_data)
+    advantage_result = advantage["products"][0]
+    if advantage_result["annuity_efficiency"]["first_income_policy_year"] != 1:
+        raise AssertionError("Annuity efficiency must use the explicit benefit schedule")
+    if advantage_result["years"]["5"]["cumulative_guaranteed_benefit"] != 1500:
+        raise AssertionError("Cumulative guaranteed benefits are incorrect")
+    if advantage_result["longevity"]["tail_benefit"] != 900:
+        raise AssertionError("Longevity tail benefit must be based on explicit scheduled values")
+    if advantage_result["longevity"]["tail_schedule_status"] != "calculated_from_partial_explicit_schedule":
+        raise AssertionError("A partial schedule must not be described as complete longevity coverage")
+    if advantage_result["contract_options"][0]["quantification_status"] != "explicit_scenario":
+        raise AssertionError("Contract option must remain unquantified without an explicit scenario")
+    if any(item["non_guaranteed_included"] for item in advantage_result["stress_tests"]):
+        raise AssertionError("Guaranteed stress tests must exclude non-guaranteed benefits")
+    if "grade" in advantage or "total_score" in advantage:
+        raise AssertionError("Strict comparison must not emit a composite grade or score")
+    checks.append("年金效率、长寿、选择权与保证压力测试")
 
     pwd_data = load_json(fixtures / "pwd_unit_conflict.json")
     try:
@@ -1111,7 +1642,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         return 0
     try:
         result = calculate_case(data, validation)
-        markdown_path, json_path = _write_outputs(result, args.output_dir)
+        markdown_path, json_path = write_outputs(result, args.output_dir)
     except (CalculationError, OSError, ValueError) as exc:
         print(f"计算失败：{exc}", file=sys.stderr)
         return 3

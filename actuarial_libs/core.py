@@ -130,34 +130,19 @@ class ActuarialLibraryManager:
         return False
 
     def analyze_with_available_libs(self, product_spec):
-        """使用所有可用库进行分析"""
-        results = {
+        """Retain the old API without running ungrounded library simulations."""
+        del product_spec
+        return {
+            'status': 'disabled',
+            'formal_analysis_supported': False,
+            'available_libs': self.get_available_libraries(),
+            'message': (
+                '安装精算库不等于具备保险公司真实模型和数据；'
+                '请使用 unified_analysis.py --comparison-case。'
+            ),
             'basic': {},
             'enhanced': {},
-            'available_libs': self.get_available_libraries()
         }
-
-        # 基础分析（使用你现有的代码）
-        from actuarial_calculator import irr_scenario_analysis
-
-        try:
-            basic_irr = irr_scenario_analysis(product_spec)
-            results['basic']['irr_scenarios'] = basic_irr
-        except Exception as e:
-            results['basic']['error'] = str(e)
-
-        # 增强分析（使用各个库）
-        for name in self.get_available_libraries():
-            adapter = self.adapters.get(name)
-            if adapter:
-                try:
-                    lib_results = adapter.analyze(product_spec)
-                    if lib_results:
-                        results['enhanced'][name] = lib_results
-                except Exception as e:
-                    results['enhanced'][name] = {'error': str(e)}
-
-        return results
 
     def get_integration_report(self) -> Dict[str, Any]:
         """生成集成报告"""
@@ -186,7 +171,9 @@ class ActuarialLibraryManager:
             'missing_libraries': missing,
             'available_capabilities': available_capabilities,
             'missing_capabilities': missing_capabilities,
-            'integration_rate': len(available) / len(self.status) * 100
+            'integration_rate': len(available) / len(self.status) * 100,
+            'formal_product_analysis_supported': False,
+            'note': '这里只报告依赖可用性，不代表可以据此评价保险产品。',
         }
 
 

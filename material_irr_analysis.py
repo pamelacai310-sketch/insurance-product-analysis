@@ -23,7 +23,7 @@ import pandas as pd
 import pdfplumber
 import requests
 
-from actuarial_calculator import calculate_irr, generate_rating
+from actuarial_calculator import calculate_irr
 from premium_table_reference import (
     build_formal_plan_input,
     build_material_version_refs,
@@ -428,7 +428,7 @@ def extract_scenario_from_text(product_name: str, manual_text: str, terms_text: 
     )
 
 
-def apply_product_rule(scenario: ScenarioSpec, terms_text: str, manual_text: str) -> ScenarioSpec:
+def apply_product_rule(scenario: ScenarioSpec, terms_text: str, manual_text: str) -> Optional[ScenarioSpec]:
     name = scenario.product_name
     total_premium = scenario.total_premium
 
@@ -527,13 +527,7 @@ def apply_product_rule(scenario: ScenarioSpec, terms_text: str, manual_text: str
         scenario.notes.append("基本年金=基本年金金额；终身领取，报告截取至105岁。")
         return scenario
 
-    # 通用年金兜底
-    scenario.terminal_age = scenario.terminal_age or 105
-    scenario.start_year = scenario.start_year or scenario.payment_period + 2
-    scenario.annual_benefit = scenario.annual_benefit or scenario.base_amount
-    scenario.maturity_benefit = scenario.maturity_benefit or 0
-    scenario.notes.append("通用兜底：按基本保险金额年领。")
-    return scenario
+    return None
 
 
 def build_pingan_future_schedule(scenario: ScenarioSpec) -> dict[int, float]:
@@ -581,8 +575,8 @@ def build_cashflows(scenario: ScenarioSpec, dividend_rate: float = 0.0) -> list[
         horizon = max(1, scenario.terminal_age - scenario.entry_age)
     cashflows = [0.0] * (horizon + 1)
 
-    for year in range(1, min(scenario.payment_period, horizon) + 1):
-        cashflows[year] -= scenario.annual_premium
+    for time in range(min(scenario.payment_period, horizon)):
+        cashflows[time] -= scenario.annual_premium
 
     if scenario.benefit_schedule:
         for year, amount in scenario.benefit_schedule.items():
@@ -623,21 +617,9 @@ def breakeven_year(cashflows: list[float]) -> Optional[int]:
 
 def analyze_scenario(company: str, scenario: ScenarioSpec) -> MaterialIrrResult:
     conservative = build_cashflows(scenario, 0.0)
-    neutral = build_cashflows(scenario, 0.01)
-    optimistic = build_cashflows(scenario, 0.025)
 
     irr_con = calculate_irr(conservative)
-    irr_neu = calculate_irr(neutral)
-    irr_opt = calculate_irr(optimistic)
     be_year = breakeven_year(conservative)
-    rating = generate_rating(
-        irr_conservative=irr_con,
-        irr_neutral=irr_neu,
-        breakeven_year=be_year,
-        death_leverage=1.0,
-        transparency_score=5 if "公开说明书" in scenario.source_quality else 4,
-        product_type="annuity",
-    )
     return MaterialIrrResult(
         company=company,
         product_name=scenario.product_name,
@@ -652,11 +634,11 @@ def analyze_scenario(company: str, scenario: ScenarioSpec) -> MaterialIrrResult:
         insurance_period=scenario.insurance_period,
         start_year=scenario.start_year,
         irr_conservative=irr_con,
-        irr_neutral=irr_neu,
-        irr_optimistic=irr_opt,
+        irr_neutral=None,
+        irr_optimistic=None,
         breakeven_year=be_year,
-        rating_grade=rating.get("grade", ""),
-        rating_score=rating.get("total_score"),
+        rating_grade="",
+        rating_score=None,
         notes=scenario.notes,
     )
 
@@ -687,7 +669,7 @@ def attach_material_refs(
 
 
 def fallback_existing_result(product: dict) -> Optional[MaterialIrrResult]:
-    if not product.get("analyzed"):
+    if not product.get("analyzed") or not product.get("strict_verified"):
         return None
     return MaterialIrrResult(
         company=product.get("company", ""),
@@ -704,8 +686,8 @@ def fallback_existing_result(product: dict) -> Optional[MaterialIrrResult]:
         irr_neutral=product.get("irr_neutral"),
         irr_optimistic=product.get("irr_optimistic"),
         breakeven_year=product.get("breakeven_year"),
-        rating_grade=product.get("rating_grade") or product.get("tool_rating", ""),
-        rating_score=product.get("rating_score"),
+        rating_grade="",
+        rating_score=None,
         notes=[product.get("note", "")] if product.get("note") else [],
     )
 
@@ -745,8 +727,9 @@ def analyze_products(analysis_json: Path, download_dir: Path, previous_json: Opt
         scenario = extract_scenario_from_text(product_name, manual_text, terms_text)
         if scenario:
             scenario = apply_product_rule(scenario, terms_text, manual_text)
-            results.append(attach_material_refs(analyze_scenario(company, scenario), essential_docs, product_name))
-            continue
+            if scenario:
+                results.append(attach_material_refs(analyze_scenario(company, scenario), essential_docs, product_name))
+                continue
 
         fallback = fallback_existing_result(product)
         if fallback:
@@ -757,14 +740,15 @@ def analyze_products(analysis_json: Path, download_dir: Path, previous_json: Opt
                 product_name=product_name,
                 analyzed=False,
                 source_quality="未形成数值现金流",
-                unresolved_reason=product.get("skip_reason", "未能从公开说明书/费率表抽取完整现金流参数。"),
+                unresolved_reason=product.get(
+                    "skip_reason",
+                    "未能从公开材料抽取完整且有明确产品规则的保证现金流；禁止使用通用年金兜底。",
+                ),
             )
             results.append(attach_material_refs(unresolved, essential_docs, product_name))
 
-    analyzed = [r for r in results if r.analyzed and r.irr_neutral is not None]
-    ranked = sorted(analyzed, key=lambda item: item.irr_neutral or -99, reverse=True)
+    analyzed = [r for r in results if r.analyzed and r.irr_conservative is not None]
     target_name = "汇丰汇赢丰年2026年金保险（分红型）"
-    target_rank = next((idx + 1 for idx, item in enumerate(ranked) if item.product_name == target_name), None)
     target = next((item for item in results if item.product_name == target_name), None)
 
     material_version_refs = [
@@ -781,8 +765,11 @@ def analyze_products(analysis_json: Path, download_dir: Path, previous_json: Opt
         "total_products": len(results),
         "analyzed_count": len(analyzed),
         "unresolved_count": len(results) - len(analyzed),
-        "target_rank_by_neutral_irr": target_rank,
-        "target_neutral_irr": target.irr_neutral if target else None,
+        "target_rank_by_neutral_irr": None,
+        "target_neutral_irr": None,
+        "target_guaranteed_cashflow_irr": target.irr_conservative if target else None,
+        "ranking_disabled": True,
+        "ranking_disabled_reason": "材料案例投保条件不完全一致；仅做逐产品保证现金流审计。",
         "material_version_refs": material_version_refs,
         "version_changes": detect_version_changes(previous_refs, material_version_refs) if previous_refs else [],
         "products": [asdict(r) for r in results],
@@ -799,36 +786,36 @@ def fmt_money(value: Optional[float]) -> str:
 
 def write_markdown_report(payload: dict, output_path: Path) -> None:
     products = [MaterialIrrResult(**item) for item in payload["products"]]
-    analyzed = [p for p in products if p.analyzed and p.irr_neutral is not None]
-    ranked = sorted(analyzed, key=lambda item: item.irr_neutral or -99, reverse=True)
+    analyzed = [p for p in products if p.analyzed and p.irr_conservative is not None]
     unresolved = [p for p in products if not p.analyzed]
     target = next((p for p in products if p.product_name == "汇丰汇赢丰年2026年金保险（分红型）"), None)
 
     lines = [
-        "# 汇丰汇赢丰年2026同类产品材料版数值 IRR 分析",
+        "# 汇丰汇赢丰年2026同类产品材料准备与保证现金流审计",
         "",
         f"- 生成时间：{payload['generated_at']}",
-        f"- 分析产品数：{payload['total_products']}；形成数值 IRR：{payload['analyzed_count']}；未形成：{payload['unresolved_count']}",
+        f"- 分析产品数：{payload['total_products']}；形成保证现金流IRR：{payload['analyzed_count']}；未形成：{payload['unresolved_count']}",
+        f"- 排名状态：已禁用。{payload.get('ranking_disabled_reason', '')}",
+        "- 不使用1%/2.5%通用分红假设，不输出综合分或A-D等级。",
     ]
     if target:
         lines.append(
-            f"- 目标产品中性 IRR：{fmt_pct(target.irr_neutral)}；排名：{payload.get('target_rank_by_neutral_irr')}/{len(ranked)}；评级：{target.rating_grade}"
+            f"- 目标产品保证现金流IRR：{fmt_pct(target.irr_conservative)}；不作跨条件排名。"
         )
     if payload.get("version_changes"):
         lines.append(f"- 条款/费率表版本变更：{len(payload['version_changes'])} 项")
     lines.extend([
         "",
-        "## IRR 排名",
+        "## 逐产品保证现金流审计",
         "",
-        "| 排名 | 公司 | 产品 | 参数来源 | 年交/趸交保费 | 交费期 | 基本金额 | 保守IRR | 中性IRR | 乐观IRR | 回本年 | 评级 |",
-        "|---:|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|",
+        "| 公司 | 产品 | 参数来源 | 年交/趸交保费 | 交费期 | 基本金额 | 保证现金流IRR | 回本年 |",
+        "|---|---|---|---:|---:|---:|---:|---:|",
     ])
-    for index, item in enumerate(ranked, 1):
+    for item in analyzed:
         lines.append(
-            f"| {index} | {item.company} | {item.product_name} | {item.source_quality} | "
+            f"| {item.company} | {item.product_name} | {item.source_quality} | "
             f"{fmt_money(item.annual_premium)} | {item.payment_period or ''} | {fmt_money(item.base_amount)} | "
-            f"{fmt_pct(item.irr_conservative)} | {fmt_pct(item.irr_neutral)} | {fmt_pct(item.irr_optimistic)} | "
-            f"{item.breakeven_year or ''} | {item.rating_grade} |"
+            f"{fmt_pct(item.irr_conservative)} | {item.breakeven_year or ''} |"
         )
 
     lines.extend([
@@ -848,7 +835,7 @@ def write_markdown_report(payload: dict, output_path: Path) -> None:
         )
 
     lines.extend(["", "## 关键说明", ""])
-    for item in ranked:
+    for item in analyzed:
         if item.notes:
             lines.append(f"- {item.company} / {item.product_name}：{'；'.join(note for note in item.notes if note)}")
 
@@ -871,7 +858,7 @@ def write_markdown_report(payload: dict, output_path: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="基于公开说明书/费率表/现金价值表生成材料版 IRR 分析")
+    parser = argparse.ArgumentParser(description="基于公开说明书/费率表准备保证现金流审计材料")
     parser.add_argument("--analysis-json", type=Path, default=DEFAULT_ANALYSIS_JSON)
     parser.add_argument("--download-dir", type=Path, default=DEFAULT_DOWNLOAD_DIR)
     parser.add_argument("--output-json", type=Path, default=DEFAULT_REPORT_JSON)
@@ -883,9 +870,10 @@ def main() -> None:
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_json.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     write_markdown_report(payload, args.output_md)
-    print(f"材料版 IRR JSON: {args.output_json}")
-    print(f"材料版 IRR 报告: {args.output_md}")
-    print(f"形成数值 IRR: {payload['analyzed_count']}/{payload['total_products']}")
+    print(f"保证现金流审计 JSON: {args.output_json}")
+    print(f"保证现金流审计报告: {args.output_md}")
+    print(f"形成保证现金流 IRR: {payload['analyzed_count']}/{payload['total_products']}")
+    print("不同投保案例不排名；不输出中性/乐观通用分红情景或综合等级。")
 
 
 if __name__ == "__main__":

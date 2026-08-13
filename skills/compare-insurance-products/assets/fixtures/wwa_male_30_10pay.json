@@ -64,6 +64,7 @@
       },
       "cash_value": {
         "basis": "per_1000_base",
+        "value_type": "guaranteed",
         "unit_text": "每1000元基本保险金额的现金价值",
         "source_ref": "cash",
         "values": {"10": 491.41}

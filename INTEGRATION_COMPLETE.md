@@ -1,5 +1,7 @@
 # 集成完成报告
 
+> **历史存档**：本文描述的默认补值、自动排名和综合评级不再属于正式分析流程。请以当前 `README.md` 和 `skills/compare-insurance-products/` 为准。
+
 > ✅ insurance-clause-insights 与 insurance-product-analysis 集成完成
 
 ---

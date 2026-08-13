@@ -1,377 +1,115 @@
-# 保险产品逆向精算分析技能
-> Insurance Product Reverse Actuarial Analysis Skill
+# 保险产品精算优势分析
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+本项目以“同险种、同投保条件、同现金流时点、同证据标准”为前提，对保险产品进行可复核的逐项比较。正式流程不自动补年龄、性别、交费期、领取规则或满期金，不使用通用分红率推测实际利益，也不输出主观综合分或A-D等级。
 
-## 项目简介
-
-这是一个 **Claude Skill**，用于从保险产品条款文本**反推精算结构**，量化评估保险产品的真实收益率、保障功能、流动性风险等维度，帮助投资者透过营销话术看清产品本质。
-
-### 核心理念
-
-> 保险条款是精算假设的法律化表达。每一个条款措辞背后都隐藏着定价逻辑、风险承担结构和利润来源。
-
-```
-条款文本 → 精算参数提取 → 量化指标计算 → 产品优劣评级
+```text
+正式费率表/现金价值表/条款/利益演示
+                    ↓
+         版本、来源、单位和条件审计
+                    ↓
+              确定性逐项计算
+                    ↓
+          相对排名、取舍与资料缺口
 ```
 
-## 功能特性
+## 精算优势维度
 
-| 功能 | 说明 |
-|------|------|
-| **IRR 三情景分析** | 保守/中性/乐观分红假设下的真实年化收益率 |
-| **隐含预定利率反推** | 精算等价原理还原定价利率，与监管上限对比 |
-| **年金系数计算** | 基于CL2020生命表的精确年金现值 |
-| **现金价值曲线分析** | 识别"陷阱期"，量化各年退保损失率 |
-| **身故保障杠杆评估** | 还原产品的真实保障功能，区分储蓄vs保障 |
-| **分红机制透视** | 三差来源分析，红旗条款识别 |
-| **综合评级输出** | 五维加权评分，可比基准对比 |
+| 维度 | 正式流程的量化口径 |
+|---|---|
+| 保证收益 | 指定年度保证现金价值、保证退保IRR |
+| 资金回收 | 现金价值/累计保费、损失额、回本年度 |
+| 身故保障 | 普通身故保险金、条款取大分支、身故杠杆 |
+| 年金效率 | 首次保证领取、累计保证领取、保证领取现金流IRR |
+| 长寿保障 | 终身领取、保证领取年数、显式测试年龄后的保证给付 |
+| 分红质量 | 保证、演示和实际红利分列；未知不按0处理 |
+| 合同选择权 | 贷款、减保、减额交清等条款存在性及显式情景NPV |
+| 不利情景 | 零分红、按保证现金价值提前退出的损失和IRR |
+| 材料透明度 | 页码、表头、行列、单位、版本及SHA-256审计 |
 
-## 适用产品类型
-
-- ✅ **年金险**（含分红型年金）
-- ✅ **增额终身寿险**
-- ✅ **分红险 / 两全险**
-- ✅ **万能险**
-- 🔄 **重疾险**（健康险模块开发中）
-- 🔄 **医疗险**（健康险模块开发中）
+只有一只产品在全部声明的主要指标中均列第一，且所有产品资料完整时，报告才会写“综合领先”；否则只展示各维度取舍。
 
 ## 快速开始
 
-### 🚀 一键安装（推荐）
+严格计算器只依赖Python 3.9+标准库：
 
 ```bash
-# 安装所有依赖（包括精算库）
-./install_dependencies.sh
-
-# 测试集成状态
-python3 test_integration.py
-
-# 运行完整集成版分析
-python3 integrated_calculator.py
+python3 unified_analysis.py \
+  --comparison-case case.json \
+  --output-dir outputs/strict_comparison
 ```
 
-### 📦 手动安装
-
-**基础版本（仅核心功能）：**
+也可以直接调用可移植Skill：
 
 ```bash
-pip install numpy numpy-financial pandas scipy matplotlib pdfplumber
-python actuarial_calculator.py
+python3 skills/compare-insurance-products/scripts/insurance_compare.py validate \
+  --input case.json
+
+python3 skills/compare-insurance-products/scripts/insurance_compare.py compare \
+  --input case.json \
+  --output-dir outputs/strict_comparison
 ```
 
-**完整版本（集成所有精算库）：**
+输入规范见[输入结构](skills/compare-insurance-products/references/input-schema.md)，计算规则见[计算与审计规则](skills/compare-insurance-products/references/calculation-rules.md)。
+
+## 条款报告衔接
+
+`insurance-clause-insights` 生成的条款报告只能先做资料准备度审计：
 
 ```bash
-pip install -r requirements.txt
-python3 integrated_calculator.py
+python3 unified_analysis.py \
+  --clause-report ../insurance-clause-insights/outputs/run_x/reports/comparison_report.json \
+  --output outputs/strict_input_readiness.json
 ```
 
-### 🔍 检查集成状态
+该模式不会计算IRR、生成排名或填补缺失参数。补齐同版本费率表、现金价值表、条款来源和统一投保条件后，再建立严格 `comparison-case`。
+
+## 输出内容
+
+正式流程同时生成：
+
+- `comparison.md`：结论、统一条件、证据和单位审计、现金价值、保证退保IRR、年金效率、长寿风险转移、合同选择权、压力测试、身故保障及红利口径。
+- `comparison.json`：标准化输入、计算公式、现金流、身故责任分支、逐项排名、缺失数据和警告。
+
+资料缺失、版本冲突、单位冲突或投保条件不一致时，对应产品退出排名；不会用估算值补位。
+
+## 公开材料准备
+
+`material_irr_analysis.py` 保留用于公开材料抽取和保证现金流准备度审计。它不再使用统一的1%/2.5%分红假设，不采用“按基本保额年领”的通用兜底，不跨不同投保案例排名，也不输出综合等级。
+
+费率表相关能力包括：
+
+- `premium_table_ref`：记录匹配标题、URL/路径、版本、内容哈希和置信度。
+- `formal_plan_input`：检查正式计划所需年龄、性别、交费期、保费和基本金额。
+- `material_version_refs` / `version_changes`：识别条款、费率表和现金价值表版本变化。
+
+## RIC增额红利
+
+`ric_dividend_estimator.py` 只允许对“女性45岁、5年交、保障至105岁、65岁起额外年金”的正式利益演示案例按基本保险金额线性缩放。年龄、性别、交费期、保障期限或领取安排变化时会停止计算。
 
 ```bash
-# 查看哪些库已安装
-python3 test_integration.py
-
-# 查看集成报告
-python3 -c "from actuarial_libs import get_manager; get_manager().print_status()"
+python3 ric_dividend_estimator.py --basic-amount 100000 --format csv
+python3 ric_dividend_estimator.py --basic-amount 100000 \
+  --realization-rate 0.857 --format json
 ```
 
-输出示例：
-```
-============================================================
-  汇丰尊享精彩年金保险（分红型）
-  逆向精算分析报告
-============================================================
+历史红利实现率只作为敏感性代理，不能视为实际已分配红利或未来保证。完整说明见[RIC推测方法与边界](reports/ric_annual_incremental_dividend_inference_20260730.md)。
 
-📌 假设参数
-  投保年龄: 30岁  性别: 男
-  交费方式: 5年缴  年缴保费: 100,000元
-  基本保险金额: 80,000元
-  首次年金领取: 第7保单年度
+## 已停用入口
 
-📈 IRR三情景分析
-  保守（0分红）: 1.85% ██
-  中性（历史低位分红）: 2.23% ██
-  乐观（演示分红水平）: 2.67% ███
+以下旧入口包含示例现金流、固定分红率或模拟公司风险数据，现仅保留源码参考，并会拒绝生成正式综合评级：
 
-📊 对比基准利率（2025年参考）
-  3年期国债:     约2.50%-2.80%
-  5年大额存单:   约2.30%-2.60%
-  货币基金:      约1.80%-2.20%
+- `integrated_calculator.py`
+- `enhanced_calculator.py`
+- `hsbc_huiyingfengnian_analysis.py`
+- `actuarial_calculator.generate_rating()`
 
-🔍 反推隐含预定利率: 1.92%
-  监管上限（分红险）: 2.00%
-  状态: ✓ 在监管范围内
+安装某个精算库不等于拥有保险公司真实资产、负债、准备金或再保险数据。随机ALM、VaR和固定准备金示例不得作为单一保险产品优势证据。
 
-⭐ 综合评级
-  收益质量:   [■■■□□] 3/5
-  信息透明度: [■■□□□] 2/5
-  保障功能:   [■□□□□] 1/5
-  流动性:     [■■□□□] 2/5
-  长寿保障:   [■■■■□] 4/5
-
-  总分: 2.45/5.0  评级: C
-```
-
-### 在 Claude 中使用
-
-安装本技能后，向 Claude 发送：
-
-```
-帮我分析这个保险产品的条款 [上传PDF]
-```
-
-```
-这个年金险的IRR大概是多少？预定利率是多少？
-```
-
-```
-帮我比较这两款分红型年金险的优劣势
-```
-
-## 🆕 完整集成版分析系统
-
-### 系统架构
-
-本项目现已集成11个主流保险精算开源库，提供专业级精算分析能力：
-
-```
-┌─────────────────────────────────────────┐
-│     集成分析系统（IntegratedAnalyzer）     │
-├─────────────────────────────────────────┤
-│                                         │
-│  ┌────────────┐  ┌──────────────────┐  │
-│  │ 基础分析器  │  │  精算库适配器层    │  │
-│  │ (原有功能)  │  │  7个Python库     │  │
-│  │            │  │  4个Julia库      │  │
-│  │ - IRR计算  │  │                  │  │
-│  │ - 现金价值  │  │  lifelib: 完整生命表  │
-│  │ - 保障杠杆  │  │  chainladder: 准备金 │
-│  └────────────┘  │  cashflower: ALM    │  │
-│         │        │  aggregate: 极端风险 │  │
-│         └────────┤  modelx: 复杂产品   │  │
-│                  │  insurancerating    │  │
-│                  │  julia_actuary      │  │
-│                  └──────────────────┘  │
-└─────────────────────────────────────────┘
-```
-
-### 集成功能对照表
-
-| 功能 | 基础版 | 集成版 | 提升 |
-|------|--------|--------|------|
-| **分析维度** | 3个 | 7个 | +133% |
-| **IRR精度** | ±5% | ±1% | +400% |
-| **生命表** | 简化版(16点) | 完整CL2020 | +600% |
-| **风险评估** | 静态 | 动态+极端+ALM | +300% |
-| **产品覆盖** | 简单产品 | 所有寿险产品 | +200% |
-
-### 使用示例
-
-**基础版：**
-```python
-from actuarial_calculator import ProductSpec, irr_scenario_analysis
-
-spec = ProductSpec(...)
-irr = irr_scenario_analysis(spec)
-```
-
-**集成版：**
-```python
-from integrated_calculator import IntegratedAnalyzer
-
-analyzer = IntegratedAnalyzer(spec)
-report = analyzer.analyze()
-
-# 包含：
-# - 基础IRR分析
-# - lifelib精确计算
-# - chainladder准备金分析
-# - cashflower ALM分析
-# - aggregate极端风险
-# - 综合评级（7维度）
-```
-
-### 详细文档
-
-- 📖 **快速开始**: [QUICKSTART.md](QUICKSTART.md)
-- 📚 **集成指南**: [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md)
-- 📊 **库功能详解**: [LIBRARIES_SUMMARY.md](LIBRARIES_SUMMARY.md)
-- 🔧 **API文档**: `docs/API.md`（待完善）
-
-## 🆕 与 insurance-clause-insights 集成
-
-本项目现已与 [insurance-clause-insights](https://github.com/pamelacai310-sketch/insurance-clause-insights) 完全集成，实现从PDF到精算分析的完整自动化流程！
-
-### 完整工作流
+## 验证
 
 ```bash
-# 步骤1：使用 insurance-clause-insights 提取条款信息
-cd insurance-clause-insights
-insurance-clause-insights run --category 年金保险 --min-products 20
-
-# 步骤2：自动生成精算分析
-cd ../insurance-product-analysis
-python unified_analysis.py \
-  --clause-report ../insurance-clause-insights/outputs/run_XXX/reports/comparison_report.json \
-  --export-table
-
-# 步骤3：查看结果
-cat outputs/unified_analysis_comparison.md
+python3 -m unittest discover -v
+python3 skills/compare-insurance-products/scripts/insurance_compare.py self-test
 ```
 
-### 公开材料版 IRR 分析
-
-当条款分析缺少“年交保费、基本保险金额、领取金额”组合时，可使用 `material_irr_analysis.py`
-从公开产品说明书的投保示例补齐数值现金流，并支持读取爬虫下载的 PDF / Excel 费率表和现金价值表。
-
-```bash
-python material_irr_analysis.py \
-  --analysis-json ../insurance-clause-insights/outputs/huiyingfengnian_20260603_analysis/huiyingfengnian_20260603_analysis.json \
-  --output-json reports/huiyingfengnian_material_irr_20260604.json \
-  --output-md reports/huiyingfengnian_material_irr_20260604.md
-```
-
-模块会优先采用公开说明书投保示例；Cigna 信诺产品会自动从公开披露接口补齐产品说明书、费率表、现金价值表链接。
-输出报告会列出保守 / 中性 / 乐观三情景 IRR、回本年度、评级和每个产品的现金流规则来源。
-
-新增费率表引用能力：
-
-- `premium_table_ref`：为每个产品匹配可核验费率表，保留标题、URL/本地路径、版本标签、内容哈希和匹配置信度，供正式投保计划生成引用。
-- `formal_plan_input`：检查投保年龄、性别、交费期、保费、基本金额和 `premium_table_ref` 是否齐备；全部齐备时 `ready=true`。
-- `material_version_refs` / `version_changes`：记录条款和费率表版本签名，可通过 `--previous-json` 对比上一版报告识别新增、移除或变更。
-
-```bash
-python material_irr_analysis.py \
-  --analysis-json ../insurance-clause-insights/outputs/huiyingfengnian_20260603_analysis/huiyingfengnian_20260603_analysis.json \
-  --previous-json reports/huiyingfengnian_material_irr_20260604.json \
-  --output-json reports/huiyingfengnian_material_irr_next.json \
-  --output-md reports/huiyingfengnian_material_irr_next.md
-```
-
-### 分析治理与外部风险审计
-
-`analysis_governance.py` 提供可复用报告治理函数，避免单个目标产品硬编码满分或把行业通用功能写成独特优势。
-
-- `classify_advantage()`：按同类样本频率判断目标优势是否成立，样本命中率 `<25%` 才可判为成立，`>=75%` 视为通用功能。
-- `render_advantage_validation_table()`：生成“目标产品优势是否成立”判断表，区分成立、部分成立、不成立和需验证。
-- `frequency_adjusted_score()`：对高频功能做评分降权，避免通用配置推高目标产品评分。
-- `render_external_risk_audit()`：输出长久期负债/ALM、AIR再保险、百慕大再保、衍生品保证金、汇率对冲成本、PE/PD资产集中度等外部风险审计口径。
-
-### 主要优势
-
-| 功能 | 手动方式 | 集成方式 |
-|------|----------|----------|
-| 数据输入 | 手动创建 ProductSpec | 自动从PDF提取 |
-| 批量分析 | ❌ 不支持 | ✅ 支持批量分析 |
-| 产品对比 | 手动对比 | 自动生成对比报告 |
-| 参数完整性 | 100%必需 | 60%+可补充 |
-
-**详细文档**: [INTEGRATION_WITH_CLAUSE_INSIGHTS.md](INTEGRATION_WITH_CLAUSE_INSIGHTS.md)
-
-## 精算方法论
-
-### IRR 计算
-
-内部收益率基于完整生命周期现金流，覆盖三个分红情景：
-
-```python
-# 保守情景（0分红）
-irr_conservative = npf.irr(base_cash_flows)
-
-# 中性情景（历史低位分红 ≈ 给付额×1%）
-irr_neutral = npf.irr(add_dividends(base_cash_flows, rate=0.01))
-
-# 乐观情景（演示分红 ≈ 给付额×2.5%）
-irr_optimistic = npf.irr(add_dividends(base_cash_flows, rate=0.025))
-```
-
-### 隐含预定利率反推
-
-基于精算等价原理（保费现值 = 保险金现值）：
-
-```
-PV(保费) = PV(年金) + PV(满期金)
-
-用二分法求解使等式成立的折现率 r
-r 即为产品隐含预定利率
-```
-
-### 生命表
-
-默认使用**中国人寿保险业经验生命表2020（CL2020）**，2021年起执行。可接入 `lifelib` 获取完整表格。
-
-## 监管数据参考（2025年）
-
-| 指标 | 数值 | 来源 |
-|------|------|------|
-| 普通型保险预定利率上限 | 2.5% | 金融监管总局2023年公告 |
-| 分红险预定利率上限 | 2.0% | 金融监管总局2023年公告 |
-| 万能险最低保证利率上限 | 1.5% | 金融监管总局2023年公告 |
-| 保单持有人分红比例下限 | ≥70% | 原保监发[2009]90号 |
-| 核心偿付能力充足率要求 | ≥50% | 偿二代II期 |
-| 综合偿付能力充足率要求 | ≥100% | 偿二代II期 |
-
-## 相关开源资源
-
-本项目已集成以下保险精算相关开源项目作为 Git Submodules：
-
-### Python 精算库
-
-| 项目 | 用途 | 路径 |
-|------|------|------|
-| [chainladder-python](https://github.com/casact/chainladder-python) | 准备金三角形分析，损失准备金评估 | `external/chainladder-python` |
-| [lifelib](https://github.com/lifelib-dev/lifelib) | 寿险精算建模，完整生命表，产品定价 | `external/lifelib` |
-| [modelx](https://github.com/fumitoh/modelx) | 精算模型框架，Excel 类建模工具 | `external/modelx` |
-| [cashflower](https://github.com/acturtle/cashflower) | 现金流建模工具，用于精算模拟 | `external/cashflower` |
-| [aggregate](https://github.com/mynl/aggregate) | 聚合损失分布建模 | `external/aggregate` |
-| [insurancerating](https://github.com/MHaringa/insurancerating) | GLM 费率厘定（R/Python） | `external/insurancerating` |
-
-### Julia 精算库
-
-| 项目 | 用途 | 路径 |
-|------|------|------|
-| [LifeContingencies.jl](https://github.com/JuliaActuary/LifeContingencies.jl) | 生命事件精算建模 | `external/JuliaActuary/LifeContingencies.jl` |
-| [ActuaryUtilities.jl](https://github.com/JuliaActuary/ActuaryUtilities.jl) | 精算实用工具集 | `external/JuliaActuary/ActuaryUtilities.jl` |
-| [MortalityTables.jl](https://github.com/JuliaActuary/MortalityTables.jl) | 生命表处理和分析 | `external/JuliaActuary/MortalityTables.jl` |
-| [ExperienceAnalysis.jl](https://github.com/JuliaActuary/ExperienceAnalysis.jl) | 经验数据分析 | `external/JuliaActuary/ExperienceAnalysis.jl` |
-
-### R 语言精算库
-
-| 项目 | 用途 | 路径 |
-|------|------|------|
-| [FASLR](https://github.com/casact/FASLR) | 损失准备金统计报告 | `external/FASLR` |
-
-### 其他相关资源
-
-- [TmVal](https://github.com/genedan/TmVal) - 年金现值、IRR精确计算
-- [InsQABench](https://github.com/Spico/InsQABench) - 中文保险条款QA基准数据集
-
-### 使用子模块
-
-初始化并更新所有子模块：
-
-```bash
-git submodule update --init --recursive
-```
-
-更新子模块到最新版本：
-
-```bash
-git submodule update --remote
-```
-
-## 使用限制
-
-⚠️ **重要声明**
-
-- 本工具基于条款文本的公开信息进行精算估算，**不构成投资建议**
-- IRR测算结果依赖参数假设，实际收益率受分红实现情况影响
-- 建议结合保险公司官方提供的现金价值表进行精确计算
-- 投保决策请咨询持牌保险从业人员或精算师
-
-## 许可证
-
-MIT License
+结果仅用于产品核算复核，不替代保险公司正式投保计划书，也不构成保险、法律或投资建议。

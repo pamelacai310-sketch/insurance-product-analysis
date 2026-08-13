@@ -159,8 +159,8 @@ def extract_period_from_text(text: str) -> Optional[int]:
 
 def convert_to_product_spec(
     extracted: ExtractedProduct,
-    default_age: int = 30,
-    default_gender: str = "M"
+    default_age: Optional[int] = None,
+    default_gender: Optional[str] = None,
 ) -> Optional[ProductSpec]:
     """将提取的产品数据转换为 ProductSpec
 
@@ -168,45 +168,39 @@ def convert_to_product_spec(
 
     Args:
         extracted: 提取的产品数据
-        default_age: 缺失年龄时的默认值
-        default_gender: 缺失性别时的默认值
+        default_age: 已停用；传入任何值都会报错
+        default_gender: 已停用；传入任何值都会报错
 
     Returns:
         ProductSpec 对象，如果必需参数缺失则返回 None
     """
-    # 检查必需参数
-    if not extracted.annual_premium or not extracted.sum_assured:
+    if default_age is not None or default_gender is not None:
+        raise ValueError("严格分析禁止用默认年龄或性别补齐缺失投保条件")
+
+    # 严格入口不补任何投保参数。
+    if (
+        not extracted.annual_premium
+        or not extracted.sum_assured
+        or not extracted.payment_period
+        or extracted.entry_age is None
+        or not extracted.gender
+    ):
         return None
 
     # 映射产品类型
     product_type = map_category_to_type(extracted.category)
 
     # 确定分红类型
-    dividend_type = extracted.dividend_type
-    if not dividend_type:
-        # 根据产品名称推断
-        if "分红" in extracted.product_name:
-            dividend_type = "accumulate"  # 默认累积生息
-        elif "万能" in extracted.product_name:
-            dividend_type = "universal"
-
-    # 确定年金开始年龄（如果适用）
-    annuity_start_year = None
-    if product_type in ["annuity", "annuity_participating"]:
-        # 年金险通常在第5或第7年开始领取
-        payment_period = extracted.payment_period or 5
-        annuity_start_year = payment_period  # 假设交费期满后开始领取
-
     return ProductSpec(
         product_name=extracted.product_name,
         product_type=product_type,
-        entry_age=extracted.entry_age or default_age,
-        gender=extracted.gender or default_gender,
-        payment_period=extracted.payment_period or 5,
+        entry_age=extracted.entry_age,
+        gender=extracted.gender,
+        payment_period=extracted.payment_period,
         annual_premium=extracted.annual_premium,
         sum_assured=extracted.sum_assured,
-        annuity_start_year=annuity_start_year,
-        dividend_type=dividend_type,
+        annuity_start_year=None,
+        dividend_type=extracted.dividend_type,
         guaranteed_rate=extracted.guaranteed_rate,
     )
 
@@ -265,9 +259,9 @@ def calculate_completeness(product: ExtractedProduct) -> float:
 
 def batch_analyze_from_clauses(
     clause_report_path: Path,
-    default_age: int = 30,
-    default_gender: str = "M",
-    min_completeness: float = 0.6
+    default_age: Optional[int] = None,
+    default_gender: Optional[str] = None,
+    min_completeness: Optional[float] = None,
 ) -> dict:
     """
     从条款报告批量分析产品
@@ -276,60 +270,15 @@ def batch_analyze_from_clauses(
 
     Args:
         clause_report_path: comparison_report.json 路径
-        default_age: 缺失年龄时的默认值
-        default_gender: 缺失性别时的默认值
-        min_completeness: 最小参数完整性阈值
+        default_age: 已停用
+        default_gender: 已停用
+        min_completeness: 已停用
 
     Returns:
         分析结果字典，包含统计信息和产品分析结果
     """
-    from actuarial_calculator import irr_scenario_analysis
-    from integrated_calculator import IntegratedAnalyzer
+    if default_age is not None or default_gender is not None or min_completeness is not None:
+        raise ValueError("旧的默认补值和完整度放行参数已停用")
+    from strict_analysis import audit_clause_report_readiness
 
-    extracted_products = load_clause_report(clause_report_path)
-    results = {
-        "total": len(extracted_products),
-        "analyzed": 0,
-        "skipped": 0,
-        "products": []
-    }
-
-    for extracted in extracted_products:
-        # 检查参数完整性
-        completeness = calculate_completeness(extracted)
-        if completeness < min_completeness:
-            results["skipped"] += 1
-            continue
-
-        # 转换为 ProductSpec
-        spec = convert_to_product_spec(extracted, default_age, default_gender)
-        if not spec:
-            results["skipped"] += 1
-            continue
-
-        # 执行精算分析
-        irr_results = irr_scenario_analysis(spec)
-        analyzer = IntegratedAnalyzer(spec)
-        report = analyzer.analyze()
-
-        results["products"].append({
-            "company": extracted.company,
-            "product_name": extracted.product_name,
-            "category": extracted.category,
-            "completeness": round(completeness, 2),
-            "spec": {
-                "entry_age": spec.entry_age,
-                "gender": spec.gender,
-                "payment_period": spec.payment_period,
-                "annual_premium": spec.annual_premium,
-                "sum_assured": spec.sum_assured,
-            },
-            "irr_conservative": round(irr_results.get("保守（0分红）", 0), 4),
-            "irr_neutral": round(irr_results.get("中性（历史低位分红）", 0), 4),
-            "irr_optimistic": round(irr_results.get("乐观（演示分红水平）", 0), 4),
-            "rating": report["rating"]["grade"],
-            "total_score": round(report["rating"]["total_score"], 2),
-        })
-        results["analyzed"] += 1
-
-    return results
+    return audit_clause_report_readiness(clause_report_path)

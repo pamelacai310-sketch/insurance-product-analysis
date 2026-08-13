@@ -18,6 +18,7 @@
     "primary_policy_year": 10,
     "product_category": "whole_life",
     "death_scenario": "ordinary_death",
+    "longevity_test_age": 85,
     "primary_metrics": ["cash_value", "surrender_irr", "death_benefit"]
   },
   "products": []
@@ -55,6 +56,7 @@
   },
   "cash_value": {
     "basis": "per_1000_base",
+    "value_type": "guaranteed",
     "unit_text": "每1000元基本保险金额的现金价值",
     "source_ref": "cash",
     "values": {"10": 491.41}
@@ -89,6 +91,8 @@
 | `absolute` | 表值即金额 |
 
 `values` 的键是保单年度字符串，值为该年度表值。未提供的年度会标记为缺失，不插值。
+
+`value_type` 必须明确为 `guaranteed`。包含演示红利、累计红利或其他非保证利益的“总现金价值”不能填入此字段。
 
 ## 身故责任公式
 
@@ -155,3 +159,66 @@
 ```
 
 `actual_schedule: null` 表示未知，不是 0。演示红利放在 `illustrated_scenarios`，不得写入保证现金价值或保证退保 IRR。
+
+## 保证领取与年金效率
+
+只有正式条款、现金价值表或利益演示明确列示的保证领取才能录入：
+
+```json
+{
+  "guaranteed_benefits": {
+    "source_ref": "illustration",
+    "basis": "absolute",
+    "unit_text": "人民币元",
+    "values": {"5": 12000, "6": 12000, "7": 12000}
+  }
+}
+```
+
+`values` 为每个保单年度末的绝对保证领取金额。脚本据此计算首次领取额、累计保证领取、累计领取/总保费、仅含保证领取的现金流 IRR 及仅靠保证领取的回本年度。未逐年列明时不得按产品名称、基本保额或行业惯例补齐。
+
+## 长寿风险转移
+
+```json
+{
+  "longevity": {
+    "source_ref": "terms",
+    "lifetime_income": true,
+    "income_start_policy_year": 30,
+    "contract_end_age": 105,
+    "guaranteed_payment_years": 20,
+    "age_at_policy_year_end": "entry_age_plus_year_minus_one"
+  }
+}
+```
+
+`comparison.longevity_test_age` 是显式指定的尾部年龄，例如85岁。测试年龄后的保证领取总额只从 `guaranteed_benefits.values` 逐年加总；给付表必须显式包含测试年龄。若仅覆盖测试年龄但尚未覆盖合同终止年龄，结果标记为“部分给付表”，不得解释为完整终身尾部价值；脚本不会外推至105岁或终身。
+
+## 合同选择权
+
+```json
+{
+  "contract_options": [
+    {
+      "name": "保单贷款",
+      "type": "policy_loan",
+      "source_ref": "terms",
+      "available": true,
+      "max_access_ratio": 0.8,
+      "known_cost_rate": 0.05,
+      "quantified_scenario": {
+        "name": "第10年借款、第15年偿还",
+        "assumption": "借款和偿还金额均来自客户明确情景",
+        "discount_rate": 0.025,
+        "incremental_cash_flows": {"10": 80000, "15": -102102}
+      }
+    }
+  ]
+}
+```
+
+支持的 `type` 包括 `policy_loan`、`partial_surrender`、`paid_up`、`annuity_conversion`、`beneficiary_change`、`policyholder_change`、`insured_change`、`second_policyholder` 和 `other`。仅有功能条款时只报告“存在”；只有提供显式增量现金流和折现率时才计算该情景 NPV。不同选择权的 NPV 不相加，也不形成主观评分。
+
+## 可验证压力测试
+
+脚本自动把每个选定年度的保证现金价值视为“零分红、提前退出”压力情景，报告损失额、回收率和保证退保 IRR。该压力测试排除全部非保证利益，不调用随机 ALM/VaR，也不根据保险公司未披露的资产配置推测结果。

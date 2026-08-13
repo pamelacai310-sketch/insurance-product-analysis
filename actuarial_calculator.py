@@ -14,6 +14,10 @@ from typing import Optional
 import warnings
 
 
+class UnverifiedAssumptionError(ValueError):
+    """Raised when a legacy inferred cash-flow model is requested without opt-in."""
+
+
 # ─────────────────────────────────────────────
 # 数据结构定义
 # ─────────────────────────────────────────────
@@ -80,7 +84,11 @@ def calculate_irr(cash_flows: list) -> Optional[float]:
         return None
 
 
-def irr_scenario_analysis(spec: ProductSpec) -> dict:
+def irr_scenario_analysis(
+    spec: ProductSpec,
+    *,
+    allow_unverified_assumptions: bool = False,
+) -> dict:
     """
     三情景IRR分析：保守 / 中性 / 乐观
     
@@ -89,21 +97,48 @@ def irr_scenario_analysis(spec: ProductSpec) -> dict:
     - 中性：年金给付额的1%（约为历史均值的低端）
     - 乐观：年金给付额的2.5%（演示利率水平）
     """
-    base_cfs = build_annuity_cash_flows(spec, dividend_rate=0.0)
+    if not allow_unverified_assumptions:
+        raise UnverifiedAssumptionError(
+            "旧IRR情景会假定领取额、满期金及1%/2.5%分红，正式分析已禁止；"
+            "请使用 unified_analysis.py --comparison-case。"
+        )
+    warnings.warn(
+        "正在运行含未核验假设的旧IRR演示，不得用于正式产品比较。",
+        RuntimeWarning,
+        stacklevel=2,
+    )
+    base_cfs = build_annuity_cash_flows(
+        spec,
+        dividend_rate=0.0,
+        allow_unverified_assumptions=True,
+    )
     
     scenarios = {
         '保守（0分红）': calculate_irr(base_cfs),
         '中性（历史低位分红）': calculate_irr(
-            build_annuity_cash_flows(spec, dividend_rate=0.01)
+            build_annuity_cash_flows(
+                spec,
+                dividend_rate=0.01,
+                allow_unverified_assumptions=True,
+            )
         ),
         '乐观（演示分红水平）': calculate_irr(
-            build_annuity_cash_flows(spec, dividend_rate=0.025)
+            build_annuity_cash_flows(
+                spec,
+                dividend_rate=0.025,
+                allow_unverified_assumptions=True,
+            )
         )
     }
     return scenarios
 
 
-def build_annuity_cash_flows(spec: ProductSpec, dividend_rate: float = 0.0) -> list:
+def build_annuity_cash_flows(
+    spec: ProductSpec,
+    dividend_rate: float = 0.0,
+    *,
+    allow_unverified_assumptions: bool = False,
+) -> list:
     """
     构建年金险现金流序列
     
@@ -114,6 +149,10 @@ def build_annuity_cash_flows(spec: ProductSpec, dividend_rate: float = 0.0) -> l
     Year 7-N: +annual_annuity + dividend
     Year N: +annual_annuity + maturity_bonus（满期年）
     """
+    if not allow_unverified_assumptions:
+        raise UnverifiedAssumptionError(
+            "旧年金现金流函数包含未核验领取和满期假设；请改用严格逐年给付表。"
+        )
     max_years = spec.terminal_age - spec.entry_age + 1
     cash_flows = [0.0] * max_years  # t=0开始
     
@@ -215,7 +254,9 @@ def reverse_engineer_rate(
     annuity_start_age: int,
     terminal_age: int = 105,
     gender: str = 'M',
-    maturity_bonus: float = 0.0
+    maturity_bonus: float = 0.0,
+    *,
+    allow_unverified_assumptions: bool = False,
 ) -> Optional[float]:
     """
     反推产品隐含预定利率
@@ -225,6 +266,12 @@ def reverse_engineer_rate(
     Returns:
         隐含预定利率（小数）
     """
+    if not allow_unverified_assumptions:
+        raise UnverifiedAssumptionError(
+            "旧隐含利率函数使用简化生命表，不能作为正式产品精算优势证据；"
+            "请在严格comparison-case中使用逐年合同现金流。"
+        )
+
     def actuarial_equation(r):
         # 保费现值
         pv_premiums = 0.0
@@ -317,7 +364,9 @@ def calculate_death_leverage(
     payment_period: int,
     sum_assured: float,
     death_benefit_rule: str,  # 'max_premium_csv' / 'sum_assured' / 'N_times'
-    leverage_multiple: float = 1.0
+    leverage_multiple: float = 1.0,
+    *,
+    allow_unverified_assumptions: bool = False,
 ) -> pd.DataFrame:
     """
     各保单年度身故保障杠杆比分析
@@ -327,6 +376,12 @@ def calculate_death_leverage(
     - 'N_times': 保额×N倍                        ← 有保障型
     - 'sum_assured': 固定保额                     ← 定期寿险型
     """
+    if not allow_unverified_assumptions:
+        raise UnverifiedAssumptionError(
+            "旧身故杠杆函数会简化现金价值和身故责任，正式分析已禁止；"
+            "请在严格comparison-case中录入条款公式树。"
+        )
+
     records = []
     
     for year in range(1, min(payment_period * 3, 30) + 1):
@@ -369,94 +424,24 @@ def generate_rating(
     transparency_score: int,   # 1-5
     product_type: str = 'annuity'
 ) -> dict:
-    """
-    生成产品综合评级
-    
-    Returns:
-        评级报告字典
-    """
-    
-    # IRR评级
-    irr_benchmarks = {
-        'annuity':    [0.030, 0.025, 0.020],
-        'whole_life': [0.040, 0.032, 0.025],
-        'endowment':  [0.035, 0.028, 0.022],
-    }
-    thresholds = irr_benchmarks.get(product_type, irr_benchmarks['annuity'])
-    
-    def score_irr(irr):
-        if irr is None:
-            return 1
-        if irr >= thresholds[0]:
-            return 5
-        elif irr >= thresholds[1]:
-            return 4
-        elif irr >= thresholds[2]:
-            return 3
-        elif irr >= 0:
-            return 2
-        else:
-            return 1
-    
-    irr_score = score_irr(irr_neutral or irr_conservative)
-    
-    # 流动性评级
-    if breakeven_year is None:
-        liquidity_score = 1
-    elif breakeven_year <= 5:
-        liquidity_score = 5
-    elif breakeven_year <= 8:
-        liquidity_score = 4
-    elif breakeven_year <= 12:
-        liquidity_score = 3
-    elif breakeven_year <= 15:
-        liquidity_score = 2
-    else:
-        liquidity_score = 1
-    
-    # 保障评级
-    if death_leverage >= 5:
-        protection_score = 5
-    elif death_leverage >= 3:
-        protection_score = 4
-    elif death_leverage >= 2:
-        protection_score = 3
-    elif death_leverage >= 1.2:
-        protection_score = 2
-    else:
-        protection_score = 1  # 纯储蓄，无保障功能
-    
-    # 加权总分
-    weights = {
-        'irr': 0.30,
-        'transparency': 0.20,
-        'protection': 0.20,
-        'liquidity': 0.15,
-        'longevity': 0.15
-    }
-    
-    longevity_score = 4  # 保至105岁，长寿保障较好
-    
-    total = (
-        irr_score * weights['irr'] +
-        transparency_score * weights['transparency'] +
-        protection_score * weights['protection'] +
-        liquidity_score * weights['liquidity'] +
-        longevity_score * weights['longevity']
-    )
-    
+    """Return an audit payload; composite A-D ratings are intentionally disabled."""
     return {
-        'dimensions': {
-            '收益质量': irr_score,
-            '信息透明度': transparency_score,
-            '保障功能': protection_score,
-            '流动性': liquidity_score,
-            '长寿保障': longevity_score,
+        'status': 'disabled',
+        'reason': (
+            '固定阈值加权总分无法保证同险种、同投保条件和同证据口径；'
+            '请使用 unified_analysis.py 的严格逐项相对比较。'
+        ),
+        'input_metrics': {
+            'irr_conservative': irr_conservative,
+            'irr_neutral': irr_neutral,
+            'breakeven_year': breakeven_year,
+            'death_leverage': death_leverage,
+            'transparency_score_legacy_input': transparency_score,
+            'product_type': product_type,
         },
-        'total_score': round(total, 2),
-        'grade': 'A' if total >= 4.0 else 'B' if total >= 3.0 else 'C' if total >= 2.0 else 'D',
-        'irr_conservative': f'{irr_conservative:.2%}' if irr_conservative else 'N/A',
-        'irr_neutral': f'{irr_neutral:.2%}' if irr_neutral else 'N/A',
+        'dimensions': {},
+        'total_score': None,
+        'grade': None,
     }
 
 
@@ -469,93 +454,12 @@ def demo_hsbc_annuity():
     示例：汇丰尊享精彩年金保险（分红型）精算快速分析
     假设参数：30岁男性，5年缴，年缴10万，基本保险金额（年金额）2万
     """
-    spec = ProductSpec(
-        product_name="汇丰尊享精彩年金保险（分红型）",
-        product_type="annuity",
-        entry_age=30,
-        gender='M',
-        payment_period=5,
-        annual_premium=100_000,
-        sum_assured=20_000,  # 年金额≈年缴保费×20%，符合行业惯例
-        annuity_start_year=7,  # 5年缴，第7保单年度开始领取
-        terminal_age=105,
-        dividend_type='accumulate'
+    message = (
+        "该旧演示含推测现金流和通用分红率，已停用。"
+        "请使用 unified_analysis.py --comparison-case。"
     )
-    
-    print(f"{'='*60}")
-    print(f"  {spec.product_name}")
-    print(f"  逆向精算分析报告")
-    print(f"{'='*60}")
-    print(f"\n📌 假设参数")
-    print(f"  投保年龄: {spec.entry_age}岁  性别: {'男' if spec.gender=='M' else '女'}")
-    print(f"  交费方式: {spec.payment_period}年缴  年缴保费: {spec.annual_premium:,.0f}元")
-    print(f"  基本保险金额: {spec.sum_assured:,.0f}元")
-    print(f"  首次年金领取: 第{spec.annuity_start_year}保单年度")
-    
-    # IRR三情景分析
-    print(f"\n📈 IRR三情景分析")
-    scenarios = irr_scenario_analysis(spec)
-    for scenario, irr in scenarios.items():
-        bar = '█' * int((irr or 0) * 100) if irr else ''
-        print(f"  {scenario}: {f'{irr:.2%}' if irr else 'N/A'} {bar}")
-    
-    # 对比基准
-    print(f"\n📊 对比基准利率（2025年参考）")
-    print(f"  3年期国债:     约2.50%-2.80%")
-    print(f"  5年大额存单:   约2.30%-2.60%")
-    print(f"  货币基金:      约1.80%-2.20%")
-    
-    # 隐含预定利率反推
-    implied_rate = reverse_engineer_rate(
-        annual_premium=spec.annual_premium,
-        payment_period=spec.payment_period,
-        annual_annuity=spec.sum_assured,
-        entry_age=spec.entry_age,
-        annuity_start_age=spec.entry_age + spec.annuity_start_year - 1,
-        terminal_age=spec.terminal_age,
-        gender=spec.gender,
-        maturity_bonus=spec.annual_premium * spec.payment_period + spec.sum_assured
-    )
-    if implied_rate:
-        print(f"\n🔍 反推隐含预定利率: {implied_rate:.2%}")
-        print(f"  监管上限（分红险）: 2.00%")
-        status = "✓ 在监管范围内" if implied_rate <= 0.02 else "⚠️ 超出监管上限，需核查"
-        print(f"  状态: {status}")
-    
-    # 身故保障分析
-    print(f"\n🛡️ 身故保障杠杆（条款2.4：max(已交保费, 现金价值)）")
-    print(f"  第1年杠杆: ~1.0x  → ⭐（纯储蓄，无死亡杠杆）")
-    print(f"  第5年杠杆: ~1.0x  → ⭐（已交保费返还）")
-    print(f"  评价: 本产品无真实死亡保障功能")
-    
-    # 综合评级
-    irr_vals = list(scenarios.values())
-    rating = generate_rating(
-        irr_conservative=irr_vals[0],
-        irr_neutral=irr_vals[1],
-        breakeven_year=10,  # 估算
-        death_leverage=1.0,
-        transparency_score=2,  # 条款未披露预定利率
-        product_type='annuity'
-    )
-    
-    print(f"\n⭐ 综合评级")
-    for dim, score in rating['dimensions'].items():
-        bar = '■' * score + '□' * (5 - score)
-        print(f"  {dim}: [{bar}] {score}/5")
-    print(f"\n  总分: {rating['total_score']}/5.0  评级: {rating['grade']}")
-    
-    print(f"\n✅ 适合人群")
-    print(f"  • 有明确养老规划，接受10年以上资金锁定")
-    print(f"  • 有家族财富传承需求（第二投保人制度）")
-    print(f"  • 对资金安全要求极高的保守型投资者")
-    
-    print(f"\n❌ 不适合人群")
-    print(f"  • 期望跑赢通胀的投资者（名义年金无通胀保护）")
-    print(f"  • 近5年内有较大资金需求者（退保损失较大）")
-    print(f"  • 以分红为主要收益来源者（分红不确定性高）")
-    
-    return rating
+    print(message)
+    return {"status": "disabled", "message": message}
 
 
 if __name__ == "__main__":

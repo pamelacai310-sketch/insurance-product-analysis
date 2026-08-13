@@ -52,6 +52,7 @@
       },
       "cash_value": {
         "basis": "per_1000_base",
+        "value_type": "guaranteed",
         "unit_text": "每1000元年交保险费的现金价值",
         "source_ref": "cash",
         "values": {"10": 520.0}

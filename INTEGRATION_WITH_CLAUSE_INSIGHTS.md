@@ -1,5 +1,7 @@
 # 与 insurance-clause-insights 集成指南
 
+> **安全更新（2026-08）**：本文其余内容为旧流程存档。`--default-age`、`--min-completeness`、自动IRR混排和综合等级已停用。当前正式流程先运行 `python3 unified_analysis.py --clause-report ...` 做资料准备度审计，再按 `README.md` 建立严格 `--comparison-case`。
+
 > Integration Guide with insurance-clause-insights
 
 本文档说明如何使用 `insurance-clause-insights` 项目作为基础素材提取工具，自动为 `insurance-product-analysis` 提供结构化产品数据，实现从PDF到精算分析的完整自动化流程。
