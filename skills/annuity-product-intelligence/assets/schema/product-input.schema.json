@@ -72,6 +72,9 @@
         "effective_date": {"type": "string"},
         "authority": {"enum": ["contract", "rate_table", "cash_value_table", "illustration", "product_summary", "benchmark", "synthetic_fixture"]},
         "embedded_fixture": {"type": "boolean"},
+        "original_url": {"type": "string", "minLength": 1},
+        "original_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "original_page_range": {"type": "string", "minLength": 1},
         "extraction": {"type": "object"}
       }
     },
@@ -262,8 +265,17 @@
         "available": {"type": "boolean"},
         "limit_ratio": {"$ref": "#/$defs/decimal"},
         "eligible_value": {"type": "string"},
+        "availability_start_month": {"type": "integer", "minimum": 0},
+        "availability_end_month": {"type": "integer", "minimum": 0},
+        "maximum_term_months": {"type": "integer", "minimum": 1},
         "interest_rate_status": {"enum": ["available", "missing", "not_applicable"]},
         "interest_rate": {"$ref": "#/$defs/decimal"},
+        "interest_rate_basis": {"type": "string", "minLength": 1},
+        "interest_rate_reset_frequency_months": {"type": "integer", "minimum": 1},
+        "repayment_terms": {"type": "string", "minLength": 1},
+        "benefit_deduction": {"type": "boolean"},
+        "lapse_trigger": {"type": "string", "minLength": 1},
+        "annuity_effect": {"type": "string", "minLength": 1},
         "evidence_refs": {"$ref": "#/$defs/evidenceRefs"}
       }
     },

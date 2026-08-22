@@ -36,6 +36,8 @@ Read [extraction-routing.md](references/extraction-routing.md) when PDFs, OCR, s
 
 3. Build the product-only JSON using `assets/schema/product-input.schema.json`. Map ordinary fields only from deterministic extraction records or explicit manual verification; do not have an LLM transcribe tables or fill routine fields. Enumerate the full published configuration grid rather than asking for a customer's configuration. Read [schema-and-units.md](references/schema-and-units.md) for policy-month timing, typed units, per-1,000 bases, source versions, and guarantee classification.
 
+   For the bundled DAO, PIA, and Allianz examples, use `assets/reference-products/products/`. Their product-only source extracts preserve original PDF hashes and pages; regenerate them deterministically with `scripts/build_reference_annuity_products.py`.
+
 4. Validate before calculating:
 
 ```bash
@@ -63,6 +65,8 @@ Normalize monetary values to total premium 1,000,000 only when every product exp
 The script alone calculates schedules, unit conversions, IRR roots, present values, totals, inflation deflation, death scenarios, and rankings. Never reproduce these calculations in prose or with an LLM. Read [metric-definitions.md](references/metric-definitions.md) when interpreting formulas, cash-flow boundaries, multiple IRR roots, longevity, early-death, inflation, capital efficiency, or relative value. Read [confidence-and-provenance.md](references/confidence-and-provenance.md) for audit and resolution status.
 
 Use explicit policy months and same-time event order. Report every distinct IRR root within the declared rate domain; select a headline IRR only when the root is unique. Label death-outcome IRR as conditional, policy loans as debt, survival-path PV as conditional without mortality weighting, and hypothetical inflation as a scenario rather than a forecast.
+
+Read the complete annual table before summarizing a product. Report cash-value recovery year and locked-capital years separately; use the age IRR curve rather than one terminal IRR; keep 10-year longevity leverage, standard early-death outcomes, and 0%/2%/3%/4% inflation rows visible. Do not merge cash value, prior annuity receipts, death settlement, guarantee-period continuation, or maturity benefits into an unlabeled total.
 
 ## Required outputs
 

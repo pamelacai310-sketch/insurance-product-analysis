@@ -1,0 +1,1663 @@
+{
+  "analysis_assumptions": {
+    "analysis_end_age": 105,
+    "benchmark_selection": "nearest disclosed tenor without interpolation",
+    "inflation_rates": [
+      "0",
+      "0.02",
+      "0.03",
+      "0.04"
+    ],
+    "target_death_ages": [
+      41,
+      42,
+      44,
+      45,
+      46,
+      50,
+      70,
+      75,
+      80
+    ],
+    "target_survival_ages": [
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100,
+      105
+    ]
+  },
+  "configurations": [
+    {
+      "annuity_rules": [
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "23944.93"
+          },
+          "annual_growth_rate": "0",
+          "contingency": "survival",
+          "evidence_refs": [
+            "dao-annuity",
+            "dao-rate-row"
+          ],
+          "first_payment_month": 60,
+          "frequency_months": 12,
+          "growth_interval_months": 12,
+          "guarantee_basis": "guaranteed",
+          "guaranteed_period_months": 0,
+          "last_payment_month": 768,
+          "lifetime": false,
+          "payment_timing": "arrears",
+          "rounding": "cent",
+          "rule_id": "dao-guaranteed-annuity",
+          "scenario_id": "guaranteed"
+        }
+      ],
+      "basic_amount": {
+        "unit": "CNY",
+        "value": "23944.93"
+      },
+      "cash_values": [
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "3639.84"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 12,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "8107.37"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 24,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "14147.09"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 36,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "21612.06"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 48,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "30284.36"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 60,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "30083.44"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 72,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "29876.85"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 84,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "29664.48"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 96,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "29446.22"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 108,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "29222.00"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 120,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "28991.73"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 132,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "28755.33"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 144,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "28512.74"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 156,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "28263.90"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 168,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "28008.72"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 180,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "27747.17"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 192,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "27479.18"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 204,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "27204.73"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 216,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "26923.82"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 228,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "26636.47"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 240,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "26341.48"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 252,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "26038.37"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 264,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "25726.92"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 276,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "25406.91"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 288,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "25078.10"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 300,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "24740.25"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 312,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "24393.11"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 324,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "24036.42"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 336,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "23669.92"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 348,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "23293.34"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 360,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "22906.41"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 372,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "22508.83"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 384,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "22100.33"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 396,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "21680.59"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 408,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "21249.30"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 420,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "20806.16"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 432,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "20350.83"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 444,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "19882.97"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 456,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "19402.26"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 468,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "18908.32"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 480,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "18400.80"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 492,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "17879.32"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 504,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "17343.50"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 516,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "16792.95"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 528,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "16227.25"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 540,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "15646.00"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 552,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "15048.77"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 564,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "14435.11"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 576,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "13804.57"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 588,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "13156.70"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 600,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "12491.01"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 612,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "11807.01"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 624,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "11104.20"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 636,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "10382.07"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 648,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "9640.08"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 660,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "8877.68"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 672,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "8094.31"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 684,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "7289.41"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 696,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "6462.37"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 708,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "5612.58"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 720,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "4739.43"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 732,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "3842.26"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 744,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "2920.42"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 756,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "1973.24"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 768,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "23944.93",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "1000.00"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "dao-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 780,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "contract_end_before_maturity"
+        },
+        {
+          "event_order": 90,
+          "evidence_refs": [
+            "dao-maturity"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 780,
+          "scenario_id": "guaranteed",
+          "status": "not_applicable",
+          "timing": "contract_end_after_maturity"
+        }
+      ],
+      "configuration_id": "dao-f40-5pay-total-premium-1m",
+      "death_benefit": {
+        "boundary_order": "after_annuity",
+        "cash_value_timing": "respect_event_order",
+        "evidence_refs": [
+          "dao-death",
+          "dao-cash-row"
+        ],
+        "guarantee_basis": "guaranteed",
+        "lookup": "at_or_before",
+        "rule": {
+          "args": [
+            {
+              "arg": {
+                "evidence_refs": [
+                  "dao-death"
+                ],
+                "left": {
+                  "evidence_refs": [
+                    "dao-death"
+                  ],
+                  "name": "cumulative_premium",
+                  "op": "field"
+                },
+                "op": "subtract",
+                "right": {
+                  "evidence_refs": [
+                    "dao-death"
+                  ],
+                  "name": "cumulative_annuity",
+                  "op": "field"
+                }
+              },
+              "evidence_refs": [
+                "dao-death"
+              ],
+              "op": "floor_zero"
+            },
+            {
+              "evidence_refs": [
+                "dao-death"
+              ],
+              "name": "cash_value",
+              "op": "field"
+            }
+          ],
+          "evidence_refs": [
+            "dao-death"
+          ],
+          "op": "max"
+        },
+        "scenario_id": "guaranteed"
+      },
+      "dimension_evidence_refs": [
+        "dao-dimensions",
+        "dao-rate-row"
+      ],
+      "dimensions": {
+        "annuity_frequency_per_year": 1,
+        "annuity_start_age": 45,
+        "guarantee_option": "survival_contingent_no_period_certain",
+        "premium_mode": "annual_advance",
+        "premium_term_months": 60,
+        "product_option_code": "DAO",
+        "proportionality_verified": true,
+        "published_issue_age": 40,
+        "rate_class": "female"
+      },
+      "loan_terms": {
+        "annuity_effect": "loan debt is deducted from insurance benefits; loan proceeds are not income",
+        "availability_start_month": 0,
+        "available": true,
+        "benefit_deduction": true,
+        "eligible_value": "contract_cash_value_net_of_other_debts",
+        "evidence_refs": [
+          "dao-loan"
+        ],
+        "interest_rate_basis": "rate stated in service completion notice; then-current published company loan rate",
+        "interest_rate_reset_frequency_months": 6,
+        "interest_rate_status": "missing",
+        "lapse_trigger": "loan principal, interest and other debts reach contract cash value",
+        "limit_ratio": "0.8",
+        "maximum_term_months": 6,
+        "repayment_terms": "repay principal and interest at any time, or all interest only; overdue balance capitalizes"
+      },
+      "maturity_events": [
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "23944.93"
+          },
+          "event_order": 40,
+          "evidence_refs": [
+            "dao-maturity"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 780,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "contract_maturity"
+        }
+      ],
+      "notes": "Guaranteed base contract only; non-guaranteed participating additions are excluded. The year-65 table value is retained before maturity and becomes not applicable after maturity.",
+      "premium_events": [
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 10,
+          "evidence_refs": [
+            "dao-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 0,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "issue"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "dao-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 12,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "dao-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 24,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "dao-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 36,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "dao-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 48,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "confidence": "1",
+      "evidence_id": "dao-product",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 1,
+      "raw_text": "汇丰精彩丰年2026年金保险（分红型）",
+      "raw_text_sha256": "5ca0007a2d94a311608ee88aecf64463de1b32dc3c87426c0213b868a1a25507",
+      "source_id": "dao-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "dao-dimensions",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 1,
+      "raw_text": "female age 40; 5-year annual premium; contract to age 105",
+      "raw_text_sha256": "95945f01a9d1cc9863aca58451f9f5eb767bbb0d6c2f32da77e58daafedbb72c",
+      "source_id": "dao-rate",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "dao-rate-row",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 1,
+      "raw_text": "female age 40, 5-pay: premium 8352.5 per 1000 basic amount",
+      "raw_text_sha256": "0ba3f0304c94762a87707510193c28c0abeb41514bed480143fd2f153b776ff7",
+      "source_id": "dao-rate",
+      "status": "verified",
+      "transformation": "200000*1000/8352.5=23944.93",
+      "unit_text": "CNY per 1000 basic amount"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "dao-cash-row",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "female age 40, 5-pay, values by policy year: 3639.84,8107.37,14147.09,21612.06,30284.36,30083.44,29876.85,29664.48,29446.22,29222.00,28991.73,28755.33,28512.74,28263.90,28008.72,27747.17,27479.18,27204.73,26923.82,26636.47,26341.48,26038.37,25726.92,25406.91,25078.10,24740.25,24393.11,24036.42,23669.92,23293.34,22906.41,22508.83,22100.33,21680.59,21249.30,20806.16,20350.83,19882.97,19402.26,18908.32,18400.80,17879.32,17343.50,16792.95,16227.25,15646.00,15048.77,14435.11,13804.57,13156.70,12491.01,11807.01,11104.20,10382.07,9640.08,8877.68,8094.31,7289.41,6462.37,5612.58,4739.43,3842.26,2920.42,1973.24,1000.00",
+      "raw_text_sha256": "d82860ea634d6ffc85d4046f1d16efd0807c8ea71a0ad728e033abd609b39d12",
+      "source_id": "dao-cash",
+      "status": "verified",
+      "transformation": "factor*23944.93/1000, rounded to cents",
+      "unit_text": "CNY per 1000 basic amount"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "dao-annuity",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "For lump sum, 3-pay or 5-pay, first annuity allocation date is the fifth policy anniversary; annual annuity equals basic amount until maturity.",
+      "raw_text_sha256": "5568f354964c0f0eba3e116973dd39ebafaf3508c530372cc8c2f606c5d40fe9",
+      "source_id": "dao-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "dao-maturity",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "At the maturity date, maturity benefit equals basic amount; contract terminates.",
+      "raw_text_sha256": "3f87da233c78b4befdefa897d98b4c23f97e19379ba9ef617723466d8beb09db",
+      "source_id": "dao-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "dao-death",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "Death benefit is the greater of cumulative paid premium less allocated annuity and cash value corresponding to basic amount.",
+      "raw_text_sha256": "2fc4d8650cb22889cdb7cb78892b86327c8420b870c39eb98ba955c49023217b",
+      "source_id": "dao-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "dao-loan",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 6,
+      "raw_text": "Policy loan principal and interest may not exceed 80% of cash value net of debts; each term at most 6 months; unpaid debt is deducted from benefits and contract lapses when debt reaches cash value.",
+      "raw_text_sha256": "82449a51cc8865dca14604c22a8083a4ca28be68baeabe6366400137f10d61f4",
+      "source_id": "dao-terms",
+      "status": "verified"
+    }
+  ],
+  "product": {
+    "analysis_only": true,
+    "currency": "CNY",
+    "document_version": "2026-06",
+    "effective_date": "2026-06-01",
+    "evidence_refs": [
+      "dao-product"
+    ],
+    "insurer": "汇丰人寿保险有限公司",
+    "jurisdiction": "CN",
+    "name": "汇丰精彩丰年2026年金保险（分红型）",
+    "product_id": "dao-hsbc-jingcai-fengnian-2026",
+    "product_type": "annuity"
+  },
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "authority": "contract",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1-11",
+      "original_sha256": "4c47a5b15f453ca0f5fcd460495068cc625f9db0d876477d7e570be475f3cc51",
+      "original_url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/product/tnc/jing-cai-feng-nian-2026-annuity-insurance-tnc.pdf",
+      "path": "skill://assets/reference-products/source-extracts/dao-hsbc-jingcai-fengnian-2026.extract.json",
+      "sha256": "eae1386cecf041f0a2573b5dad3e2c2bb3490a8aaa3c1097dd1336b17122cc13",
+      "source_id": "dao-terms",
+      "version": "2026-06"
+    },
+    {
+      "authority": "rate_table",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1-4",
+      "original_sha256": "e964ee7bfc0e2a5070136d037d736138ec92511d95630125aba1de5511730023",
+      "original_url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/product/rates/jing-cai-feng-nian-2026-annuity-insurance-rates.pdf",
+      "path": "skill://assets/reference-products/source-extracts/dao-hsbc-jingcai-fengnian-2026.extract.json",
+      "sha256": "eae1386cecf041f0a2573b5dad3e2c2bb3490a8aaa3c1097dd1336b17122cc13",
+      "source_id": "dao-rate",
+      "version": "2026-06"
+    },
+    {
+      "authority": "cash_value_table",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1-4; selected row on 2",
+      "original_sha256": "c531200f0bd352ebc5b00630bf99235d05709ef12bd07613bea3e1c7b5f04432",
+      "original_url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/product/cash/jing-cai-feng-nian-2026-annuity-insurance-cash.pdf",
+      "path": "skill://assets/reference-products/source-extracts/dao-hsbc-jingcai-fengnian-2026.extract.json",
+      "sha256": "eae1386cecf041f0a2573b5dad3e2c2bb3490a8aaa3c1097dd1336b17122cc13",
+      "source_id": "dao-cash",
+      "version": "2026-06"
+    }
+  ]
+}

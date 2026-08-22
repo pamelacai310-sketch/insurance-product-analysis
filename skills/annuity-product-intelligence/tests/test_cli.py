@@ -34,6 +34,21 @@ def benchmark() -> dict:
 
 
 class PipelineGateTests(unittest.TestCase):
+    def test_report_without_benchmark_renders_missing_relative_value(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            input_path = root / "product.json"
+            output = root / "result"
+            input_path.write_text(json.dumps(make_product()), encoding="utf-8")
+
+            result = run_pipeline(
+                input_path,
+                output,
+                allow_embedded_fixtures=True,
+            )
+
+            self.assertIn("未提供版本化基准", result["report"])
+
     def test_unresolved_input_writes_typed_block_queue_and_no_metrics(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)

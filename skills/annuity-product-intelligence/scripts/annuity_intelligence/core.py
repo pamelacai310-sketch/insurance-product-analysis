@@ -68,6 +68,9 @@ SOURCE_KEYS = {
     "effective_date",
     "authority",
     "embedded_fixture",
+    "original_url",
+    "original_sha256",
+    "original_page_range",
     "extraction",
 }
 EVIDENCE_KEYS = {
@@ -165,8 +168,17 @@ LOAN_TERM_KEYS = {
     "available",
     "limit_ratio",
     "eligible_value",
+    "availability_start_month",
+    "availability_end_month",
+    "maximum_term_months",
     "interest_rate_status",
     "interest_rate",
+    "interest_rate_basis",
+    "interest_rate_reset_frequency_months",
+    "repayment_terms",
+    "benefit_deduction",
+    "lapse_trigger",
+    "annuity_effect",
     "evidence_refs",
 }
 ASSUMPTION_KEYS = {
@@ -200,6 +212,13 @@ def find_unresolved_paths(data: Any, path: str = "$") -> List[str]:
         for index, value in enumerate(data):
             paths.extend(find_unresolved_paths(value, f"{path}[{index}]"))
     return paths
+
+
+def _source_artifact_path(source_path: str) -> Path:
+    if source_path.startswith("skill://"):
+        relative = source_path.removeprefix("skill://").lstrip("/")
+        return Path(__file__).resolve().parents[2] / relative
+    return Path(source_path).expanduser()
 
 
 def _validate_evidence_refs(
@@ -546,6 +565,18 @@ def validate_product(
             r"[0-9a-f]{64}", digest or ""
         ):
             errors.append(f"{path}.sha256 must be a lowercase SHA-256")
+        original_digest = source.get("original_sha256")
+        if original_digest is not None and (
+            not isinstance(original_digest, str)
+            or not re.fullmatch(r"[0-9a-f]{64}", original_digest)
+        ):
+            errors.append(f"{path}.original_sha256 must be a lowercase SHA-256")
+        for source_key in ("original_url", "original_page_range"):
+            if source.get(source_key) is not None and (
+                not isinstance(source.get(source_key), str)
+                or not source.get(source_key, "").strip()
+            ):
+                errors.append(f"{path}.{source_key} must be a non-empty string")
         source_path = source.get("path")
         embedded = source.get("embedded_fixture") is True
         if embedded:
@@ -559,7 +590,7 @@ def validate_product(
         elif not isinstance(source_path, str) or not source_path:
             errors.append(f"{path}.path must identify a local source artifact")
         elif verify_files:
-            artifact = Path(source_path).expanduser()
+            artifact = _source_artifact_path(source_path)
             if not artifact.is_file():
                 errors.append(f"{path}.path does not exist: {source_path}")
             elif isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest):
@@ -1232,6 +1263,44 @@ def validate_product(
                     loan.get("eligible_value"), str
                 ):
                     errors.append(f"{loan_path}.eligible_value must be a string")
+                for key in (
+                    "availability_start_month",
+                    "availability_end_month",
+                    "maximum_term_months",
+                    "interest_rate_reset_frequency_months",
+                ):
+                    if loan.get(key) is None:
+                        continue
+                    minimum = 1 if key in {
+                        "maximum_term_months",
+                        "interest_rate_reset_frequency_months",
+                    } else 0
+                    if not _is_int(loan.get(key)) or int(loan.get(key)) < minimum:
+                        errors.append(
+                            f"{loan_path}.{key} must be an integer of at least {minimum}"
+                        )
+                if (
+                    _is_int(loan.get("availability_start_month"))
+                    and _is_int(loan.get("availability_end_month"))
+                    and int(loan["availability_start_month"])
+                    > int(loan["availability_end_month"])
+                ):
+                    errors.append(
+                        f"{loan_path}.availability_start_month cannot follow availability_end_month"
+                    )
+                for key in (
+                    "interest_rate_basis",
+                    "repayment_terms",
+                    "lapse_trigger",
+                    "annuity_effect",
+                ):
+                    if loan.get(key) is not None and (
+                        not isinstance(loan.get(key), str)
+                        or not loan.get(key, "").strip()
+                    ):
+                        errors.append(f"{loan_path}.{key} must be a non-empty string")
+                if loan.get("benefit_deduction") not in {None, True, False}:
+                    errors.append(f"{loan_path}.benefit_deduction must be boolean")
                 if loan.get("limit_ratio") is not None:
                     try:
                         ratio = decimal_value(

@@ -37,6 +37,10 @@ capital_returned_ratio = (R_t + SV_t) / P_t
 
 Cash-value recovery is the first disclosed point where `SV_t >= P_t`. Total-benefit recovery is the first disclosed point where `R_t + SV_t >= P_t`. V1 does not interpolate missing cash-value months. Loan capacity is `limit_ratio × cash value`, reported separately as debt and never included in return cashflows.
 
+`capital_recovery_year` is the policy year of the first final annual state where cash value reaches cumulative premium. `locked_capital_years` counts disclosed policy-year endpoints whose final cash-value state remains below cumulative premium. If recovery never occurs, the count is explicitly bounded by the last disclosed annual point. `liquidity_penalty = 1 - cash_value_ratio`; unlike the non-negative `lock_ratio`, it may be negative after cash value exceeds premium.
+
+The annual decision table uses a policy-year closing boundary after anniversary annuity/maturity events and before a renewal premium due for the next policy year. It reports every year through the maximum disclosed cash-flow or cash-value month. A first-annuity or maturity boundary may retain both the source table's immediately-before state and the contract's after-event state; the final annual row uses the latter and never double-counts cash value with maturity.
+
 ## Longevity and capital efficiency
 
 At each standardized survival age:
@@ -50,6 +54,7 @@ At each standardized survival age:
 - income conversion = first-12-month income / total premium;
 - income-only break-even month = first guaranteed annuity event where cumulative annuity reaches total premium;
 - capital per unit first income = total premium / first-12-month income.
+- 10-year longevity leverage = additional cumulative annuity over ten survival years / total premium, only when both endpoint ages are on the disclosed analysis grid.
 
 No mortality table is part of the v1 schema, so mortality-weighted EPV, fair annuity factor, mortality credit, and actuarial expected value stay unavailable. Conditional survival-path PV must be labeled as such.
 
@@ -58,6 +63,8 @@ For non-guaranteed annuity and maturity scenarios, `scenario_composition=total` 
 ## Early-death outcome
 
 The safe schedule/AST produces the death settlement without defaulting missing operands to zero. The output reports cumulative paid premium, prior receipts, settlement, post-death guaranteed installments, recovery ratio, net estate outcome, shortfall, and conditional IRR.
+
+`death_wealth_multiple` uses total scheduled premium as denominator and includes prior contractual receipts, death settlement, and remaining guaranteed annuity. `nominal_recovery_ratio` instead uses premium actually paid by the death boundary. Standard labels distinguish premium-period death, pre-income death, first-payment death, one/five years after income, and ages 70/75/80 when those ages are requested.
 
 ```text
 early_death_shortfall = max(0, premium_paid - all_contractual_receipts_and_value)
@@ -73,7 +80,7 @@ For hypothetical constant inflation `pi`:
 real_cashflow_m = nominal_cashflow_m / (1 + pi) ** (m / 12)
 ```
 
-V1 reports real cumulative annuity, preceding-12-month real income at each age, real payout multiple, and real income-only IRR. These are sensitivities, not forecasts.
+V1 reports real cumulative annuity, preceding-12-month real income at each age, real-income retention, real payout multiple, and real income-only IRR. The default grid is 0%, 2%, 3%, and 4%; 0% is the nominal-control row. These are sensitivities, not forecasts.
 
 ## Benchmark relative value
 

@@ -1,0 +1,295 @@
+{
+  "cash_value_basis": "CNY per 1000 basic amount; year 20 source value is immediately before first annuity and contract value is zero from first annuity",
+  "cash_values": [
+    {
+      "policy_year": 1,
+      "value": "1605.39"
+    },
+    {
+      "policy_year": 2,
+      "value": "3575.91"
+    },
+    {
+      "policy_year": 3,
+      "value": "5821.96"
+    },
+    {
+      "policy_year": 4,
+      "value": "8362.97"
+    },
+    {
+      "policy_year": 5,
+      "value": "11094.49"
+    },
+    {
+      "policy_year": 6,
+      "value": "11506.87"
+    },
+    {
+      "policy_year": 7,
+      "value": "11934.55"
+    },
+    {
+      "policy_year": 8,
+      "value": "12378.09"
+    },
+    {
+      "policy_year": 9,
+      "value": "12838.10"
+    },
+    {
+      "policy_year": 10,
+      "value": "13315.23"
+    },
+    {
+      "policy_year": 11,
+      "value": "13810.15"
+    },
+    {
+      "policy_year": 12,
+      "value": "14323.58"
+    },
+    {
+      "policy_year": 13,
+      "value": "14856.26"
+    },
+    {
+      "policy_year": 14,
+      "value": "15408.99"
+    },
+    {
+      "policy_year": 15,
+      "value": "15982.57"
+    },
+    {
+      "policy_year": 16,
+      "value": "16577.86"
+    },
+    {
+      "policy_year": 17,
+      "value": "17195.73"
+    },
+    {
+      "policy_year": 18,
+      "value": "17837.12"
+    },
+    {
+      "policy_year": 19,
+      "value": "18503.00"
+    },
+    {
+      "policy_year": 20,
+      "value": "19194.41"
+    },
+    {
+      "policy_year": 21,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 22,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 23,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 24,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 25,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 26,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 27,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 28,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 29,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 30,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 31,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 32,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 33,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 34,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 35,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 36,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 37,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 38,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 39,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 40,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 41,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 42,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 43,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 44,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 45,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 46,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 47,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 48,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 49,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 50,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 51,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 52,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 53,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 54,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 55,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 56,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 57,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 58,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 59,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 60,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 61,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 62,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 63,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 64,
+      "value": "0.00"
+    },
+    {
+      "policy_year": 65,
+      "value": "0.00"
+    }
+  ],
+  "configuration": "female age 40; annual advance premium 200000 for 5 years; income starts age 60",
+  "contract_facts": {
+    "annuity": "basic amount annually from age 60 to before maturity; 20-year certain",
+    "death": "pre-income max(paid premium, cash value); during guarantee floor(paid premium-20*basic,0) plus remaining guaranteed annuity; later floor(paid premium-cumulative annuity,0)",
+    "loan": "80% of cash value net of debt, 6-month maximum; unavailable from first annuity date when cash value becomes zero",
+    "maturity": "basic amount at age-105 maturity"
+  },
+  "original_documents": {
+    "cash": {
+      "pages": "1-6; selected row on 3",
+      "sha256": "c5c5f5b6663505b6cc2c767329075d6e6d7d8a1b417eb072746733d8c619432a",
+      "url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/cashvalue/pia-retirement-annuity-insurance-cashvalue.pdf"
+    },
+    "rate": {
+      "pages": "1-5; selected row on 2",
+      "sha256": "4d61e93fff22912ffbc860d34f2ccbdb98e22502b837c64a7ae81085b049076c",
+      "url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/rates/pia-retirement-annuity-insurance-rates.pdf"
+    },
+    "terms": {
+      "pages": "1-12",
+      "sha256": "3c31b4a4d30d9f85dba31d38b3ebef1e43bf0d94b9c62fe82f4cdcba5ec9d7ed",
+      "url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/terms/pia-enjoy-golden-life-retirement-annuity-insurance-terms.pdf"
+    }
+  },
+  "premium_rate": {
+    "direction": "premium_per_1000_basic_amount",
+    "page": 2,
+    "value": "4229.68"
+  },
+  "product_id": "pia-hsbc-jingcai-yannian-2026"
+}

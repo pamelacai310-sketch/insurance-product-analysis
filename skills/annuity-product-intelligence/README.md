@@ -9,11 +9,12 @@ The core engine uses Python's standard library. `pdfplumber` and `openpyxl` are 
 For every published configuration, the engine generates an explicit policy-month cash-flow timeline and computes:
 
 - cash-value-only, total-exit, income-only, survival-liquidation, real, and conditional death-outcome IRR curves;
+- a complete policy-year decision table aligning cumulative premium, guaranteed annuity, maturity, cash value, CV IRR, death settlement, death wealth multiple, and loan capacity;
 - every distinct IRR root in the documented rate domain, including tangent, close-root, multiple-root, and no-root states;
-- cash-value ratio, liquidity gap, surrender loss, lock ratio, recovery month, and separately stated loan capacity;
-- cumulative annuity, payout multiple, income conversion, longevity break-even behavior, and guarantee-period continuation;
+- cash-value ratio, liquidity penalty, surrender loss, lock ratio, recovery year, locked-capital years, and separately stated loan capacity;
+- cumulative annuity, payout multiple, income conversion, 10-year longevity leverage, longevity break-even behavior, and guarantee-period continuation;
 - early-death settlement, beneficiary continuation, nominal recovery, estate outcome, and shortfall;
-- real purchasing power at versioned hypothetical inflation rates;
+- real purchasing power and income-retention ratios at 0%, 2%, 3%, and 4% hypothetical inflation by default;
 - capital efficiency and conditional survival-path PV/NPV against an immutable benchmark snapshot;
 - compatible common-configuration peer comparisons, with no opaque aggregate score;
 - field-level evidence and metric-level formula provenance.
@@ -103,6 +104,20 @@ python3 scripts/annuity_product_intelligence.py run \
 
 The benchmark must state its as-of date, annual-effective compounding, day count, source SHA-256, currency, and disclosed tenor points. The engine selects the nearest disclosed tenor and reports that choice; it does not hide interpolation assumptions.
 
+## Bundled three-product reference data
+
+The package includes product-only inputs for a common published-table slice: female age 40, five annual premiums of CNY 200,000, total premium CNY 1,000,000. They contain every disclosed annual cash-value point plus the complete guaranteed annuity, death-benefit AST, maturity, and policy-loan fields for DAO, PIA, and Allianz Anxiang Fengying C.
+
+```bash
+python3 scripts/build_reference_annuity_products.py
+
+python3 scripts/annuity_product_intelligence.py run \
+  --input assets/reference-products/products/pia-hsbc-jingcai-yannian-2026.json \
+  --out results/pia
+```
+
+The lightweight source extracts retain each original PDF URL when known, the original PDF SHA-256, source page range, selected row, and transformation. Original PDFs are intentionally excluded from the Skill package. `skill://` source paths resolve relative to the installed Skill directory, so the examples remain portable across devices.
+
 ## Resolve a semantic exception
 
 Prepare a patch conforming to [`assets/schema/semantic-resolution.schema.json`](assets/schema/semantic-resolution.schema.json):
@@ -144,6 +159,7 @@ The input schema is closed (`additionalProperties: false`), and the validator re
 ## Timing and units
 
 - Policy issue is month `0`; every event has an integer policy month and explicit same-time order.
+- The reference inputs close each policy year after anniversary benefits and before the next renewal premium; this prevents an end-of-year cash value from silently counting the next year's premium.
 - Money is normalized from decimal strings, not binary-float source values.
 - Per-1,000 or percent units require an explicit basis: basic amount, annual premium, or total premium.
 - Absolute currency units cannot masquerade as per-1,000 values.

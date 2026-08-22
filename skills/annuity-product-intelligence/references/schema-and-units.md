@@ -10,6 +10,8 @@ The executable input contract is `assets/schema/product-input.schema.json`. V1 u
 
 Unknown properties are rejected. Configuration IDs are unique within a product; product IDs must also be unique in peer comparison.
 
+Production sources may use `skill://` paths for small bundled artifacts; these resolve relative to the installed Skill root. A verified lightweight extract can additionally retain `original_url`, `original_sha256`, and `original_page_range`. The local extract hash remains independently verified. This does not permit a missing original document identity to be invented.
+
 ## Product dimensions, not customer inputs
 
 `published_issue_age`, `rate_class`, premium term/mode, annuity start/frequency, guarantee option, and product option code identify a published table cell or product option. Enumerate the available grid; never map it to a person's data in this skill.
@@ -35,6 +37,7 @@ Each illustrated scenario uses a distinct `scenario_id`. A non-guaranteed annuit
 - A lifetime rule uses its sourced `contract_end_age` as the finite contractual expansion boundary. A non-lifetime rule declares exactly one of `last_payment_month` or `payment_count`. Optional `analysis_end_age` can shorten the reported metric grid, but never extend contractual cash flows.
 - Cash values are state values added only to the appropriate surrender/survival-liquidation scenario.
 - Same-time death uses sourced `before_annuity`, `after_annuity`, or `unresolved`; unresolved order blocks all calculation. Premium paid, prior receipts, and AST cumulative fields share the same death cutoff. Guarantee-period continuation contains only annuity events after that cutoff.
+- Reference annual-premium schedules use event order 50 for renewal premiums: anniversary annuity and end-of-year cash value are therefore evaluated before the next policy year's premium at the same policy month.
 - A rule that reads `cash_value` must declare `cash_value_timing`: `policy_month_state` uses the disclosed month snapshot independent of death order, while `respect_event_order` applies the same-month event cutoff. Never infer this timing from surrender-table row order.
 
 Duration-only IRR uses `policy_month / 12` and annual-effective rates. V1 does not mix exact-calendar day-count cashflows into a policy-month calculation.
@@ -61,6 +64,8 @@ Supported relative units are:
 The matching `basis_kind` is mandatory. An explicit basis value must agree with the computed configuration context. Absolute units cannot carry a hidden per-1,000 denominator. V1 normalizes benefit amounts; it does not infer a basic sum assured from an ambiguous premium-rate direction.
 
 Keep full Decimal precision unless the source specifies `cent` or `whole` event rounding. JSON outputs use decimal strings.
+
+Loan terms can record availability start/end month, maximum term, eligible-value basis, disclosed or missing rate, rate basis/reset interval, repayment terms, benefit deduction, lapse trigger, and annuity effect. Loan proceeds and loan capacity are debt, not return cash flows.
 
 ## Proportional comparison
 

@@ -340,6 +340,14 @@ def _bind_metric_provenance(value: Any, dependency_sha256: str) -> None:
             _bind_metric_provenance(child, dependency_sha256)
 
 
+def _loan_available_at(loan: Mapping[str, Any], policy_month: int) -> bool:
+    if loan.get("available") is not True:
+        return False
+    start = int(loan.get("availability_start_month", 0))
+    end = loan.get("availability_end_month")
+    return policy_month >= start and (end is None or policy_month <= int(end))
+
+
 def _liquidity_metrics(
     config: Mapping[str, Any],
     events: Sequence[Mapping[str, Any]],
@@ -388,6 +396,9 @@ def _liquidity_metrics(
         status = item.get("status", "missing")
         row: Dict[str, Any] = {
             "policy_month": month,
+            "policy_year": month // 12 if month % 12 == 0 else None,
+            "event_order": order,
+            "timing": item.get("timing"),
             "status": status,
             "cumulative_premium": _metric(
                 decimal_string(cumulative_premium),
@@ -406,6 +417,7 @@ def _liquidity_metrics(
                 ("cash_value_ratio", "liquidity.cash_value_ratio"),
                 ("liquidity_gap", "liquidity.gap"),
                 ("surrender_loss", "liquidity.surrender_loss"),
+                ("liquidity_penalty", "liquidity.penalty"),
                 ("lock_ratio", "liquidity.lock_ratio"),
                 ("capital_returned_ratio", "capital.returned_ratio"),
                 ("cash_value_only_irr", "irr.cash_value_only"),
@@ -414,12 +426,32 @@ def _liquidity_metrics(
                 row[key] = _metric(
                     None, formula, config_id, refs, calc, unavailable_status
                 )
+            loan = config.get("loan_terms") or {}
+            loan_refs = flatten_evidence_refs(refs, loan.get("evidence_refs", []))
+            row["policy_loan_available"] = _metric(
+                False,
+                "liquidity.policy_loan_available",
+                config_id,
+                loan_refs,
+                calc,
+            )
+            row["maximum_policy_loan"] = _metric(
+                None,
+                "liquidity.maximum_policy_loan",
+                config_id,
+                loan_refs,
+                calc,
+                "not_applicable",
+            )
             curve.append(row)
             continue
         cash_value = money_value(item["amount"])
         gap = cumulative_premium - cash_value
         surrender_loss = max(gap, DECIMAL_ZERO)
         cash_ratio = safe_ratio(cash_value, cumulative_premium)
+        liquidity_penalty = (
+            None if cash_ratio is None else DECIMAL_ONE - cash_ratio
+        )
         lock_ratio = safe_ratio(surrender_loss, cumulative_premium)
         returned_ratio = safe_ratio(cash_value + prior_receipts, cumulative_premium)
         if (
@@ -467,6 +499,18 @@ def _liquidity_metrics(
                     refs,
                     calc,
                 ),
+                "liquidity_penalty": _metric(
+                    None
+                    if liquidity_penalty is None
+                    else decimal_string(liquidity_penalty),
+                    "liquidity.penalty",
+                    config_id,
+                    refs,
+                    calc,
+                    "not_applicable"
+                    if liquidity_penalty is None
+                    else "available",
+                ),
                 "lock_ratio": _metric(
                     None if lock_ratio is None else decimal_string(lock_ratio),
                     "liquidity.lock_ratio",
@@ -492,7 +536,15 @@ def _liquidity_metrics(
             }
         )
         loan = config.get("loan_terms") or {}
-        if loan.get("available") is True and loan.get("limit_ratio") is not None:
+        loan_available = _loan_available_at(loan, month)
+        row["policy_loan_available"] = _metric(
+            loan_available,
+            "liquidity.policy_loan_available",
+            config_id,
+            flatten_evidence_refs(refs, loan.get("evidence_refs", [])),
+            calc,
+        )
+        if loan_available and loan.get("limit_ratio") is not None:
             loan_amount = cash_value * decimal_value(loan["limit_ratio"])
             row["maximum_policy_loan"] = _metric(
                 decimal_string(loan_amount),
@@ -514,6 +566,30 @@ def _liquidity_metrics(
                 "not_applicable",
             )
         curve.append(row)
+    latest_rows_by_month: Dict[int, Dict[str, Any]] = {}
+    for row in curve:
+        latest_rows_by_month[int(row["policy_month"])] = row
+    cash_value_recovery_month = next(
+        (
+            month
+            for month, row in sorted(latest_rows_by_month.items())
+            if row.get("status") == "available"
+            and row["cash_value_ratio"].get("status") == "available"
+            and decimal_value(row["cash_value_ratio"]["value"]) >= DECIMAL_ONE
+        ),
+        None,
+    )
+    total_benefit_recovery_month = next(
+        (
+            month
+            for month, row in sorted(latest_rows_by_month.items())
+            if row.get("status") == "available"
+            and row["capital_returned_ratio"].get("status") == "available"
+            and decimal_value(row["capital_returned_ratio"]["value"])
+            >= DECIMAL_ONE
+        ),
+        None,
+    )
     coverage_warning = []
     months = [int(item["policy_month"]) for item in selected_cash_values]
     if months and any(b - a > 12 for a, b in zip(sorted(months), sorted(months)[1:])):
@@ -524,6 +600,32 @@ def _liquidity_metrics(
     refs = flatten_evidence_refs(
         *(item.get("evidence_refs", []) for item in selected_cash_values)
     )
+    annual_by_year: Dict[int, Dict[str, Any]] = {}
+    for row in curve:
+        if row.get("policy_year") is not None:
+            annual_by_year[int(row["policy_year"])] = row
+    annual_rows = [
+        row
+        for _, row in sorted(annual_by_year.items())
+        if row.get("status") == "available"
+    ]
+    locked_years = sum(
+        1
+        for row in annual_rows
+        if decimal_value(row["cash_value_ratio"]["value"]) < DECIMAL_ONE
+    )
+    recovery_year = (
+        None
+        if cash_value_recovery_month is None
+        else cash_value_recovery_month // 12
+        if cash_value_recovery_month % 12 == 0
+        else Decimal(cash_value_recovery_month) / Decimal(12)
+    )
+    lock_warnings = list(coverage_warning)
+    if cash_value_recovery_month is None and annual_rows:
+        lock_warnings.append(
+            "Cash value did not recover cumulative premium by the final disclosed annual point"
+        )
     return {
         "curve": curve,
         "cash_value_recovery_month": _metric(
@@ -543,6 +645,27 @@ def _liquidity_metrics(
             calc,
             "missing" if total_benefit_recovery_month is None else "available",
             coverage_warning,
+        ),
+        "capital_recovery_year": _metric(
+            None if recovery_year is None else decimal_string(Decimal(recovery_year)),
+            "liquidity.capital_recovery_year",
+            config_id,
+            refs,
+            calc,
+            "missing" if recovery_year is None else "available",
+            coverage_warning,
+        ),
+        "locked_capital_years": _metric(
+            locked_years,
+            "liquidity.locked_capital_years",
+            config_id,
+            refs,
+            calc,
+            "missing" if not annual_rows else "available",
+            lock_warnings,
+            assumptions=[
+                "count of disclosed policy-year endpoints with cash value below cumulative premium"
+            ],
         ),
     }
 
@@ -588,6 +711,14 @@ def _survival_metrics(
         cumulative_annuity = sum(
             (_event_amount(event) for event in annuities), DECIMAL_ZERO
         )
+        annualized_income = sum(
+            (
+                _event_amount(event)
+                for event in annuities
+                if horizon - 12 < int(event["policy_month"]) <= horizon
+            ),
+            DECIMAL_ZERO,
+        )
         payout_multiple = safe_ratio(cumulative_annuity, total_premium)
         income_flows = [_signed_event(event) for event in selected]
         cv_status, cv_amount, cv_refs, cv_month = cash_value_at(
@@ -614,6 +745,13 @@ def _survival_metrics(
                 refs,
                 calc,
                 "not_applicable" if payout_multiple is None else "available",
+            ),
+            "annualized_income_at_age": _metric(
+                decimal_string(annualized_income),
+                "longevity.annualized_income_at_age",
+                config_id,
+                refs,
+                calc,
             ),
             "income_only_irr": _irr_metric(
                 income_flows, "irr.income_only", config_id, refs, calc
@@ -703,6 +841,21 @@ def _survival_metrics(
                         inflation_calc,
                         assumptions=[
                             "sum of payments in the preceding 12 policy months"
+                        ],
+                    ),
+                    "real_income_retention": _metric(
+                        None
+                        if annualized_income == 0
+                        else decimal_string(twelve_month_income / annualized_income),
+                        "inflation.real_income_retention",
+                        config_id,
+                        refs,
+                        inflation_calc,
+                        "not_applicable"
+                        if annualized_income == 0
+                        else "available",
+                        assumptions=[
+                            "real preceding-12-month income divided by nominal preceding-12-month income"
                         ],
                     ),
                     "real_payout_multiple": _metric(
@@ -800,6 +953,43 @@ def _survival_metrics(
                 },
             }
         curve.append(row)
+    rows_by_age = {int(row["target_age"]): row for row in curve}
+    for row in curve:
+        age = int(row["target_age"])
+        prior = rows_by_age.get(age - 10)
+        refs = flatten_evidence_refs(
+            row["cumulative_annuity"]["provenance"].get("evidence_refs", []),
+            []
+            if prior is None
+            else prior["cumulative_annuity"]["provenance"].get("evidence_refs", []),
+        )
+        calc = {
+            "scenario_id": scenario_id,
+            "target_age": age,
+            "comparison_age": age - 10,
+        }
+        if prior is None:
+            row["longevity_leverage_10y"] = _metric(
+                None,
+                "longevity.leverage_10y",
+                config_id,
+                refs,
+                calc,
+                "not_applicable",
+            )
+            continue
+        current_amount = decimal_value(row["cumulative_annuity"]["value"])
+        prior_amount = decimal_value(prior["cumulative_annuity"]["value"])
+        row["longevity_leverage_10y"] = _metric(
+            decimal_string((current_amount - prior_amount) / total_premium),
+            "longevity.leverage_10y",
+            config_id,
+            refs,
+            calc,
+            assumptions=[
+                "incremental cumulative annuity over ten survival years divided by total premium"
+            ],
+        )
     return {"curve": curve}
 
 
@@ -811,11 +1001,34 @@ def _death_metrics(
     config_id: str,
 ) -> Dict[str, Any]:
     issue_age = int(config["dimensions"]["published_issue_age"])
+    total_scheduled_premium = decimal_value(
+        config["calculation_context"]["total_premium"]
+    )
+    premium_end_month = (
+        max(int(event["policy_month"]) for event in config.get("premium_events", []))
+        + 12
+    )
+    first_annuity_month = min(
+        int(rule["first_payment_month"])
+        for rule in config.get("annuity_rules", [])
+    )
     curve = []
     for age in target_ages:
         month = (int(age) - issue_age) * 12
         if month < 0:
             continue
+        if month < premium_end_month:
+            scenario_label = "缴费期间身故"
+        elif month < first_annuity_month:
+            scenario_label = "开始领取前身故"
+        elif month == first_annuity_month:
+            scenario_label = "首次领取日身故"
+        else:
+            years_after_income = (month - first_annuity_month) // 12
+            scenario_label = f"领取后{years_after_income}年身故"
+        if int(age) in {70, 75, 80}:
+            scenario_label = f"{age}岁身故（{scenario_label}）"
+        scenario_key = f"death-age-{age}"
         definition = config.get("death_benefit") or {}
         boundary = definition.get("boundary_order", "before_annuity")
         if boundary == "before_annuity":
@@ -825,6 +1038,8 @@ def _death_metrics(
         else:
             curve.append(
                 {
+                    "scenario_id": scenario_key,
+                    "scenario_label": scenario_label,
                     "target_age": age,
                     "policy_month": month,
                     "status": "unresolved",
@@ -860,6 +1075,8 @@ def _death_metrics(
         if settlement["status"] in {"missing", "unresolved"}:
             curve.append(
                 {
+                    "scenario_id": scenario_key,
+                    "scenario_label": scenario_label,
                     "target_age": age,
                     "policy_month": month,
                     "status": f"partial_{settlement['status']}",
@@ -911,6 +1128,8 @@ def _death_metrics(
         outcome_flows.extend(_signed_event(event) for event in continuation)
         curve.append(
             {
+                "scenario_id": scenario_key,
+                "scenario_label": scenario_label,
                 "target_age": age,
                 "policy_month": month,
                 "status": "available",
@@ -953,6 +1172,18 @@ def _death_metrics(
                     calc,
                     "not_applicable" if recovery is None else "available",
                 ),
+                "death_wealth_multiple": _metric(
+                    None
+                    if total_scheduled_premium == 0
+                    else decimal_string(total_benefit / total_scheduled_premium),
+                    "early_death.wealth_multiple",
+                    config_id,
+                    refs,
+                    calc,
+                    "not_applicable"
+                    if total_scheduled_premium == 0
+                    else "available",
+                ),
                 "net_estate_outcome": _metric(
                     decimal_string(total_benefit - paid),
                     "early_death.net_estate_outcome",
@@ -978,6 +1209,256 @@ def _death_metrics(
             }
         )
     return {"curve": curve}
+
+
+def _annual_decision_table(
+    config: Mapping[str, Any],
+    events: Sequence[Mapping[str, Any]],
+    scenario_id: str,
+    config_id: str,
+) -> Dict[str, Any]:
+    cash_months = [int(item["policy_month"]) for item in config.get("cash_values", [])]
+    event_months = [int(event["policy_month"]) for event in events]
+    maximum_month = max([*cash_months, *event_months], default=0)
+    maximum_year = maximum_month // 12
+    total_premium = decimal_value(config["calculation_context"]["total_premium"])
+    death_definition = config.get("death_benefit") or {}
+    death_boundary = death_definition.get("boundary_order", "before_annuity")
+    death_order = 29 if death_boundary == "before_annuity" else 39
+    loan = config.get("loan_terms") or {}
+    rows: List[Dict[str, Any]] = []
+    for policy_year in range(1, maximum_year + 1):
+        policy_month = policy_year * 12
+        prior_month = policy_month - 12
+        # Policy-year reporting closes after anniversary benefits but before the
+        # next renewal premium, which uses event order 50 in reference inputs.
+        selected = events_through_boundary(events, policy_month, 49, scenario_id)
+        annual_events = [
+            event
+            for event in selected
+            if prior_month < int(event["policy_month"]) <= policy_month
+        ]
+        premiums = [event for event in selected if event["event_type"] == "premium"]
+        annuities = [
+            event for event in selected if event["event_type"] == "annuity_payment"
+        ]
+        annual_annuities = [
+            event
+            for event in annual_events
+            if event["event_type"] == "annuity_payment"
+        ]
+        annual_maturities = [
+            event
+            for event in annual_events
+            if event["event_type"] == "maturity_benefit"
+        ]
+        cumulative_premium = sum(
+            (_event_amount(event) for event in premiums), DECIMAL_ZERO
+        )
+        cumulative_annuity = sum(
+            (_event_amount(event) for event in annuities), DECIMAL_ZERO
+        )
+        annual_annuity = sum(
+            (_event_amount(event) for event in annual_annuities), DECIMAL_ZERO
+        )
+        annual_maturity = sum(
+            (_event_amount(event) for event in annual_maturities), DECIMAL_ZERO
+        )
+        cv_status, cash_value, cv_refs, _ = cash_value_at(
+            config, policy_month, scenario_id, "exact"
+        )
+        death = death_benefit_at(
+            config, events, policy_month, scenario_id, death_order
+        )
+        continuation = beneficiary_continuation_events(
+            config, events, policy_month, death_order
+        )
+        continuation_amount = sum(
+            (_event_amount(event) for event in continuation), DECIMAL_ZERO
+        )
+        death_selected = events_through_boundary(
+            events, policy_month, death_order, scenario_id
+        )
+        prior_receipts = sum(
+            (
+                _event_amount(event)
+                for event in death_selected
+                if event["owner_direction"] == "inflow"
+            ),
+            DECIMAL_ZERO,
+        )
+        death_amount = (
+            death.get("amount")
+            if death.get("status") == "available" and death.get("amount") is not None
+            else None
+        )
+        death_total = (
+            None
+            if death_amount is None
+            else prior_receipts + death_amount + continuation_amount
+        )
+        refs = flatten_evidence_refs(
+            _evidence_from_events(selected),
+            cv_refs,
+            death.get("evidence_refs", []),
+            _evidence_from_events(continuation),
+            loan.get("evidence_refs", []),
+        )
+        calc = {
+            "scenario_id": scenario_id,
+            "policy_year": policy_year,
+            "policy_month": policy_month,
+            "death_boundary_order": death_boundary,
+        }
+        cash_value_record = _metric(
+            None if cash_value is None else decimal_string(cash_value),
+            "annual.cash_value",
+            config_id,
+            cv_refs,
+            calc,
+            cv_status,
+        )
+        pure_exit_flows = [_signed_event(event) for event in premiums]
+        total_exit_flows = [_signed_event(event) for event in selected]
+        if cv_status == "available" and cash_value is not None:
+            pure_exit_flows.append((policy_month, cash_value))
+            total_exit_flows.append((policy_month, cash_value))
+        loan_available = (
+            _loan_available_at(loan, policy_month)
+            and cv_status == "available"
+            and cash_value is not None
+            and cash_value > 0
+        )
+        loan_capacity = (
+            cash_value * decimal_value(loan["limit_ratio"])
+            if loan_available and loan.get("limit_ratio") is not None
+            else None
+        )
+        rows.append(
+            {
+                "policy_year": policy_year,
+                "policy_month": policy_month,
+                "cumulative_premium": _metric(
+                    decimal_string(cumulative_premium),
+                    "annual.cumulative_premium",
+                    config_id,
+                    refs,
+                    calc,
+                ),
+                "annual_guaranteed_annuity": _metric(
+                    decimal_string(annual_annuity),
+                    "annual.guaranteed_annuity",
+                    config_id,
+                    _evidence_from_events(annual_annuities),
+                    calc,
+                ),
+                "cumulative_guaranteed_annuity": _metric(
+                    decimal_string(cumulative_annuity),
+                    "annual.cumulative_guaranteed_annuity",
+                    config_id,
+                    _evidence_from_events(annuities),
+                    calc,
+                ),
+                "annual_maturity_benefit": _metric(
+                    decimal_string(annual_maturity),
+                    "annual.maturity_benefit",
+                    config_id,
+                    _evidence_from_events(annual_maturities),
+                    calc,
+                ),
+                "cash_value": cash_value_record,
+                "cash_value_only_irr": _irr_metric(
+                    pure_exit_flows,
+                    "irr.annual_cash_value_only",
+                    config_id,
+                    refs,
+                    calc,
+                )
+                if cv_status == "available"
+                else _metric(
+                    None,
+                    "irr.annual_cash_value_only",
+                    config_id,
+                    refs,
+                    calc,
+                    cv_status,
+                ),
+                "total_exit_irr": _irr_metric(
+                    total_exit_flows,
+                    "irr.annual_total_exit",
+                    config_id,
+                    refs,
+                    calc,
+                )
+                if cv_status == "available"
+                else _metric(
+                    None,
+                    "irr.annual_total_exit",
+                    config_id,
+                    refs,
+                    calc,
+                    cv_status,
+                ),
+                "death_settlement": _metric(
+                    None if death_amount is None else decimal_string(death_amount),
+                    "annual.death_settlement",
+                    config_id,
+                    death.get("evidence_refs", []),
+                    calc,
+                    str(death.get("status", "missing")),
+                ),
+                "death_total_contract_value": _metric(
+                    None if death_total is None else decimal_string(death_total),
+                    "annual.death_total_contract_value",
+                    config_id,
+                    refs,
+                    calc,
+                    "missing" if death_total is None else "available",
+                ),
+                "death_wealth_multiple": _metric(
+                    None
+                    if death_total is None or total_premium == 0
+                    else decimal_string(death_total / total_premium),
+                    "annual.death_wealth_multiple",
+                    config_id,
+                    refs,
+                    calc,
+                    "not_applicable"
+                    if death_total is not None and total_premium == 0
+                    else "missing"
+                    if death_total is None
+                    else "available",
+                ),
+                "policy_loan_available": _metric(
+                    loan_available,
+                    "annual.policy_loan_available",
+                    config_id,
+                    loan.get("evidence_refs", []),
+                    calc,
+                ),
+                "maximum_policy_loan": _metric(
+                    None
+                    if loan_capacity is None
+                    else decimal_string(loan_capacity),
+                    "annual.maximum_policy_loan",
+                    config_id,
+                    loan.get("evidence_refs", []),
+                    calc,
+                    "not_applicable" if loan_capacity is None else "available",
+                    warnings=[
+                        "Loan capacity is debt capacity, not a contractual investment return"
+                    ],
+                ),
+            }
+        )
+    return {
+        "rows": rows,
+        "year_count": maximum_year,
+        "complete_annual_cash_value_coverage": all(
+            row["cash_value"]["status"] in {"available", "not_applicable"}
+            for row in rows
+        ),
+    }
 
 
 def _capital_metrics(
@@ -1083,7 +1564,9 @@ def analyze_product(
     assumptions = normalized.get("analysis_assumptions", {})
     inflation_rates = [
         decimal_value(value)
-        for value in assumptions.get("inflation_rates", ["0.02", "0.03", "0.04"])
+        for value in assumptions.get(
+            "inflation_rates", ["0", "0.02", "0.03", "0.04"]
+        )
     ]
     currency = normalized["product"]["currency"]
     cashflows_by_id = {
@@ -1101,7 +1584,20 @@ def analyze_product(
             for rule in config.get("annuity_rules", [])
             if rule.get("contract_end_age") is not None
         ]
-        default_end_age = max(contract_end_ages or [issue_age + 60])
+        maximum_disclosed_month = max(
+            [
+                *(int(event["policy_month"]) for event in events),
+                *(
+                    int(item["policy_month"])
+                    for item in config.get("cash_values", [])
+                ),
+            ],
+            default=0,
+        )
+        disclosed_end_age = issue_age + maximum_disclosed_month // 12
+        default_end_age = max(
+            [issue_age + 60, disclosed_end_age, *contract_end_ages]
+        )
         if assumptions.get("analysis_end_age") is not None:
             default_end_age = min(default_end_age, int(assumptions["analysis_end_age"]))
         target_survival = [
@@ -1117,8 +1613,11 @@ def analyze_product(
                 issue_age + 1,
                 issue_age + 5,
                 max(issue_age, annuity_start_age - 1),
+                min(default_end_age, annuity_start_age + 1),
                 min(default_end_age, annuity_start_age + 5),
+                min(default_end_age, 70),
                 min(default_end_age, 75),
+                min(default_end_age, 80),
                 min(default_end_age, 85),
                 min(default_end_age, 95),
             }
@@ -1131,6 +1630,9 @@ def analyze_product(
         scenarios = {}
         for scenario_id in _scenario_ids(events, config):
             scenarios[scenario_id] = {
+                "annual_decision_table": _annual_decision_table(
+                    config, events, scenario_id, config_id
+                ),
                 "liquidity": _liquidity_metrics(config, events, scenario_id, config_id),
                 "survival_longevity_inflation_relative_value": _survival_metrics(
                     config,

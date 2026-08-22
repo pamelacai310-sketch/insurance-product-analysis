@@ -1,0 +1,1571 @@
+{
+  "analysis_assumptions": {
+    "analysis_end_age": 105,
+    "benchmark_selection": "nearest disclosed tenor without interpolation",
+    "inflation_rates": [
+      "0",
+      "0.02",
+      "0.03",
+      "0.04"
+    ],
+    "target_death_ages": [
+      41,
+      42,
+      45,
+      59,
+      60,
+      61,
+      65,
+      70,
+      75,
+      80
+    ],
+    "target_survival_ages": [
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100,
+      105
+    ]
+  },
+  "configurations": [
+    {
+      "annuity_rules": [
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "47284.9"
+          },
+          "annual_growth_rate": "0",
+          "contingency": "survival_or_guarantee_period",
+          "evidence_refs": [
+            "pia-annuity",
+            "pia-rate-row"
+          ],
+          "first_payment_month": 240,
+          "frequency_months": 12,
+          "growth_interval_months": 12,
+          "guarantee_basis": "guaranteed",
+          "guaranteed_period_months": 240,
+          "last_payment_month": 768,
+          "lifetime": false,
+          "payment_timing": "arrears",
+          "rounding": "cent",
+          "rule_id": "pia-guaranteed-retirement-annuity",
+          "scenario_id": "guaranteed"
+        }
+      ],
+      "basic_amount": {
+        "unit": "CNY",
+        "value": "47284.9"
+      },
+      "cash_values": [
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "1605.39"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 12,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "3575.91"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 24,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "5821.96"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 36,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "8362.97"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 48,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "11094.49"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 60,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "11506.87"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 72,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "11934.55"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 84,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "12378.09"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 96,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "12838.10"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 108,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "13315.23"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 120,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "13810.15"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 132,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "14323.58"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 144,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "14856.26"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 156,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "15408.99"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 168,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "15982.57"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 180,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "16577.86"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 192,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "17195.73"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 204,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "17837.12"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 216,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "18503.00"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 228,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "basic_amount",
+            "basis_unit": "CNY",
+            "basis_value": "47284.9",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_basic_amount",
+            "value": "19194.41"
+          },
+          "event_order": 20,
+          "evidence_refs": [
+            "pia-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 240,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "immediately_before_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 240,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 252,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 264,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 276,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 288,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 300,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 312,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 324,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 336,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 348,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 360,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 372,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 384,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 396,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 408,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 420,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 432,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 444,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 456,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 468,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 480,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 492,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 504,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 516,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 528,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 540,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 552,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 564,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 576,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 588,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 600,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 612,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 624,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 636,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 648,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 660,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 672,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 684,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 696,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 708,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 720,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 732,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 744,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 756,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 768,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "0"
+          },
+          "event_order": 36,
+          "evidence_refs": [
+            "pia-cash-transition"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 780,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end_after_first_annuity"
+        }
+      ],
+      "configuration_id": "pia-f40-5pay-start60-total-premium-1m",
+      "death_benefit": {
+        "beneficiary_continuation": {
+          "evidence_refs": [
+            "pia-annuity",
+            "pia-death"
+          ],
+          "mode": "remaining_guaranteed_annuity",
+          "through_policy_month": 468
+        },
+        "boundary_order": "after_annuity",
+        "cash_value_timing": "respect_event_order",
+        "evidence_refs": [
+          "pia-death",
+          "pia-cash-row",
+          "pia-cash-transition"
+        ],
+        "guarantee_basis": "guaranteed",
+        "lookup": "at_or_before",
+        "rule": {
+          "else": {
+            "else": {
+              "arg": {
+                "evidence_refs": [
+                  "pia-death"
+                ],
+                "left": {
+                  "evidence_refs": [
+                    "pia-death"
+                  ],
+                  "name": "cumulative_premium",
+                  "op": "field"
+                },
+                "op": "subtract",
+                "right": {
+                  "evidence_refs": [
+                    "pia-death"
+                  ],
+                  "name": "cumulative_annuity",
+                  "op": "field"
+                }
+              },
+              "evidence_refs": [
+                "pia-death"
+              ],
+              "op": "floor_zero"
+            },
+            "evidence_refs": [
+              "pia-death"
+            ],
+            "op": "if_period",
+            "policy_month_max": 479,
+            "policy_month_min": 240,
+            "then": {
+              "arg": {
+                "evidence_refs": [
+                  "pia-death"
+                ],
+                "left": {
+                  "evidence_refs": [
+                    "pia-death"
+                  ],
+                  "name": "cumulative_premium",
+                  "op": "field"
+                },
+                "op": "subtract",
+                "right": {
+                  "args": [
+                    {
+                      "evidence_refs": [
+                        "pia-death"
+                      ],
+                      "name": "basic_amount",
+                      "op": "field"
+                    },
+                    {
+                      "evidence_refs": [
+                        "pia-death"
+                      ],
+                      "op": "scalar_constant",
+                      "value": "20"
+                    }
+                  ],
+                  "evidence_refs": [
+                    "pia-death"
+                  ],
+                  "op": "multiply"
+                }
+              },
+              "evidence_refs": [
+                "pia-death"
+              ],
+              "op": "floor_zero"
+            }
+          },
+          "evidence_refs": [
+            "pia-death"
+          ],
+          "op": "if_period",
+          "policy_month_max": 239,
+          "policy_month_min": 0,
+          "then": {
+            "args": [
+              {
+                "evidence_refs": [
+                  "pia-death"
+                ],
+                "name": "cumulative_premium",
+                "op": "field"
+              },
+              {
+                "evidence_refs": [
+                  "pia-death"
+                ],
+                "name": "cash_value",
+                "op": "field"
+              }
+            ],
+            "evidence_refs": [
+              "pia-death"
+            ],
+            "op": "max"
+          }
+        },
+        "scenario_id": "guaranteed"
+      },
+      "dimension_evidence_refs": [
+        "pia-dimensions",
+        "pia-rate-row"
+      ],
+      "dimensions": {
+        "annuity_frequency_per_year": 1,
+        "annuity_start_age": 60,
+        "guarantee_option": "20_year_certain_to_age_105",
+        "premium_mode": "annual_advance",
+        "premium_term_months": 60,
+        "product_option_code": "PIA",
+        "proportionality_verified": true,
+        "published_issue_age": 40,
+        "rate_class": "female"
+      },
+      "loan_terms": {
+        "annuity_effect": "cash value becomes zero and policy loan service ends from first retirement annuity date",
+        "availability_end_month": 239,
+        "availability_start_month": 0,
+        "available": true,
+        "benefit_deduction": true,
+        "eligible_value": "contract_cash_value_net_of_other_debts",
+        "evidence_refs": [
+          "pia-loan",
+          "pia-cash-transition"
+        ],
+        "interest_rate_basis": "rate stated in service completion notice; then-current published company loan rate",
+        "interest_rate_reset_frequency_months": 6,
+        "interest_rate_status": "missing",
+        "lapse_trigger": "loan principal, interest and other debts reach contract cash value",
+        "limit_ratio": "0.8",
+        "maximum_term_months": 6,
+        "repayment_terms": "repay principal and interest at any time, or all interest only; overdue balance capitalizes"
+      },
+      "maturity_events": [
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "47284.9"
+          },
+          "event_order": 40,
+          "evidence_refs": [
+            "pia-maturity"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 780,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "contract_maturity"
+        }
+      ],
+      "notes": "Guaranteed base contract only; non-guaranteed participating additions are excluded. The year-20 source value is retained immediately before first annuity and the post-annuity contract state is zero.",
+      "premium_events": [
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 10,
+          "evidence_refs": [
+            "pia-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 0,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "issue"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "pia-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 12,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "pia-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 24,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "pia-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 36,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "pia-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 48,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "confidence": "1",
+      "evidence_id": "pia-product",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 1,
+      "raw_text": "汇丰精彩延年2026养老年金保险（分红型）",
+      "raw_text_sha256": "373e824bd4af47f4b9c64aa28330461e942434ccb9ef38292bfe7a86b8df3aff",
+      "source_id": "pia-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "pia-dimensions",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "female age 40; age-60 start; 5-year annual premium; contract to age 105",
+      "raw_text_sha256": "9e29c24bdd1a05d55b7b84105722f0ff919f268f84ba6e7142733424a5f7d9e2",
+      "source_id": "pia-rate",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "pia-rate-row",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "female age 40, age-60 start, 5-pay: premium 4229.68 per 1000 basic amount",
+      "raw_text_sha256": "55edb5c7dc14706957204aa50705a90831c9034e875ca7f94c908bf48e182237",
+      "source_id": "pia-rate",
+      "status": "verified",
+      "transformation": "200000*1000/4229.68=47284.9",
+      "unit_text": "CNY per 1000 basic amount"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "pia-cash-row",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 3,
+      "raw_text": "female age 40, age-60 start, 5-pay, values by policy year: 1605.39,3575.91,5821.96,8362.97,11094.49,11506.87,11934.55,12378.09,12838.10,13315.23,13810.15,14323.58,14856.26,15408.99,15982.57,16577.86,17195.73,17837.12,18503.00,19194.41,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00",
+      "raw_text_sha256": "71e7e5bac59863a5a92d131b658e83f2dbf7c0c2c02c7e3fbfef3770ef1a90c3",
+      "source_id": "pia-cash",
+      "status": "verified",
+      "transformation": "factor*47284.9/1000, rounded to cents",
+      "unit_text": "CNY per 1000 basic amount"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "pia-annuity",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "Annual retirement annuity equals basic amount from first payment date; guaranteed payment period is 20 years; remaining guaranteed annuity is paid to the guarantee beneficiary after death.",
+      "raw_text_sha256": "df9d6d6180844ed7815002c53ecf37f233c76ca211e45e468682c40374e4a811",
+      "source_id": "pia-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "pia-cash-transition",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "From the first retirement annuity date, contract cash value becomes zero and policy loan service is no longer available.",
+      "raw_text_sha256": "b00aed76c105893d8a4b982b33360aa5ef29f934d67dc5b6fd4e135e34fb6bcb",
+      "source_id": "pia-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "pia-maturity",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 3,
+      "raw_text": "At the age-105 maturity date, maturity benefit equals basic amount; contract terminates.",
+      "raw_text_sha256": "6824c15b03e81ac1325d0c4aaf615d59f0c444b40839a3b70b131e6db0662f42",
+      "source_id": "pia-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "pia-death",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 3,
+      "raw_text": "Death benefit has separate pre-income, 20-year guarantee-period, and post-guarantee formulas; remaining guaranteed annuity is separately payable during the guarantee period.",
+      "raw_text_sha256": "6154fffeb993a4070bc7a68a12291e318eac9741e99d0d33c46863e6329e0843",
+      "source_id": "pia-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "pia-loan",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 7,
+      "raw_text": "Policy loan principal and interest may not exceed 80% of cash value net of debts; each term at most 6 months; debt is deducted from benefits and contract lapses when debt reaches cash value.",
+      "raw_text_sha256": "3ed018f1a2e2418a5bb6d33c25606f9fdf651a677af04d3be8f9065d9e582343",
+      "source_id": "pia-terms",
+      "status": "verified"
+    }
+  ],
+  "product": {
+    "analysis_only": true,
+    "currency": "CNY",
+    "document_version": "2026-06",
+    "effective_date": "2026-06-01",
+    "evidence_refs": [
+      "pia-product"
+    ],
+    "insurer": "汇丰人寿保险有限公司",
+    "jurisdiction": "CN",
+    "name": "汇丰精彩延年2026养老年金保险（分红型）",
+    "product_id": "pia-hsbc-jingcai-yannian-2026",
+    "product_type": "annuity"
+  },
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "authority": "contract",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1-12",
+      "original_sha256": "3c31b4a4d30d9f85dba31d38b3ebef1e43bf0d94b9c62fe82f4cdcba5ec9d7ed",
+      "original_url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/terms/pia-enjoy-golden-life-retirement-annuity-insurance-terms.pdf",
+      "path": "skill://assets/reference-products/source-extracts/pia-hsbc-jingcai-yannian-2026.extract.json",
+      "sha256": "ac0217c80f8ee04ac937ac164f7ddb76264d2aed4dcaaaa83c2807f9df7fa492",
+      "source_id": "pia-terms",
+      "version": "2026-06"
+    },
+    {
+      "authority": "rate_table",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1-5; selected row on 2",
+      "original_sha256": "4d61e93fff22912ffbc860d34f2ccbdb98e22502b837c64a7ae81085b049076c",
+      "original_url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/rates/pia-retirement-annuity-insurance-rates.pdf",
+      "path": "skill://assets/reference-products/source-extracts/pia-hsbc-jingcai-yannian-2026.extract.json",
+      "sha256": "ac0217c80f8ee04ac937ac164f7ddb76264d2aed4dcaaaa83c2807f9df7fa492",
+      "source_id": "pia-rate",
+      "version": "2026-06"
+    },
+    {
+      "authority": "cash_value_table",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1-6; selected row on 3",
+      "original_sha256": "c5c5f5b6663505b6cc2c767329075d6e6d7d8a1b417eb072746733d8c619432a",
+      "original_url": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/cashvalue/pia-retirement-annuity-insurance-cashvalue.pdf",
+      "path": "skill://assets/reference-products/source-extracts/pia-hsbc-jingcai-yannian-2026.extract.json",
+      "sha256": "ac0217c80f8ee04ac937ac164f7ddb76264d2aed4dcaaaa83c2807f9df7fa492",
+      "source_id": "pia-cash",
+      "version": "2026-06"
+    }
+  ]
+}

@@ -1,0 +1,1621 @@
+{
+  "analysis_assumptions": {
+    "analysis_end_age": 105,
+    "benchmark_selection": "nearest disclosed tenor without interpolation",
+    "inflation_rates": [
+      "0",
+      "0.02",
+      "0.03",
+      "0.04"
+    ],
+    "target_death_ages": [
+      41,
+      42,
+      45,
+      59,
+      60,
+      61,
+      65,
+      70,
+      75,
+      80
+    ],
+    "target_survival_ages": [
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100,
+      105
+    ]
+  },
+  "configurations": [
+    {
+      "annuity_rules": [
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "26608"
+          },
+          "annual_growth_rate": "0",
+          "contingency": "survival",
+          "contract_end_age": 106,
+          "evidence_refs": [
+            "allianz-annuity",
+            "allianz-rate-row"
+          ],
+          "first_payment_month": 240,
+          "frequency_months": 12,
+          "growth_interval_months": 12,
+          "guarantee_basis": "guaranteed",
+          "guaranteed_period_months": 0,
+          "lifetime": true,
+          "payment_timing": "arrears",
+          "rounding": "cent",
+          "rule_id": "allianz-guaranteed-lifetime-retirement-annuity",
+          "scenario_id": "guaranteed"
+        }
+      ],
+      "basic_amount": {
+        "unit": "CNY",
+        "value": "26608"
+      },
+      "cash_values": [
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "349.03"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 12,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "777.33"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 24,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "1265.39"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 36,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "1817.40"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 48,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "2410.61"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 60,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "2499.40"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 72,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "2591.46"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 84,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "2686.91"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 96,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "2785.87"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 108,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "2888.49"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 120,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "2994.90"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 132,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "3105.26"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 144,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "3219.71"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 156,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "3338.42"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 168,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "3461.57"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 180,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "3589.33"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 192,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "3721.91"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 204,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "3859.50"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 216,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4002.33"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 228,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4017.60"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 240,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4033.30"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 252,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4049.42"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 264,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4065.96"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 276,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4082.94"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 288,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4100.36"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 300,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4118.21"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 312,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4136.50"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 324,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4155.21"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 336,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4174.33"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 348,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4193.83"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 360,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4213.71"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 372,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4233.97"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 384,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4254.58"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 396,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4275.51"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 408,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4296.69"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 420,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4318.01"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 432,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4339.35"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 444,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4360.56"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 456,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4381.52"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 468,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4402.12"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 480,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4422.26"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 492,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4441.88"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 504,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4460.96"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 516,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4479.49"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 528,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4497.47"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 540,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4514.92"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 552,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4531.88"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 564,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4548.37"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 576,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4564.44"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 588,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4580.13"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 600,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4595.50"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 612,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4610.64"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 624,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4625.65"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 636,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4640.67"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 648,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4655.88"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 660,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4671.54"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 672,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4687.95"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 684,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4705.53"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 696,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4724.88"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 708,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4746.90"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 720,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4773.01"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 732,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4805.48"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 744,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4848.14"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 756,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4896.91"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 768,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "4947.50"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 780,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        },
+        {
+          "amount": {
+            "basis_kind": "annual_premium",
+            "basis_unit": "CNY",
+            "basis_value": "200000",
+            "rounding": "cent",
+            "unit": "CNY_per_1000_annual_premium",
+            "value": "5000.00"
+          },
+          "event_order": 35,
+          "evidence_refs": [
+            "allianz-cash-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 792,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_end"
+        }
+      ],
+      "configuration_id": "allianz-f40-5pay-start60-total-premium-1m",
+      "death_benefit": {
+        "boundary_order": "after_annuity",
+        "cash_value_timing": "policy_month_state",
+        "evidence_refs": [
+          "allianz-death",
+          "allianz-cash-row"
+        ],
+        "guarantee_basis": "guaranteed",
+        "lookup": "at_or_before",
+        "rule": {
+          "args": [
+            {
+              "evidence_refs": [
+                "allianz-death"
+              ],
+              "name": "cumulative_premium",
+              "op": "field"
+            },
+            {
+              "evidence_refs": [
+                "allianz-death"
+              ],
+              "name": "cash_value",
+              "op": "field"
+            }
+          ],
+          "evidence_refs": [
+            "allianz-death"
+          ],
+          "op": "max"
+        },
+        "scenario_id": "guaranteed"
+      },
+      "dimension_evidence_refs": [
+        "allianz-dimensions",
+        "allianz-rate-row"
+      ],
+      "dimensions": {
+        "annuity_frequency_per_year": 1,
+        "annuity_start_age": 60,
+        "guarantee_option": "lifetime_survival_contingent_no_period_certain",
+        "premium_mode": "annual_advance",
+        "premium_term_months": 60,
+        "product_option_code": "ALLIANZ-AXFYC",
+        "proportionality_verified": true,
+        "published_issue_age": 40,
+        "rate_class": "female"
+      },
+      "loan_terms": {
+        "annuity_effect": "no stated cessation at annuity start; debt remains deductible from insurance benefits",
+        "availability_start_month": 1,
+        "available": true,
+        "benefit_deduction": true,
+        "eligible_value": "contract_and_rider_cash_value_net_of_other_debts",
+        "evidence_refs": [
+          "allianz-loan"
+        ],
+        "interest_rate_basis": "rate agreed in loan agreement based on market rates, funding cost, investment return and liquidity",
+        "interest_rate_status": "missing",
+        "lapse_trigger": "loan principal, interest and other debts reach contract and rider cash value",
+        "limit_ratio": "0.8",
+        "maximum_term_months": 6,
+        "repayment_terms": "principal and interest due at term; overdue balance capitalizes; partial repayment first pays accrued interest"
+      },
+      "maturity_events": [],
+      "notes": "Guaranteed base contract only; non-guaranteed participating dividends are excluded. Contract is lifetime; age 106 is only the deterministic expansion boundary supported by the complete published cash-value row.",
+      "premium_events": [
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 10,
+          "evidence_refs": [
+            "allianz-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 0,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "issue"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "allianz-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 12,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "allianz-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 24,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "allianz-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 36,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        },
+        {
+          "amount": {
+            "unit": "CNY",
+            "value": "200000"
+          },
+          "contingency": "contractual",
+          "event_order": 50,
+          "evidence_refs": [
+            "allianz-rate-row"
+          ],
+          "guarantee_basis": "guaranteed",
+          "policy_month": 48,
+          "scenario_id": "guaranteed",
+          "status": "available",
+          "timing": "anniversary_advance"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "confidence": "1",
+      "evidence_id": "allianz-product",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 1,
+      "raw_text": "安联安享丰赢C养老年金保险（分红型）",
+      "raw_text_sha256": "7ff6abc16afc5684c71fb09e7207eb26fd02118276f3723d3543a291309bca62",
+      "source_id": "allianz-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "allianz-dimensions",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 1,
+      "raw_text": "female age 40; age-60 start; 5-year annual premium; lifetime contract",
+      "raw_text_sha256": "555ed63ed1adcbb7d38ae8a6b0d9913a0a3865237b297d69260ed1054133b557",
+      "source_id": "allianz-rate",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "allianz-rate-row",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 1,
+      "raw_text": "female age 40, age-60 start, 5-pay: basic amount 133.04 per 1000 annual premium",
+      "raw_text_sha256": "dbc8bda6a4b651a4c51c585a57ccc939d277dd6ec0cae79d693e4604183e2fc3",
+      "source_id": "allianz-rate",
+      "status": "verified",
+      "transformation": "200000*133.04/1000=26608",
+      "unit_text": "basic amount per CNY 1000 annual premium"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "allianz-cash-row",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 514,
+      "raw_text": "female age 40, age-60 start, 5-pay, values by policy year: 349.03,777.33,1265.39,1817.40,2410.61,2499.40,2591.46,2686.91,2785.87,2888.49,2994.90,3105.26,3219.71,3338.42,3461.57,3589.33,3721.91,3859.50,4002.33,4017.60,4033.30,4049.42,4065.96,4082.94,4100.36,4118.21,4136.50,4155.21,4174.33,4193.83,4213.71,4233.97,4254.58,4275.51,4296.69,4318.01,4339.35,4360.56,4381.52,4402.12,4422.26,4441.88,4460.96,4479.49,4497.47,4514.92,4531.88,4548.37,4564.44,4580.13,4595.50,4610.64,4625.65,4640.67,4655.88,4671.54,4687.95,4705.53,4724.88,4746.90,4773.01,4805.48,4848.14,4896.91,4947.50,5000.00",
+      "raw_text_sha256": "dcb0aaff39253146b79702fa1e49a20e06355fed90b00d1074f08d8a365ea753",
+      "source_id": "allianz-cash",
+      "status": "verified",
+      "transformation": "factor*200000/1000, rounded to cents; row continues on page 515",
+      "unit_text": "CNY per 1000 annual premium"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "allianz-annuity",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "Retirement annuity equals basic amount on each retirement annuity payment date while insured survives and contract remains effective.",
+      "raw_text_sha256": "a7e464cb8bdbe35a7ea80508737c7b0db75c9192220e2bc3e2700c54dc9a808a",
+      "source_id": "allianz-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "allianz-death",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 2,
+      "raw_text": "Death benefit is the greater of cumulative scheduled premium and cash value.",
+      "raw_text_sha256": "dd80e88cac7026649d1e80c32b37909c791319287bb402cd617dd4c50065e1f7",
+      "source_id": "allianz-terms",
+      "status": "verified"
+    },
+    {
+      "confidence": "1",
+      "evidence_id": "allianz-loan",
+      "extractor": "pdftotext-layout-plus-visible-row-check",
+      "extractor_version": "1.0.0",
+      "page": 4,
+      "raw_text": "After cooling-off, policy loan may not exceed 80% of cash value net of debts; each term at most 6 months; rate is agreed in the loan agreement; debt is deducted and contract lapses when debt reaches cash value.",
+      "raw_text_sha256": "5721fadb4cd46af0fb4f703e7cf85dddbd1e54563e042f847a6a31b682ddb3ae",
+      "source_id": "allianz-terms",
+      "status": "verified"
+    }
+  ],
+  "product": {
+    "analysis_only": true,
+    "currency": "CNY",
+    "document_version": "terms-2026-06-25+tables-2025-08-18",
+    "effective_date": "2026-06-25",
+    "evidence_refs": [
+      "allianz-product"
+    ],
+    "insurer": "安联人寿保险有限公司",
+    "jurisdiction": "CN",
+    "name": "安联安享丰赢C养老年金保险（分红型）",
+    "product_id": "allianz-anxiang-fengying-c",
+    "product_type": "annuity"
+  },
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "authority": "contract",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1-10",
+      "original_sha256": "0b9803793f1d4277448c5576f9b1076e9ad6f19c3ce849e0caa5913faa39ecd6",
+      "original_url": "https://www.allianz.com.cn/allianz/001d14c12383421f91106c6ef70ae479.pdf",
+      "path": "skill://assets/reference-products/source-extracts/allianz-anxiang-fengying-c.extract.json",
+      "sha256": "7e3e1a59e78b8e30741ef92125ccfb3ebfc82a16d264425ea103b9439c98dea8",
+      "source_id": "allianz-terms",
+      "version": "terms-2026-06-25+tables-2025-08-18"
+    },
+    {
+      "authority": "rate_table",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1",
+      "original_sha256": "949be054aae2bf10c046ff608fd8f1e54fe6b79864867982b01c7bbb8b74ca66",
+      "original_url": "https://www.allianz.com.cn/allianz/d9455eab50564467a2e4f632a9c93917.pdf",
+      "path": "skill://assets/reference-products/source-extracts/allianz-anxiang-fengying-c.extract.json",
+      "sha256": "7e3e1a59e78b8e30741ef92125ccfb3ebfc82a16d264425ea103b9439c98dea8",
+      "source_id": "allianz-rate",
+      "version": "terms-2026-06-25+tables-2025-08-18"
+    },
+    {
+      "authority": "cash_value_table",
+      "document_type": "verified_extract_from_public_product_pdf",
+      "extraction": {
+        "method": "pdftotext -layout plus visible row/header and clause verification",
+        "original_document_embedded": false,
+        "verified_on": "2026-08-22"
+      },
+      "original_page_range": "1-2100; selected row on 514-515",
+      "original_sha256": "2f4b460bc1b48773f2015f5e4e59eeca2662ceba8890a94e199ecfc335bb754c",
+      "path": "skill://assets/reference-products/source-extracts/allianz-anxiang-fengying-c.extract.json",
+      "sha256": "7e3e1a59e78b8e30741ef92125ccfb3ebfc82a16d264425ea103b9439c98dea8",
+      "source_id": "allianz-cash",
+      "version": "terms-2026-06-25+tables-2025-08-18"
+    }
+  ]
+}

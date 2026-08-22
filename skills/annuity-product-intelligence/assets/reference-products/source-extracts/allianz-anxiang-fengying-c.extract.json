@@ -1,0 +1,299 @@
+{
+  "cash_value_basis": "CNY per 1000 annual premium",
+  "cash_values": [
+    {
+      "policy_year": 1,
+      "value": "349.03"
+    },
+    {
+      "policy_year": 2,
+      "value": "777.33"
+    },
+    {
+      "policy_year": 3,
+      "value": "1265.39"
+    },
+    {
+      "policy_year": 4,
+      "value": "1817.40"
+    },
+    {
+      "policy_year": 5,
+      "value": "2410.61"
+    },
+    {
+      "policy_year": 6,
+      "value": "2499.40"
+    },
+    {
+      "policy_year": 7,
+      "value": "2591.46"
+    },
+    {
+      "policy_year": 8,
+      "value": "2686.91"
+    },
+    {
+      "policy_year": 9,
+      "value": "2785.87"
+    },
+    {
+      "policy_year": 10,
+      "value": "2888.49"
+    },
+    {
+      "policy_year": 11,
+      "value": "2994.90"
+    },
+    {
+      "policy_year": 12,
+      "value": "3105.26"
+    },
+    {
+      "policy_year": 13,
+      "value": "3219.71"
+    },
+    {
+      "policy_year": 14,
+      "value": "3338.42"
+    },
+    {
+      "policy_year": 15,
+      "value": "3461.57"
+    },
+    {
+      "policy_year": 16,
+      "value": "3589.33"
+    },
+    {
+      "policy_year": 17,
+      "value": "3721.91"
+    },
+    {
+      "policy_year": 18,
+      "value": "3859.50"
+    },
+    {
+      "policy_year": 19,
+      "value": "4002.33"
+    },
+    {
+      "policy_year": 20,
+      "value": "4017.60"
+    },
+    {
+      "policy_year": 21,
+      "value": "4033.30"
+    },
+    {
+      "policy_year": 22,
+      "value": "4049.42"
+    },
+    {
+      "policy_year": 23,
+      "value": "4065.96"
+    },
+    {
+      "policy_year": 24,
+      "value": "4082.94"
+    },
+    {
+      "policy_year": 25,
+      "value": "4100.36"
+    },
+    {
+      "policy_year": 26,
+      "value": "4118.21"
+    },
+    {
+      "policy_year": 27,
+      "value": "4136.50"
+    },
+    {
+      "policy_year": 28,
+      "value": "4155.21"
+    },
+    {
+      "policy_year": 29,
+      "value": "4174.33"
+    },
+    {
+      "policy_year": 30,
+      "value": "4193.83"
+    },
+    {
+      "policy_year": 31,
+      "value": "4213.71"
+    },
+    {
+      "policy_year": 32,
+      "value": "4233.97"
+    },
+    {
+      "policy_year": 33,
+      "value": "4254.58"
+    },
+    {
+      "policy_year": 34,
+      "value": "4275.51"
+    },
+    {
+      "policy_year": 35,
+      "value": "4296.69"
+    },
+    {
+      "policy_year": 36,
+      "value": "4318.01"
+    },
+    {
+      "policy_year": 37,
+      "value": "4339.35"
+    },
+    {
+      "policy_year": 38,
+      "value": "4360.56"
+    },
+    {
+      "policy_year": 39,
+      "value": "4381.52"
+    },
+    {
+      "policy_year": 40,
+      "value": "4402.12"
+    },
+    {
+      "policy_year": 41,
+      "value": "4422.26"
+    },
+    {
+      "policy_year": 42,
+      "value": "4441.88"
+    },
+    {
+      "policy_year": 43,
+      "value": "4460.96"
+    },
+    {
+      "policy_year": 44,
+      "value": "4479.49"
+    },
+    {
+      "policy_year": 45,
+      "value": "4497.47"
+    },
+    {
+      "policy_year": 46,
+      "value": "4514.92"
+    },
+    {
+      "policy_year": 47,
+      "value": "4531.88"
+    },
+    {
+      "policy_year": 48,
+      "value": "4548.37"
+    },
+    {
+      "policy_year": 49,
+      "value": "4564.44"
+    },
+    {
+      "policy_year": 50,
+      "value": "4580.13"
+    },
+    {
+      "policy_year": 51,
+      "value": "4595.50"
+    },
+    {
+      "policy_year": 52,
+      "value": "4610.64"
+    },
+    {
+      "policy_year": 53,
+      "value": "4625.65"
+    },
+    {
+      "policy_year": 54,
+      "value": "4640.67"
+    },
+    {
+      "policy_year": 55,
+      "value": "4655.88"
+    },
+    {
+      "policy_year": 56,
+      "value": "4671.54"
+    },
+    {
+      "policy_year": 57,
+      "value": "4687.95"
+    },
+    {
+      "policy_year": 58,
+      "value": "4705.53"
+    },
+    {
+      "policy_year": 59,
+      "value": "4724.88"
+    },
+    {
+      "policy_year": 60,
+      "value": "4746.90"
+    },
+    {
+      "policy_year": 61,
+      "value": "4773.01"
+    },
+    {
+      "policy_year": 62,
+      "value": "4805.48"
+    },
+    {
+      "policy_year": 63,
+      "value": "4848.14"
+    },
+    {
+      "policy_year": 64,
+      "value": "4896.91"
+    },
+    {
+      "policy_year": 65,
+      "value": "4947.50"
+    },
+    {
+      "policy_year": 66,
+      "value": "5000.00"
+    }
+  ],
+  "configuration": "female age 40; annual advance premium 200000 for 5 years; income starts age 60",
+  "contract_facts": {
+    "annuity": "basic amount annually from age 60 while insured survives and contract remains effective",
+    "death": "max(cumulative scheduled premium, cash value)",
+    "loan": "after cooling-off, 80% of cash value net of debt; each loan no longer than 6 months; agreement rate; debt deducted; lapse at debt equals cash value",
+    "maturity": "none; lifetime contract"
+  },
+  "original_documents": {
+    "cash": {
+      "pages": "1-2100; selected row on 514-515",
+      "sha256": "2f4b460bc1b48773f2015f5e4e59eeca2662ceba8890a94e199ecfc335bb754c",
+      "url": null
+    },
+    "rate": {
+      "pages": "1",
+      "sha256": "949be054aae2bf10c046ff608fd8f1e54fe6b79864867982b01c7bbb8b74ca66",
+      "url": "https://www.allianz.com.cn/allianz/d9455eab50564467a2e4f632a9c93917.pdf"
+    },
+    "terms": {
+      "pages": "1-10",
+      "sha256": "0b9803793f1d4277448c5576f9b1076e9ad6f19c3ce849e0caa5913faa39ecd6",
+      "url": "https://www.allianz.com.cn/allianz/001d14c12383421f91106c6ef70ae479.pdf"
+    }
+  },
+  "premium_rate": {
+    "direction": "basic_amount_per_1000_annual_premium",
+    "page": 1,
+    "value": "133.04"
+  },
+  "product_id": "allianz-anxiang-fengying-c"
+}

@@ -175,6 +175,32 @@ def normalize_fixture(data: dict | None = None) -> dict:
 
 
 class ProductBoundaryTests(unittest.TestCase):
+    def test_extended_loan_terms_are_closed_and_month_ranges_are_validated(self) -> None:
+        data = make_product()
+        data["configurations"][0]["loan_terms"] = {
+            "available": True,
+            "limit_ratio": "0.8",
+            "eligible_value": "cash_value_net_of_debt",
+            "availability_start_month": 24,
+            "availability_end_month": 12,
+            "maximum_term_months": 6,
+            "interest_rate_status": "missing",
+            "interest_rate_basis": "published company rate",
+            "interest_rate_reset_frequency_months": 6,
+            "repayment_terms": "principal and interest at maturity",
+            "benefit_deduction": True,
+            "lapse_trigger": "debt reaches cash value",
+            "annuity_effect": "debt deducted from benefits",
+            "evidence_refs": ["ev1"],
+        }
+
+        validation = validate_product(data, allow_embedded_fixtures=True)
+
+        self.assertFalse(validation.valid)
+        self.assertTrue(
+            any("availability_start_month cannot follow" in error for error in validation.errors)
+        )
+
     def test_product_dimensions_are_accepted_without_customer_data(self) -> None:
         validation = validate_product(
             make_product(),
