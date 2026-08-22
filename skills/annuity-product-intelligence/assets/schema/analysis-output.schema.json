@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:annuity-product-intelligence:1.0.0:analysis-output",
+  "title": "Annuity Product Intelligence Metrics Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "tool_version", "product_id", "product_analysis_only", "guaranteed_and_illustrated_separated", "configurations", "summary"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "tool_version": {"const": "1.0.0"},
+    "product_id": {"type": "string", "minLength": 1},
+    "product_analysis_only": {"const": true},
+    "guaranteed_and_illustrated_separated": {"const": true},
+    "benchmark_snapshot": {"type": ["object", "null"]},
+    "configurations": {"type": "array", "items": {"type": "object"}},
+    "summary": {
+      "type": "object",
+      "required": ["configuration_count", "aggregate_score", "aggregate_score_reason"],
+      "properties": {
+        "configuration_count": {"type": "integer", "minimum": 1},
+        "income_conversion_rate_distribution": {"type": "object"},
+        "aggregate_score": {"type": "null"},
+        "aggregate_score_reason": {"type": "string"}
+      }
+    }
+  }
+}

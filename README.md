@@ -51,6 +51,19 @@ python3 skills/compare-insurance-products/scripts/insurance_compare.py compare \
 
 输入规范见[输入结构](skills/compare-insurance-products/references/input-schema.md)，计算规则见[计算与审计规则](skills/compare-insurance-products/references/calculation-rules.md)。
 
+## 年金产品决策数据 Skill
+
+[`annuity-product-intelligence v1.0.0`](skills/annuity-product-intelligence/README.md) 是独立的产品经济分析工具，不读取或索取客户年龄、资产、收入、目标、风险偏好等适配数据。它对公开产品配置空间执行确定性 PDF/表格抽取、Schema 与单位归一化、显式保单月现金流、完整 IRR 根集、流动性、长寿、早逝、通胀、资本效率、相对价值、provenance 与 confidence routing。
+
+```bash
+python3 skills/annuity-product-intelligence/scripts/annuity_product_intelligence.py self-test
+
+python3 skills/annuity-product-intelligence/scripts/annuity_product_intelligence.py demo \
+  --out outputs/annuity_demo
+```
+
+只有条款语义仍存在歧义时才生成最小化 LLM review packet；数值冲突、OCR 和表格冲突仍走确定性或人工复核路线。保证与演示/非保证利益始终分列，不输出客户适配建议或主观综合分。
+
 ## 条款报告衔接
 
 `insurance-clause-insights` 生成的条款报告只能先做资料准备度审计：

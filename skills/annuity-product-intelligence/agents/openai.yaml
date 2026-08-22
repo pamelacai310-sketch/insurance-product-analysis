@@ -1,0 +1,4 @@
+interface:
+  display_name: "Annuity Product Intelligence"
+  short_description: "Auditable annuity product economics without customer data"
+  default_prompt: "Use $annuity-product-intelligence to analyze these annuity product materials without customer data."

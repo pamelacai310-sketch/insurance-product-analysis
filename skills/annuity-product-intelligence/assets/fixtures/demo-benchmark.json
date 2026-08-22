@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "benchmark_id": "synthetic-cny-risk-free-curve",
+  "currency": "CNY",
+  "as_of_date": "2026-08-21",
+  "compounding": "annual_effective",
+  "day_count": "ACT/365",
+  "source_sha256": "6850a31780e81b50dfe77561d47da52ec9b356a34e19005fad3245be34b61247",
+  "points": [
+    {"term_years": "1", "annual_effective_rate": "0.015", "label": "synthetic 1y"},
+    {"term_years": "5", "annual_effective_rate": "0.018", "label": "synthetic 5y"},
+    {"term_years": "10", "annual_effective_rate": "0.021", "label": "synthetic 10y"},
+    {"term_years": "20", "annual_effective_rate": "0.024", "label": "synthetic 20y"},
+    {"term_years": "30", "annual_effective_rate": "0.026", "label": "synthetic 30y"},
+    {"term_years": "50", "annual_effective_rate": "0.027", "label": "synthetic 50y"}
+  ]
+}

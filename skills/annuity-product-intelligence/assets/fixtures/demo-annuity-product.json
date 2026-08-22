@@ -1,0 +1,219 @@
+{
+  "schema_version": "1.0.0",
+  "product": {
+    "product_id": "synthetic-level-life-annuity",
+    "name": "Synthetic Level Lifetime Annuity",
+    "insurer": "Synthetic Insurer",
+    "currency": "CNY",
+    "jurisdiction": "CN",
+    "document_version": "1.0.0",
+    "effective_date": "2026-01-01",
+    "product_type": "lifetime_annuity",
+    "analysis_only": true,
+    "evidence_refs": ["ev-product"]
+  },
+  "sources": [
+    {
+      "source_id": "synthetic-source",
+      "path": "embedded://synthetic-annuity-fixture-v1",
+      "sha256": "ccf0214fbd1c1523707ad5050a4ce6bbe1554fa854e930d02fc76e768d0f0b74",
+      "document_type": "synthetic_fixture",
+      "version": "1.0.0",
+      "effective_date": "2026-01-01",
+      "authority": "synthetic_fixture",
+      "embedded_fixture": true
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-product",
+      "source_id": "synthetic-source",
+      "page": 1,
+      "bbox": [10, 10, 400, 30],
+      "raw_text": "Synthetic Level Lifetime Annuity v1.0.0",
+      "raw_text_sha256": "ee2405d3ee7fa9891bccfee312d0c302e2b0fb7ba88ec7bff4aee57678c00e10",
+      "extractor": "synthetic-fixture",
+      "extractor_version": "1.0.0",
+      "confidence": "1",
+      "status": "verified"
+    },
+    {
+      "evidence_id": "ev-dimensions",
+      "source_id": "synthetic-source",
+      "page": 1,
+      "bbox": [10, 40, 500, 60],
+      "raw_text": "Issue age 40 F; five annual premiums; annuity begins age 60",
+      "raw_text_sha256": "d68b46252240834391303f3e1f68b009804eb422a15e4969d177f989a7390a8c",
+      "extractor": "synthetic-fixture",
+      "extractor_version": "1.0.0",
+      "confidence": "1",
+      "status": "verified"
+    },
+    {
+      "evidence_id": "ev-premium",
+      "source_id": "synthetic-source",
+      "page": 2,
+      "bbox": [10, 10, 500, 30],
+      "raw_text": "Annual premium CNY 200000 payable at issue and four anniversaries",
+      "raw_text_sha256": "c498bf8bbee20e6f91eab4a962118ee3d2bf033925035aa336ad9efa4115daf1",
+      "unit_text": "CNY",
+      "extractor": "synthetic-fixture",
+      "extractor_version": "1.0.0",
+      "confidence": "1",
+      "status": "verified"
+    },
+    {
+      "evidence_id": "ev-annuity",
+      "source_id": "synthetic-source",
+      "page": 3,
+      "bbox": [10, 10, 500, 30],
+      "raw_text": "Guaranteed annual annuity CNY 60000 from age 60 through age 105; 20-year certain",
+      "raw_text_sha256": "0b7fa4b9aa7c0f4db7dc224403196b612829cf37872d90dd003f1816dac5b05e",
+      "unit_text": "CNY per year",
+      "extractor": "synthetic-fixture",
+      "extractor_version": "1.0.0",
+      "confidence": "1",
+      "status": "verified"
+    },
+    {
+      "evidence_id": "ev-cash",
+      "source_id": "synthetic-source",
+      "page": 4,
+      "bbox": [10, 10, 550, 120],
+      "raw_text": "Cash values: month 12 150000; 60 900000; 120 1050000; 228 1200000; 240 1200000; 300 1100000; 360 950000; 420 800000; 480 650000; 540 450000; 600 250000; 660 and 780 not applicable",
+      "raw_text_sha256": "591775661fb0c1f6caed5f6d4bfbdb8e7fb53f523cef45ace41332f46689e147",
+      "unit_text": "CNY",
+      "extractor": "synthetic-fixture",
+      "extractor_version": "1.0.0",
+      "confidence": "1",
+      "status": "verified"
+    },
+    {
+      "evidence_id": "ev-death",
+      "source_id": "synthetic-source",
+      "page": 5,
+      "bbox": [10, 10, 550, 50],
+      "raw_text": "Death benefit is the greater of cumulative premium less annuity paid and cash value, floored at zero",
+      "raw_text_sha256": "3f9e9dd67fbd2c0f6309d67bd99d593e1e4a22a3ede232819cbf187b2c757168",
+      "extractor": "synthetic-fixture",
+      "extractor_version": "1.0.0",
+      "confidence": "1",
+      "status": "verified"
+    },
+    {
+      "evidence_id": "ev-loan",
+      "source_id": "synthetic-source",
+      "page": 6,
+      "bbox": [10, 10, 450, 30],
+      "raw_text": "Policy loan limit is 80 percent of eligible cash value",
+      "raw_text_sha256": "6e18a4de797698f9fb14edc2f7fcfe2ca0d80916eeb29c359b622e92f67e6795",
+      "extractor": "synthetic-fixture",
+      "extractor_version": "1.0.0",
+      "confidence": "1",
+      "status": "verified"
+    }
+  ],
+  "configurations": [
+    {
+      "configuration_id": "age40-f-5pay-start60-level",
+      "dimensions": {
+        "published_issue_age": 40,
+        "rate_class": "F",
+        "premium_term_months": 60,
+        "annuity_start_age": 60,
+        "annuity_frequency_per_year": 1,
+        "guarantee_option": "20_year_certain_lifetime",
+        "premium_mode": "annual_advance",
+        "product_option_code": "SYN-LIFE-20",
+        "proportionality_verified": true
+      },
+      "dimension_evidence_refs": ["ev-dimensions"],
+      "premium_events": [
+        {"policy_month": 0, "event_order": 10, "amount": {"value": "200000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "issue", "contingency": "contractual", "evidence_refs": ["ev-premium"]},
+        {"policy_month": 12, "event_order": 10, "amount": {"value": "200000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_advance", "contingency": "contractual", "evidence_refs": ["ev-premium"]},
+        {"policy_month": 24, "event_order": 10, "amount": {"value": "200000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_advance", "contingency": "contractual", "evidence_refs": ["ev-premium"]},
+        {"policy_month": 36, "event_order": 10, "amount": {"value": "200000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_advance", "contingency": "contractual", "evidence_refs": ["ev-premium"]},
+        {"policy_month": 48, "event_order": 10, "amount": {"value": "200000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_advance", "contingency": "contractual", "evidence_refs": ["ev-premium"]}
+      ],
+      "annuity_rules": [
+        {
+          "rule_id": "guaranteed-level-life-income",
+          "first_payment_month": 240,
+          "frequency_months": 12,
+          "payment_timing": "arrears",
+          "amount": {"value": "60000", "unit": "CNY"},
+          "annual_growth_rate": "0",
+          "growth_interval_months": 12,
+          "lifetime": true,
+          "contract_end_age": 105,
+          "guaranteed_period_months": 240,
+          "guarantee_basis": "guaranteed",
+          "scenario_id": "guaranteed",
+          "rounding": "cent",
+          "contingency": "survival_or_guarantee_period",
+          "evidence_refs": ["ev-annuity"]
+        }
+      ],
+      "cash_values": [
+        {"policy_month": 12, "event_order": 90, "amount": {"value": "150000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 60, "event_order": 90, "amount": {"value": "900000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 120, "event_order": 90, "amount": {"value": "1050000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 228, "event_order": 90, "amount": {"value": "1200000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 240, "event_order": 90, "amount": {"value": "1200000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 300, "event_order": 90, "amount": {"value": "1100000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 360, "event_order": 90, "amount": {"value": "950000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 420, "event_order": 90, "amount": {"value": "800000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 480, "event_order": 90, "amount": {"value": "650000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 540, "event_order": 90, "amount": {"value": "450000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 600, "event_order": 90, "amount": {"value": "250000", "unit": "CNY"}, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "available", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 660, "event_order": 90, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "not_applicable", "timing": "anniversary_end", "evidence_refs": ["ev-cash"]},
+        {"policy_month": 780, "event_order": 90, "guarantee_basis": "guaranteed", "scenario_id": "guaranteed", "status": "not_applicable", "timing": "contract_end", "evidence_refs": ["ev-cash"]}
+      ],
+      "death_benefit": {
+        "guarantee_basis": "guaranteed",
+        "scenario_id": "guaranteed",
+        "boundary_order": "after_annuity",
+        "lookup": "at_or_before",
+        "cash_value_timing": "policy_month_state",
+        "evidence_refs": ["ev-death"],
+        "rule": {
+          "op": "max",
+          "evidence_refs": ["ev-death"],
+          "args": [
+            {
+              "op": "floor_zero",
+              "evidence_refs": ["ev-death"],
+              "arg": {
+                "op": "subtract",
+                "evidence_refs": ["ev-death"],
+                "left": {"op": "field", "name": "cumulative_premium", "evidence_refs": ["ev-death"]},
+                "right": {"op": "field", "name": "cumulative_annuity", "evidence_refs": ["ev-death"]}
+              }
+            },
+            {"op": "field", "name": "cash_value", "evidence_refs": ["ev-death", "ev-cash"]}
+          ]
+        },
+        "beneficiary_continuation": {
+          "mode": "remaining_guaranteed_annuity",
+          "through_policy_month": 468,
+          "evidence_refs": ["ev-annuity", "ev-death"]
+        }
+      },
+      "maturity_events": [],
+      "loan_terms": {
+        "available": true,
+        "limit_ratio": "0.8",
+        "eligible_value": "guaranteed_cash_value",
+        "interest_rate_status": "missing",
+        "evidence_refs": ["ev-loan"]
+      }
+    }
+  ],
+  "analysis_assumptions": {
+    "target_survival_ages": [60, 65, 70, 75, 80, 85, 90, 95, 100],
+    "target_death_ages": [41, 45, 50, 59, 65, 75, 85],
+    "inflation_rates": ["0.02", "0.03", "0.04"],
+    "benchmark_selection": "nearest disclosed tenor without interpolation",
+    "analysis_end_age": 105
+  }
+}

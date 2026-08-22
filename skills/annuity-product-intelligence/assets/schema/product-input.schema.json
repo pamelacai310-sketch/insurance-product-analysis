@@ -1,0 +1,300 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:annuity-product-intelligence:1.0.0:product-input",
+  "title": "Annuity Product Intelligence Product Input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "product", "sources", "evidence", "configurations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "product": {"$ref": "#/$defs/product"},
+    "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source"}},
+    "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}},
+    "configurations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/configuration"}},
+    "analysis_assumptions": {"$ref": "#/$defs/analysisAssumptions"}
+  },
+  "$defs": {
+    "decimal": {
+      "oneOf": [
+        {"type": "string", "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?$"},
+        {"type": "number"}
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "money": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {"$ref": "#/$defs/decimal"},
+        "unit": {"type": "string", "minLength": 1},
+        "basis_kind": {"enum": ["basic_amount", "annual_premium", "total_premium"]},
+        "basis_value": {"$ref": "#/$defs/decimal"},
+        "basis_unit": {"type": "string", "minLength": 1},
+        "rounding": {"enum": ["none", "cent", "whole"]}
+      }
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "product_id", "name", "insurer", "currency", "jurisdiction", "document_version",
+        "effective_date", "product_type", "analysis_only", "evidence_refs"
+      ],
+      "properties": {
+        "product_id": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "insurer": {"type": "string", "minLength": 1},
+        "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+        "jurisdiction": {"type": "string", "minLength": 1},
+        "document_version": {"type": "string", "minLength": 1},
+        "effective_date": {"type": "string", "minLength": 1},
+        "product_type": {"type": "string", "minLength": 1},
+        "analysis_only": {"const": true},
+        "evidence_refs": {"$ref": "#/$defs/evidenceRefs"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "path", "sha256", "document_type", "version", "authority"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "document_type": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "effective_date": {"type": "string"},
+        "authority": {"enum": ["contract", "rate_table", "cash_value_table", "illustration", "product_summary", "benchmark", "synthetic_fixture"]},
+        "embedded_fixture": {"type": "boolean"},
+        "extraction": {"type": "object"}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "source_id", "raw_text_sha256", "extractor", "extractor_version", "confidence", "status"],
+      "properties": {
+        "evidence_id": {"type": "string", "minLength": 1},
+        "source_id": {"type": "string", "minLength": 1},
+        "page": {"type": "integer", "minimum": 1},
+        "bbox": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "number"}},
+        "sheet": {"type": "string"},
+        "cell_range": {"type": "string"},
+        "row_label": {"type": "string"},
+        "column_label": {"type": "string"},
+        "raw_text": {"type": "string"},
+        "raw_value": {},
+        "raw_text_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "unit_text": {"type": "string"},
+        "extractor": {"type": "string", "minLength": 1},
+        "extractor_version": {"type": "string", "minLength": 1},
+        "confidence": {"$ref": "#/$defs/decimal"},
+        "status": {"enum": ["verified", "extracted", "resolved", "unresolved"]},
+        "transformation": {"type": "string"}
+      },
+      "anyOf": [
+        {"required": ["page"]},
+        {"required": ["sheet", "cell_range"]}
+      ]
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "published_issue_age", "rate_class", "premium_term_months", "annuity_start_age",
+        "annuity_frequency_per_year", "guarantee_option", "premium_mode", "proportionality_verified"
+      ],
+      "properties": {
+        "published_issue_age": {"type": "integer", "minimum": 0},
+        "rate_class": {"type": "string", "minLength": 1},
+        "premium_term_months": {"type": "integer", "minimum": 0},
+        "annuity_start_age": {"type": "integer", "minimum": 0},
+        "annuity_frequency_per_year": {"type": "integer", "minimum": 1},
+        "guarantee_option": {"type": "string", "minLength": 1},
+        "premium_mode": {"type": "string", "minLength": 1},
+        "product_option_code": {"type": "string"},
+        "proportionality_verified": {"type": "boolean"}
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_month", "event_order", "status", "evidence_refs"],
+      "properties": {
+        "policy_month": {"type": "integer", "minimum": 0},
+        "event_order": {"type": "integer"},
+        "amount": {"$ref": "#/$defs/money"},
+        "guarantee_basis": {"enum": ["guaranteed", "illustrated", "non_guaranteed"]},
+        "scenario_id": {"type": "string"},
+        "scenario_composition": {"enum": ["total", "incremental"], "description": "For non-guaranteed values: complete event-type replacement or disclosed increment. Cash-value and death-benefit schedules must be total."},
+        "status": {"enum": ["available", "missing", "not_applicable", "unresolved"]},
+        "timing": {"type": "string"},
+        "evidence_refs": {"$ref": "#/$defs/evidenceRefs"},
+        "contingency": {"type": "string"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "available"}}, "required": ["status"]},
+          "then": {"required": ["amount", "guarantee_basis"]}
+        }
+      ]
+    },
+    "premiumEvent": {
+      "allOf": [
+        {"$ref": "#/$defs/event"},
+        {
+          "type": "object",
+          "required": ["amount", "guarantee_basis", "scenario_id", "status"],
+          "properties": {
+            "guarantee_basis": {"const": "guaranteed"},
+            "scenario_id": {"const": "guaranteed"},
+            "status": {"const": "available"}
+          }
+        }
+      ]
+    },
+    "annuityRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id", "first_payment_month", "frequency_months", "payment_timing", "amount",
+        "annual_growth_rate", "growth_interval_months", "lifetime", "guarantee_basis", "scenario_id",
+        "rounding", "evidence_refs", "contingency"
+      ],
+      "properties": {
+        "rule_id": {"type": "string", "minLength": 1},
+        "first_payment_month": {"type": "integer", "minimum": 0},
+        "frequency_months": {"type": "integer", "minimum": 1},
+        "payment_timing": {"enum": ["advance", "arrears", "explicit"]},
+        "amount": {"$ref": "#/$defs/money"},
+        "annual_growth_rate": {"$ref": "#/$defs/decimal", "description": "Annual-effective rate applied at growth-interval boundaries using elapsed policy months."},
+        "growth_interval_months": {"type": "integer", "minimum": 1},
+        "lifetime": {"type": "boolean"},
+        "contract_end_age": {"type": "integer", "minimum": 0},
+        "last_payment_month": {"type": "integer", "minimum": 0},
+        "payment_count": {"type": "integer", "minimum": 1},
+        "guaranteed_period_months": {"type": "integer", "minimum": 0},
+        "guarantee_basis": {"enum": ["guaranteed", "illustrated", "non_guaranteed"]},
+        "scenario_id": {"type": "string", "minLength": 1},
+        "scenario_composition": {"enum": ["total", "incremental"], "description": "Complete annuity schedule replacement or disclosed increment relative to the guaranteed base."},
+        "rounding": {"enum": ["none", "cent", "whole"]},
+        "evidence_refs": {"$ref": "#/$defs/evidenceRefs"},
+        "contingency": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"lifetime": {"const": true}}, "required": ["lifetime"]},
+          "then": {
+            "required": ["contract_end_age"],
+            "not": {"anyOf": [{"required": ["last_payment_month"]}, {"required": ["payment_count"]}]}
+          },
+          "else": {
+            "oneOf": [
+              {"required": ["last_payment_month"], "not": {"required": ["payment_count"]}},
+              {"required": ["payment_count"], "not": {"required": ["last_payment_month"]}}
+            ],
+            "not": {"required": ["contract_end_age"]}
+          }
+        }
+      ]
+    },
+    "ast": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "evidence_refs"],
+      "properties": {
+        "op": {"enum": ["constant", "scalar_constant", "field", "add", "subtract", "multiply", "max", "min", "floor_zero", "if_period"]},
+        "evidence_refs": {"$ref": "#/$defs/evidenceRefs"},
+        "amount": {"$ref": "#/$defs/money"},
+        "value": {"$ref": "#/$defs/decimal"},
+        "name": {"enum": ["basic_amount", "cash_value", "cumulative_annuity", "cumulative_premium", "policy_month", "total_premium"]},
+        "args": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/ast"}},
+        "left": {"$ref": "#/$defs/ast"},
+        "right": {"$ref": "#/$defs/ast"},
+        "arg": {"$ref": "#/$defs/ast"},
+        "policy_month_min": {"type": "integer", "minimum": 0},
+        "policy_month_max": {"type": "integer", "minimum": 0},
+        "then": {"$ref": "#/$defs/ast"},
+        "else": {"$ref": "#/$defs/ast"}
+      }
+    },
+    "beneficiaryContinuation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "through_policy_month", "evidence_refs"],
+      "properties": {
+        "mode": {"const": "remaining_guaranteed_annuity"},
+        "through_policy_month": {"type": "integer", "minimum": 0},
+        "evidence_refs": {"$ref": "#/$defs/evidenceRefs"}
+      }
+    },
+    "deathBenefit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["guarantee_basis", "scenario_id", "boundary_order", "evidence_refs"],
+      "properties": {
+        "guarantee_basis": {"enum": ["guaranteed", "illustrated", "non_guaranteed"]},
+        "scenario_id": {"type": "string"},
+        "boundary_order": {"enum": ["before_annuity", "after_annuity", "unresolved"]},
+        "schedule": {"type": "array", "items": {"$ref": "#/$defs/event"}},
+        "lookup": {"enum": ["exact", "at_or_before"]},
+        "rule": {"$ref": "#/$defs/ast"},
+        "cash_value_timing": {"enum": ["policy_month_state", "respect_event_order"]},
+        "beneficiary_continuation": {"$ref": "#/$defs/beneficiaryContinuation"},
+        "evidence_refs": {"$ref": "#/$defs/evidenceRefs"}
+      },
+      "oneOf": [
+        {"required": ["schedule"], "not": {"required": ["rule"]}},
+        {"required": ["rule"], "not": {"required": ["schedule"]}}
+      ]
+    },
+    "loanTerms": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["available", "evidence_refs"],
+      "properties": {
+        "available": {"type": "boolean"},
+        "limit_ratio": {"$ref": "#/$defs/decimal"},
+        "eligible_value": {"type": "string"},
+        "interest_rate_status": {"enum": ["available", "missing", "not_applicable"]},
+        "interest_rate": {"$ref": "#/$defs/decimal"},
+        "evidence_refs": {"$ref": "#/$defs/evidenceRefs"}
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["configuration_id", "dimensions", "dimension_evidence_refs", "premium_events", "annuity_rules", "cash_values"],
+      "properties": {
+        "configuration_id": {"type": "string", "minLength": 1},
+        "dimensions": {"$ref": "#/$defs/dimensions"},
+        "dimension_evidence_refs": {"$ref": "#/$defs/evidenceRefs"},
+        "basic_amount": {"$ref": "#/$defs/money"},
+        "premium_events": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/premiumEvent"}},
+        "annuity_rules": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/annuityRule"}},
+        "cash_values": {"type": "array", "items": {"$ref": "#/$defs/event"}},
+        "death_benefit": {"$ref": "#/$defs/deathBenefit"},
+        "maturity_events": {"type": "array", "items": {"$ref": "#/$defs/event"}},
+        "loan_terms": {"$ref": "#/$defs/loanTerms"},
+        "notes": {"type": "string"}
+      }
+    },
+    "analysisAssumptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "target_survival_ages": {"type": "array", "items": {"type": "integer", "minimum": 0}},
+        "target_death_ages": {"type": "array", "items": {"type": "integer", "minimum": 0}},
+        "inflation_rates": {"type": "array", "items": {"$ref": "#/$defs/decimal"}},
+        "benchmark_selection": {"type": "string"},
+        "analysis_end_age": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

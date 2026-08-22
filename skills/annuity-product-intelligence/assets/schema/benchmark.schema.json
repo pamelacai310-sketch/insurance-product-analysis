@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:annuity-product-intelligence:1.0.0:benchmark",
+  "title": "Immutable Relative-Value Benchmark Snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "benchmark_id", "currency", "as_of_date", "compounding", "day_count", "source_sha256", "points"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "benchmark_id": {"type": "string", "minLength": 1},
+    "currency": {"type": "string", "pattern": "^[A-Z]{3}$"},
+    "as_of_date": {"type": "string", "minLength": 1},
+    "compounding": {"const": "annual_effective"},
+    "day_count": {"type": "string", "minLength": 1},
+    "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "points": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["term_years", "annual_effective_rate"],
+        "properties": {
+          "term_years": {"oneOf": [{"type": "string"}, {"type": "number"}]},
+          "annual_effective_rate": {"oneOf": [{"type": "string"}, {"type": "number"}]},
+          "label": {"type": "string"}
+        }
+      }
+    }
+  }
+}
