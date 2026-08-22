@@ -1,0 +1,4 @@
+interface:
+  display_name: "Leveraged Life Product Intelligence"
+  short_description: "Audit leveraged-life product economics without client data"
+  default_prompt: "Use $leveraged-life-product-intelligence to analyze this product benchmark and produce auditable metrics."

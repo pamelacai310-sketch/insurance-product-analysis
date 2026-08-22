@@ -1,0 +1,11 @@
+{
+  "case_id": "LLPI-STD-1PAY-100K-v1",
+  "fingerprint_id": "58d2451b13d1ff9f",
+  "guaranteed_breakeven_year": 3,
+  "rows": {
+    "1": {"death_leverage": 5.0, "death_irr": 4.0, "cash_value_irr": -0.2, "protection_liquidity_ratio": 6.25, "real_death_benefit": "490196.08"},
+    "5": {"death_leverage": 5.0, "death_irr": 0.379729661461, "cash_value_irr": 0.019244876492, "protection_liquidity_ratio": 4.545454545455, "real_death_benefit": "452865.40"},
+    "10": {"death_leverage": 5.0, "death_irr": 0.174618943088, "cash_value_irr": 0.041379743993, "protection_liquidity_ratio": 3.333333333333, "real_death_benefit": "410174.15"},
+    "20": {"death_leverage": 5.0, "death_irr": 0.083798386735, "cash_value_irr": 0.046880234977, "protection_liquidity_ratio": 2.0, "real_death_benefit": "336485.67"}
+  }
+}

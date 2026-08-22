@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "analysis_scope": "product_only",
+  "product": {
+    "product_id": "synthetic-beta",
+    "name": "Synthetic Beta Whole Life",
+    "insurer": "Synthetic Fixture Mutual",
+    "currency": "CNY",
+    "product_type": "whole_life",
+    "jurisdiction": "TEST",
+    "participating": true
+  },
+  "sources": [
+    {"source_id": "src-beta", "title": "Synthetic Beta benchmark", "kind": "synthetic_benchmark", "version": "1.0.0", "document_sha256": "fae9451669d4e8b85cccb5281eae6f4436bfde62fec436dfe1d3c1ba284c4479"}
+  ],
+  "evidence": [
+    {"evidence_id": "ev-beta-table", "source_id": "src-beta", "document_sha256": "fae9451669d4e8b85cccb5281eae6f4436bfde62fec436dfe1d3c1ba284c4479", "page": 1, "bbox": [0, 0, 1, 1], "raw_text": "Synthetic single-pay beta benchmark schedule", "content_sha256": "fae9451669d4e8b85cccb5281eae6f4436bfde62fec436dfe1d3c1ba284c4479", "extractor": "manual_gold_fixture", "extractor_version": "1.0.0", "confidence": 1.0, "reason_codes": ["synthetic_fixture"]}
+  ],
+  "cases": [
+    {
+      "case_id": "LLPI-STD-1PAY-100K-v1",
+      "label": "One payment of CNY 100,000; no personal attributes",
+      "basis": {"kind": "standard_benchmark", "benchmark_version": "1.0.0"},
+      "timing": {"issue_date": "2026-01-01", "premium_timing": "explicit_dates", "benefit_timing": "projection_date"},
+      "amount_scale": "currency_unit",
+      "inflation_rate": "0.02",
+      "premium_cashflows": [{"date": "2026-01-01", "time_years": "0", "amount": "100000.00"}],
+      "scenario_definitions": {"current": {"label": "Current non-guaranteed illustration", "guaranteed": false}},
+      "projection": [
+        {"policy_year": 1, "date": "2026-12-31", "time_years": "1", "death_benefit": {"guaranteed": "450000.00", "scenarios": {"current": "480000.00"}}, "cash_surrender_value": {"guaranteed": "90000.00", "scenarios": {"current": "95000.00"}}},
+        {"policy_year": 3, "date": "2028-12-31", "time_years": "3", "death_benefit": {"guaranteed": "450000.00", "scenarios": {"current": "500000.00"}}, "cash_surrender_value": {"guaranteed": "110000.00", "scenarios": {"current": "120000.00"}}},
+        {"policy_year": 5, "date": "2030-12-31", "time_years": "5", "death_benefit": {"guaranteed": "450000.00", "scenarios": {"current": "520000.00"}}, "cash_surrender_value": {"guaranteed": "130000.00", "scenarios": {"current": "150000.00"}}},
+        {"policy_year": 10, "date": "2035-12-31", "time_years": "10", "death_benefit": {"guaranteed": "450000.00", "scenarios": {"current": "540000.00"}}, "cash_surrender_value": {"guaranteed": "180000.00", "scenarios": {"current": "230000.00"}}},
+        {"policy_year": 20, "date": "2045-12-31", "time_years": "20", "death_benefit": {"guaranteed": "450000.00", "scenarios": {"current": "600000.00"}}, "cash_surrender_value": {"guaranteed": "300000.00", "scenarios": {"current": "420000.00"}}},
+        {"policy_year": 30, "date": "2055-12-31", "time_years": "30", "death_benefit": {"guaranteed": "450000.00", "scenarios": {"current": "680000.00"}}, "cash_surrender_value": {"guaranteed": "420000.00", "scenarios": {"current": "620000.00"}}}
+      ]
+    }
+  ],
+  "provenance": {
+    "/product": {"evidence_ids": ["ev-beta-table"], "extractor": "manual_gold_fixture", "extractor_version": "1.0.0", "confidence": 1.0, "status": "accepted", "reason_codes": ["synthetic_fixture"]},
+    "/cases/0": {"evidence_ids": ["ev-beta-table"], "extractor": "manual_gold_fixture", "extractor_version": "1.0.0", "confidence": 1.0, "status": "accepted", "reason_codes": ["synthetic_fixture"]},
+    "/cases/0/premium_cashflows": {"evidence_ids": ["ev-beta-table"], "extractor": "manual_gold_fixture", "extractor_version": "1.0.0", "confidence": 1.0, "status": "accepted", "reason_codes": ["synthetic_fixture"]},
+    "/cases/0/projection": {"evidence_ids": ["ev-beta-table"], "extractor": "manual_gold_fixture", "extractor_version": "1.0.0", "confidence": 1.0, "status": "accepted", "reason_codes": ["synthetic_fixture"]}
+  }
+}

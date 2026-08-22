@@ -51,6 +51,21 @@ python3 skills/compare-insurance-products/scripts/insurance_compare.py compare \
 
 输入规范见[输入结构](skills/compare-insurance-products/references/input-schema.md)，计算规则见[计算与审计规则](skills/compare-insurance-products/references/calculation-rules.md)。
 
+## 杠杆寿险产品智能 v1.0.0
+
+[`$leveraged-life-product-intelligence`](skills/leveraged-life-product-intelligence/) 是独立的 product-only Skill：它不依赖客户年龄、收入、资产负债、家庭责任、健康或风险偏好，只在显式标准基准现金流下重建保证/演示利益，计算身故杠杆、Death IRR/XIRR、现金价值 IRR/XIRR、回本、非保证依赖度、保障—流动性比和通胀调整身故金。
+
+```bash
+python3 skills/leveraged-life-product-intelligence/scripts/llpi.py benchmark
+
+python3 skills/leveraged-life-product-intelligence/scripts/llpi.py analyze \
+  --input skills/leveraged-life-product-intelligence/assets/benchmarks/single-pay-alpha.json \
+  --strict-evidence \
+  --output outputs/leveraged_life_analysis.json
+```
+
+PDF 先经 PyMuPDF/Camelot/Docling 的延迟导入分层解析；LLM 兜底默认关闭且只处理未解决字段，所有数学仍由确定性 Decimal 引擎完成。完整安装、schema、公式、benchmark 和许可说明见[Skill README](skills/leveraged-life-product-intelligence/README.md)。
+
 ## 条款报告衔接
 
 `insurance-clause-insights` 生成的条款报告只能先做资料准备度审计：
@@ -110,6 +125,7 @@ python3 ric_dividend_estimator.py --basic-amount 100000 \
 ```bash
 python3 -m unittest discover -v
 python3 skills/compare-insurance-products/scripts/insurance_compare.py self-test
+python3 -m unittest -v tests.test_leveraged_life_product_intelligence
 ```
 
 结果仅用于产品核算复核，不替代保险公司正式投保计划书，也不构成保险、法律或投资建议。

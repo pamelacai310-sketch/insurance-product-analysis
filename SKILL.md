@@ -9,6 +9,8 @@ dependencies:
 
 正式分析必须使用 `skills/compare-insurance-products/` 的规范和确定性计算器。
 
+若任务明确要求“不使用客户资料，只分析杠杆终身寿险产品自身经济价值”，应改用独立的 `skills/leveraged-life-product-intelligence/`。该 Skill 使用标准 benchmark、证据/置信度路由和确定性 Death IRR/XIRR 引擎，不执行客户适配或保障缺口分析。
+
 ## 工作流
 
 1. 收集同一版本的正式费率表、现金价值表、条款和利益演示。

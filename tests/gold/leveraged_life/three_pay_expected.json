@@ -1,0 +1,14 @@
+{
+  "case_id": "LLPI-STD-3PAY-100K-v1",
+  "fingerprint_id": "4a996279c8f29118",
+  "guaranteed_breakeven_year": 4,
+  "rows": {
+    "1": {"cumulative_premium": "100000.00", "death_leverage": 6.0, "death_irr": 5.0, "cash_value_irr": -0.3},
+    "2": {"cumulative_premium": "200000.00", "death_leverage": 3.0, "death_irr": 1.0, "cash_value_irr": -0.139852949127},
+    "3": {"cumulative_premium": "300000.00", "death_leverage": 2.0, "death_irr": 0.38919359654, "cash_value_irr": -0.051763167766},
+    "4": {"cumulative_premium": "300000.00", "death_leverage": 2.0, "death_irr": 0.252856888297, "cash_value_irr": 0.010976504069},
+    "5": {"cumulative_premium": "300000.00", "death_leverage": 2.0, "death_irr": 0.186324567731, "cash_value_irr": 0.031701748896},
+    "10": {"cumulative_premium": "300000.00", "death_leverage": 2.0, "death_irr": 0.079823950018, "cash_value_irr": 0.069489385823, "death_non_guaranteed_dependency": 0.2, "cash_non_guaranteed_dependency": 0.214285714286, "protection_liquidity_ratio": 1.090909090909, "real_death_benefit": "492208.98"},
+    "20": {"cumulative_premium": "300000.00", "death_leverage": 2.0, "death_irr": 0.037130861786, "cash_value_irr": 0.036214993506}
+  }
+}
