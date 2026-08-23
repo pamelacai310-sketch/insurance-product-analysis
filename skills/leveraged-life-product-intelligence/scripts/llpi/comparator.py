@@ -178,6 +178,21 @@ def _find_row(case: dict, horizon: int) -> Optional[dict]:
     )
 
 
+def _stress_real_amount(
+    row: Optional[dict], rate: str, scenario_id: Optional[str] = None
+) -> Optional[float]:
+    if row is None:
+        return None
+    values = (
+        row.get("guaranteed", {})
+        if scenario_id is None
+        else row.get("scenarios", {}).get(scenario_id, {})
+    )
+    stress = values.get("death_benefit_purchasing_power_stress", {}).get(rate, {})
+    amount = stress.get("real_amount")
+    return None if amount is None else float(amount)
+
+
 def _rank(observations: List[dict], higher_is_mechanical: bool) -> List[dict]:
     available = [item for item in observations if item["value"] is not None]
     available.sort(
@@ -331,15 +346,15 @@ def compare_reports(
             ),
             "guaranteed_death_xirr": _observation_set(
                 horizon_peers,
-                guaranteed_metric("death_xirr"),
+                guaranteed_metric("conditional_death_xirr"),
                 "higher_mechanical",
-                "Higher is a mechanical cashflow return at this assumed death date, not an investment promise.",
+                "Higher is a mechanical cashflow return conditional on death at this assumed date, not an investment promise or survival-weighted return.",
             ),
             "guaranteed_death_irr": _observation_set(
                 horizon_peers,
-                guaranteed_metric("death_irr"),
+                guaranteed_metric("conditional_death_irr"),
                 "higher_mechanical",
-                "Higher is a periodic-time mechanical cashflow return at this assumed death point, not an investment promise.",
+                "Higher is a periodic-time cashflow return conditional on death at this assumed point, not an investment promise or survival-weighted return.",
             ),
             "guaranteed_cash_value_xirr": _observation_set(
                 horizon_peers,
@@ -365,6 +380,12 @@ def compare_reports(
                 "higher_mechanical",
                 "Higher is a larger death benefit in common benchmark-date purchasing-power units under the same explicit inflation assumption and premium basis.",
             ),
+            "guaranteed_death_benefit_purchasing_power_retention": _observation_set(
+                horizon_peers,
+                guaranteed_metric("death_benefit_purchasing_power_retention"),
+                "higher_mechanical",
+                "Higher means a larger fraction of nominal death benefit purchasing power is retained under the same explicit inflation assumption.",
+            ),
             "protection_liquidity_ratio": _observation_set(
                 horizon_peers,
                 guaranteed_metric("protection_liquidity_ratio"),
@@ -372,6 +393,24 @@ def compare_reports(
                 "Higher is more protection-weighted and lower is more liquidity-weighted; neither is universally superior.",
             ),
         }
+        metrics["guaranteed_conditional_death_xirr"] = metrics[
+            "guaranteed_death_xirr"
+        ]
+        metrics["guaranteed_conditional_death_irr"] = metrics[
+            "guaranteed_death_irr"
+        ]
+        metrics["death_benefit_cv_ratio"] = metrics[
+            "protection_liquidity_ratio"
+        ]
+        for stress_rate in ("0.00", "0.02", "0.03", "0.04"):
+            metrics[f"guaranteed_real_death_benefit_inflation_{stress_rate}"] = (
+                _observation_set(
+                    horizon_peers,
+                    lambda row, rate=stress_rate: _stress_real_amount(row, rate),
+                    "higher_mechanical",
+                    f"Higher is a larger guaranteed death benefit in today's money under a fixed {float(stress_rate):.0%} inflation stress.",
+                )
+            )
         common_scenarios = None
         for _, _, row in horizon_peers:
             row_scenarios = set() if row is None else set(row.get("scenarios", {}))
@@ -381,6 +420,65 @@ def compare_reports(
                 else common_scenarios & row_scenarios
             )
         for scenario_id in sorted(common_scenarios or set()):
+            def scenario_metric(name: str, sid: str = scenario_id):
+                return lambda row: (
+                    None
+                    if row is None
+                    else _metric_value(row["scenarios"][sid].get(name))
+                )
+
+            metrics[f"{scenario_id}_death_leverage"] = _observation_set(
+                horizon_peers,
+                scenario_metric("death_leverage"),
+                "higher_mechanical",
+                "Higher means more illustrated death benefit per premium paid under this named non-guaranteed scenario.",
+            )
+            metrics[f"{scenario_id}_conditional_death_xirr"] = _observation_set(
+                horizon_peers,
+                scenario_metric("conditional_death_xirr"),
+                "higher_mechanical",
+                "Higher is an illustrated cashflow return conditional on death at this date; it remains non-guaranteed and is not an investment promise.",
+            )
+            metrics[f"{scenario_id}_conditional_death_irr"] = _observation_set(
+                horizon_peers,
+                scenario_metric("conditional_death_irr"),
+                "higher_mechanical",
+                "Higher is an illustrated periodic-time return conditional on death at this point; it remains non-guaranteed.",
+            )
+            metrics[f"{scenario_id}_cash_value_xirr"] = _observation_set(
+                horizon_peers,
+                scenario_metric("cash_value_xirr"),
+                "higher_mechanical",
+                "Higher is an illustrated surrender cashflow return under this named non-guaranteed scenario.",
+            )
+            metrics[f"{scenario_id}_cash_value_irr"] = _observation_set(
+                horizon_peers,
+                scenario_metric("cash_value_irr"),
+                "higher_mechanical",
+                "Higher is an illustrated periodic-time surrender return under this named non-guaranteed scenario.",
+            )
+            metrics[f"{scenario_id}_cash_value_premium_recovery"] = (
+                _observation_set(
+                    horizon_peers,
+                    scenario_metric("cash_value_premium_recovery"),
+                    "higher_mechanical",
+                    "Higher means more illustrated surrender value per cumulative premium under this named non-guaranteed scenario.",
+                )
+            )
+            metrics[f"{scenario_id}_death_benefit_cv_ratio"] = _observation_set(
+                horizon_peers,
+                scenario_metric("death_benefit_cv_ratio"),
+                "orientation_only",
+                "Higher is more protection-weighted and lower is more liquidity-weighted within this illustrated scenario; neither is universally superior.",
+            )
+            metrics[
+                f"{scenario_id}_death_benefit_purchasing_power_retention"
+            ] = _observation_set(
+                horizon_peers,
+                scenario_metric("death_benefit_purchasing_power_retention"),
+                "higher_mechanical",
+                "Higher means more purchasing power is retained under the common inflation assumption; the illustrated amount remains non-guaranteed.",
+            )
             metrics[f"{scenario_id}_death_non_guaranteed_dependency"] = (
                 _observation_set(
                     horizon_peers,
@@ -411,6 +509,23 @@ def compare_reports(
                     "Lower means less of the illustrated surrender value depends on non-guaranteed values.",
                 )
             )
+            metrics[f"{scenario_id}_death_ngr"] = metrics[
+                f"{scenario_id}_death_non_guaranteed_dependency"
+            ]
+            metrics[f"{scenario_id}_cash_value_ngr"] = metrics[
+                f"{scenario_id}_cash_value_non_guaranteed_dependency"
+            ]
+            for stress_rate in ("0.00", "0.02", "0.03", "0.04"):
+                metrics[
+                    f"{scenario_id}_real_death_benefit_inflation_{stress_rate}"
+                ] = _observation_set(
+                    horizon_peers,
+                    lambda row, sid=scenario_id, rate=stress_rate: (
+                        _stress_real_amount(row, rate, sid)
+                    ),
+                    "higher_mechanical",
+                    f"Higher is a larger illustrated death benefit in today's money under a fixed {float(stress_rate):.0%} inflation stress; the benefit remains non-guaranteed.",
+                )
         horizon_results.append({"policy_year": horizon, "metrics": metrics})
 
     breakeven_peers = []
@@ -425,6 +540,25 @@ def compare_reports(
         "lower_mechanical",
         "Earlier observed guaranteed cash-value breakeven is mechanically earlier; no interpolation is used.",
     )
+    irr_breakeven: Dict[str, Any] = {}
+    for threshold in ("0.01", "0.02", "0.03"):
+        threshold_peers = []
+        for product_id, product_name, case in peers:
+            item = case["summary"]["guaranteed_cash_value_irr_breakeven"].get(
+                threshold, {}
+            )
+            value = item.get("first", {}).get("value")
+            threshold_peers.append((product_id, product_name, {"value": value}))
+        irr_breakeven[threshold] = _observation_set(
+            threshold_peers,
+            lambda item: (
+                None
+                if item is None or item["value"] is None
+                else float(item["value"])
+            ),
+            "lower_mechanical",
+            f"Earlier first observed guaranteed cash-value IRR at or above {float(threshold):.0%} is mechanically earlier; no interpolation is used.",
+        )
     return {
         "comparison_version": COMPARATOR_VERSION,
         "case_id": case_id,
@@ -434,5 +568,11 @@ def compare_reports(
         "currency": next(iter(currencies)),
         "products": [product_id for product_id, _, _ in peers],
         "guaranteed_breakeven": breakeven,
+        "guaranteed_cash_value_irr_breakeven": irr_breakeven,
+        "decision_scope": {
+            "ranking_unit": "metric_by_policy_year_and_named_scenario",
+            "overall_winner": None,
+            "statement": "Rankings are local to each disclosed horizon, metric, guarantee basis, and named scenario. They must not be described as a full-cycle overall winner.",
+        },
         "horizons": horizon_results,
     }

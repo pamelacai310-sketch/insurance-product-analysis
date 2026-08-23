@@ -1,0 +1,41 @@
+{
+  "annual_value_counts": {
+    "allianz_grade_a": 76,
+    "allianz_grade_b": 76,
+    "allianz_grade_c": 76,
+    "allianz_grade_d": 76,
+    "allianz_grade_e": 76,
+    "wwa": 75,
+    "wwb_plan_1": 75,
+    "wwb_plan_2": 75
+  },
+  "benchmark_case_id": "LLPI-STD-10PAY-100K-v1",
+  "canonical_files": [
+    "wwa-fortune-life-2025.json",
+    "wwb-bonjour-2025-plan-1.json",
+    "wwb-bonjour-2025-plan-2.json",
+    "allianz-prosperous-legacy-c-5-grade-a.json",
+    "allianz-prosperous-legacy-c-5-grade-b.json",
+    "allianz-prosperous-legacy-c-5-grade-c.json",
+    "allianz-prosperous-legacy-c-5-grade-d.json",
+    "allianz-prosperous-legacy-c-5-grade-e.json"
+  ],
+  "formal_illustration_counts": {
+    "wwb_plan_1": 65,
+    "wwb_plan_2": 65
+  },
+  "generated_by": "build_reference_products.py",
+  "schema_version": "1.0.0",
+  "source_sha256": {
+    "allianz_cash": "f0e7b52a4d736f8d66bad7bd754fa766a52ef1b43daaa3a1deb07bcae5709292",
+    "allianz_rates": "f17bc8d58da1ec1ef789747b4cf424056bb9b80ca60a3a80dbd88d38b8c2c417",
+    "allianz_terms": "88a2b291c202347296c83e380f8bf0658e2ec5e2d6ba4a5bf6b0dbb5ca485383",
+    "wwa_cash": "2a890f7e1222d4e2f37e739c49f56191f9139d7e45455bff28054399ec78fcad",
+    "wwa_rates": "7443a958ac6cf440354ffe8c0cd6f6f02642ff76596a2386d69cf6ad169133e6",
+    "wwa_terms": "6ffe302e93b9caccdcdd563eb1c3999929fc741f815f98aba385f07367f3616c",
+    "wwb_cash": "9505ded94c03d190a802bce473363cf5d9b9c3e76c58d90b0ea29279344de211",
+    "wwb_illustration": "f1b48215e69a790219c22bd3f893449482182b9ae7eee5a47bafb5840f89bcb1",
+    "wwb_rates": "c3906411321de04fcbc486ab6908fa62c98cfd53b9facd6c9cc0b0ba4153c0ec",
+    "wwb_terms": "ca3c9f3be79a1f9f9563a5a0c0c49bac4a967163617b44186f3009d85647380d"
+  }
+}

@@ -1,0 +1,2553 @@
+{
+  "analysis_scope": "product_only",
+  "cases": [
+    {
+      "amount_scale": "currency_unit",
+      "basis": {
+        "benchmark_version": "1.0.0",
+        "kind": "standard_benchmark"
+      },
+      "case_id": "LLPI-STD-10PAY-100K-v1",
+      "inflation_rate": "0.02",
+      "label": "Ten-pay standard product experiment; official disclosed pricing row",
+      "premium_cashflows": [
+        {
+          "amount": "100000.00",
+          "date": "2026-01-01",
+          "time_years": "0"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2027-01-01",
+          "time_years": "1"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2028-01-01",
+          "time_years": "2"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2029-01-01",
+          "time_years": "3"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2030-01-01",
+          "time_years": "4"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2031-01-01",
+          "time_years": "5"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2032-01-01",
+          "time_years": "6"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2033-01-01",
+          "time_years": "7"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2034-01-01",
+          "time_years": "8"
+        },
+        {
+          "amount": "100000.00",
+          "date": "2035-01-01",
+          "time_years": "9"
+        }
+      ],
+      "projection": [
+        {
+          "cash_surrender_value": {
+            "guaranteed": "19357.11",
+            "scenarios": {}
+          },
+          "date": "2026-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 1,
+          "time_years": "1"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "55064.33",
+            "scenarios": {}
+          },
+          "date": "2027-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 2,
+          "time_years": "2"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "99642.20",
+            "scenarios": {}
+          },
+          "date": "2028-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 3,
+          "time_years": "3"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "150736.53",
+            "scenarios": {}
+          },
+          "date": "2029-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 4,
+          "time_years": "4"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "233223.58",
+            "scenarios": {}
+          },
+          "date": "2030-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 5,
+          "time_years": "5"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "334304.58",
+            "scenarios": {}
+          },
+          "date": "2031-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 6,
+          "time_years": "6"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "454984.39",
+            "scenarios": {}
+          },
+          "date": "2032-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 7,
+          "time_years": "7"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "596256.47",
+            "scenarios": {}
+          },
+          "date": "2033-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 8,
+          "time_years": "8"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "759106.65",
+            "scenarios": {}
+          },
+          "date": "2034-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 9,
+          "time_years": "9"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "944503.65",
+            "scenarios": {}
+          },
+          "date": "2035-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 10,
+          "time_years": "10"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "959942.14",
+            "scenarios": {}
+          },
+          "date": "2036-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 11,
+          "time_years": "11"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "975569.05",
+            "scenarios": {}
+          },
+          "date": "2037-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 12,
+          "time_years": "12"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "991378.65",
+            "scenarios": {}
+          },
+          "date": "2038-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 13,
+          "time_years": "13"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1007365.26",
+            "scenarios": {}
+          },
+          "date": "2039-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 14,
+          "time_years": "14"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1023521.24",
+            "scenarios": {}
+          },
+          "date": "2040-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 15,
+          "time_years": "15"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1039837.09",
+            "scenarios": {}
+          },
+          "date": "2041-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 16,
+          "time_years": "16"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1056309.00",
+            "scenarios": {}
+          },
+          "date": "2042-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 17,
+          "time_years": "17"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1072925.55",
+            "scenarios": {}
+          },
+          "date": "2043-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 18,
+          "time_years": "18"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1089688.64",
+            "scenarios": {}
+          },
+          "date": "2044-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 19,
+          "time_years": "19"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1106592.57",
+            "scenarios": {}
+          },
+          "date": "2045-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 20,
+          "time_years": "20"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1123639.24",
+            "scenarios": {}
+          },
+          "date": "2046-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 21,
+          "time_years": "21"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1140830.54",
+            "scenarios": {}
+          },
+          "date": "2047-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 22,
+          "time_years": "22"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1158170.30",
+            "scenarios": {}
+          },
+          "date": "2048-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 23,
+          "time_years": "23"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1175666.11",
+            "scenarios": {}
+          },
+          "date": "2049-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 24,
+          "time_years": "24"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1193323.69",
+            "scenarios": {}
+          },
+          "date": "2050-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 25,
+          "time_years": "25"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1211154.46",
+            "scenarios": {}
+          },
+          "date": "2051-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 26,
+          "time_years": "26"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1229166.03",
+            "scenarios": {}
+          },
+          "date": "2052-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 27,
+          "time_years": "27"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1247358.40",
+            "scenarios": {}
+          },
+          "date": "2053-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 28,
+          "time_years": "28"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1265720.16",
+            "scenarios": {}
+          },
+          "date": "2054-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 29,
+          "time_years": "29"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1284230.36",
+            "scenarios": {}
+          },
+          "date": "2055-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 30,
+          "time_years": "30"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1302854.75",
+            "scenarios": {}
+          },
+          "date": "2056-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 31,
+          "time_years": "31"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1321555.27",
+            "scenarios": {}
+          },
+          "date": "2057-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 32,
+          "time_years": "32"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1340297.66",
+            "scenarios": {}
+          },
+          "date": "2058-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 33,
+          "time_years": "33"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1359045.75",
+            "scenarios": {}
+          },
+          "date": "2059-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 34,
+          "time_years": "34"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1377765.30",
+            "scenarios": {}
+          },
+          "date": "2060-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 35,
+          "time_years": "35"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1396420.14",
+            "scenarios": {}
+          },
+          "date": "2061-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 36,
+          "time_years": "36"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1414976.02",
+            "scenarios": {}
+          },
+          "date": "2062-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 37,
+          "time_years": "37"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1433389.16",
+            "scenarios": {}
+          },
+          "date": "2063-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 38,
+          "time_years": "38"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1451617.69",
+            "scenarios": {}
+          },
+          "date": "2064-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 39,
+          "time_years": "39"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1469612.13",
+            "scenarios": {}
+          },
+          "date": "2065-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 40,
+          "time_years": "40"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1487326.81",
+            "scenarios": {}
+          },
+          "date": "2066-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 41,
+          "time_years": "41"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1504719.85",
+            "scenarios": {}
+          },
+          "date": "2067-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 42,
+          "time_years": "42"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1521751.29",
+            "scenarios": {}
+          },
+          "date": "2068-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 43,
+          "time_years": "43"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1538398.29",
+            "scenarios": {}
+          },
+          "date": "2069-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 44,
+          "time_years": "44"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1554634.21",
+            "scenarios": {}
+          },
+          "date": "2070-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 45,
+          "time_years": "45"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1570445.72",
+            "scenarios": {}
+          },
+          "date": "2071-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 46,
+          "time_years": "46"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1585821.41",
+            "scenarios": {}
+          },
+          "date": "2072-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 47,
+          "time_years": "47"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1600747.94",
+            "scenarios": {}
+          },
+          "date": "2073-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 48,
+          "time_years": "48"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1615215.82",
+            "scenarios": {}
+          },
+          "date": "2074-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 49,
+          "time_years": "49"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1629213.61",
+            "scenarios": {}
+          },
+          "date": "2075-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 50,
+          "time_years": "50"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1642735.61",
+            "scenarios": {}
+          },
+          "date": "2076-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 51,
+          "time_years": "51"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1655778.01",
+            "scenarios": {}
+          },
+          "date": "2077-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 52,
+          "time_years": "52"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1668337.01",
+            "scenarios": {}
+          },
+          "date": "2078-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 53,
+          "time_years": "53"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1680420.22",
+            "scenarios": {}
+          },
+          "date": "2079-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 54,
+          "time_years": "54"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1692035.25",
+            "scenarios": {}
+          },
+          "date": "2080-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 55,
+          "time_years": "55"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1703193.51",
+            "scenarios": {}
+          },
+          "date": "2081-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 56,
+          "time_years": "56"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1713908.34",
+            "scenarios": {}
+          },
+          "date": "2082-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 57,
+          "time_years": "57"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1724189.25",
+            "scenarios": {}
+          },
+          "date": "2083-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 58,
+          "time_years": "58"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1734047.66",
+            "scenarios": {}
+          },
+          "date": "2084-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 59,
+          "time_years": "59"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1743485.46",
+            "scenarios": {}
+          },
+          "date": "2085-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 60,
+          "time_years": "60"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1752508.37",
+            "scenarios": {}
+          },
+          "date": "2086-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 61,
+          "time_years": "61"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1761114.49",
+            "scenarios": {}
+          },
+          "date": "2087-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 62,
+          "time_years": "62"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1769309.53",
+            "scenarios": {}
+          },
+          "date": "2088-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 63,
+          "time_years": "63"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1777104.90",
+            "scenarios": {}
+          },
+          "date": "2089-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 64,
+          "time_years": "64"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1784525.35",
+            "scenarios": {}
+          },
+          "date": "2090-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 65,
+          "time_years": "65"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1791612.74",
+            "scenarios": {}
+          },
+          "date": "2091-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 66,
+          "time_years": "66"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1798443.21",
+            "scenarios": {}
+          },
+          "date": "2092-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 67,
+          "time_years": "67"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1805136.65",
+            "scenarios": {}
+          },
+          "date": "2093-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 68,
+          "time_years": "68"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1811889.08",
+            "scenarios": {}
+          },
+          "date": "2094-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 69,
+          "time_years": "69"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1819018.35",
+            "scenarios": {}
+          },
+          "date": "2095-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 70,
+          "time_years": "70"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1827063.03",
+            "scenarios": {}
+          },
+          "date": "2096-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 71,
+          "time_years": "71"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1836953.79",
+            "scenarios": {}
+          },
+          "date": "2097-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 72,
+          "time_years": "72"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1850369.21",
+            "scenarios": {}
+          },
+          "date": "2098-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 73,
+          "time_years": "73"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1870434.30",
+            "scenarios": {}
+          },
+          "date": "2099-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 74,
+          "time_years": "74"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "date": "2100-12-31",
+          "death_benefit": {
+            "guaranteed": "1903166.87",
+            "scenarios": {}
+          },
+          "policy_year": 75,
+          "time_years": "75"
+        }
+      ],
+      "scenario_definitions": {},
+      "timing": {
+        "benefit_timing": "projection_date",
+        "issue_date": "2026-01-01",
+        "premium_timing": "explicit_dates"
+      }
+    },
+    {
+      "amount_scale": "currency_unit",
+      "basis": {
+        "benchmark_version": "WWB-description-2026-v1",
+        "kind": "document_illustration"
+      },
+      "case_id": "WWB-DOC-P1-2026-v1",
+      "inflation_rate": "0.02",
+      "label": "Official WWB plan 1 benefit illustration; non-guaranteed scenario separated",
+      "premium_cashflows": [
+        {
+          "amount": "900360.00",
+          "date": "2026-01-01",
+          "time_years": "0"
+        },
+        {
+          "amount": "900360.00",
+          "date": "2027-01-01",
+          "time_years": "1"
+        },
+        {
+          "amount": "900360.00",
+          "date": "2028-01-01",
+          "time_years": "2"
+        },
+        {
+          "amount": "900360.00",
+          "date": "2029-01-01",
+          "time_years": "3"
+        },
+        {
+          "amount": "900360.00",
+          "date": "2030-01-01",
+          "time_years": "4"
+        },
+        {
+          "amount": "900360.00",
+          "date": "2031-01-01",
+          "time_years": "5"
+        }
+      ],
+      "projection": [
+        {
+          "cash_surrender_value": {
+            "guaranteed": "263310.00",
+            "scenarios": {
+              "illustrated": "266884.00"
+            }
+          },
+          "date": "2026-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10014164.00"
+            }
+          },
+          "policy_year": 1,
+          "time_years": "1"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "639740.00",
+            "scenarios": {
+              "illustrated": "652856.00"
+            }
+          },
+          "date": "2027-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10050424.00"
+            }
+          },
+          "policy_year": 2,
+          "time_years": "2"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "1114200.00",
+            "scenarios": {
+              "illustrated": "1143346.00"
+            }
+          },
+          "date": "2028-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10108698.00"
+            }
+          },
+          "policy_year": 3,
+          "time_years": "3"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "2083240.00",
+            "scenarios": {
+              "illustrated": "2148896.00"
+            }
+          },
+          "date": "2029-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10188944.00"
+            }
+          },
+          "policy_year": 4,
+          "time_years": "4"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "3390100.00",
+            "scenarios": {
+              "illustrated": "3514370.00"
+            }
+          },
+          "date": "2030-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10291104.00"
+            }
+          },
+          "policy_year": 5,
+          "time_years": "5"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5062370.00",
+            "scenarios": {
+              "illustrated": "5272520.00"
+            }
+          },
+          "date": "2031-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10415122.00"
+            }
+          },
+          "policy_year": 6,
+          "time_years": "6"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5146690.00",
+            "scenarios": {
+              "illustrated": "5424942.00"
+            }
+          },
+          "date": "2032-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10540642.00"
+            }
+          },
+          "policy_year": 7,
+          "time_years": "7"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5232110.00",
+            "scenarios": {
+              "illustrated": "5581457.00"
+            }
+          },
+          "date": "2033-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10667697.00"
+            }
+          },
+          "policy_year": 8,
+          "time_years": "8"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5318640.00",
+            "scenarios": {
+              "illustrated": "5742153.00"
+            }
+          },
+          "date": "2034-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10796281.00"
+            }
+          },
+          "policy_year": 9,
+          "time_years": "9"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5406270.00",
+            "scenarios": {
+              "illustrated": "5907122.00"
+            }
+          },
+          "date": "2035-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "10926428.00"
+            }
+          },
+          "policy_year": 10,
+          "time_years": "10"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5495020.00",
+            "scenarios": {
+              "illustrated": "6076475.00"
+            }
+          },
+          "date": "2036-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "11058149.00"
+            }
+          },
+          "policy_year": 11,
+          "time_years": "11"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5584890.00",
+            "scenarios": {
+              "illustrated": "6250318.00"
+            }
+          },
+          "date": "2037-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "11191480.00"
+            }
+          },
+          "policy_year": 12,
+          "time_years": "12"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5675880.00",
+            "scenarios": {
+              "illustrated": "6428737.00"
+            }
+          },
+          "date": "2038-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "11326414.00"
+            }
+          },
+          "policy_year": 13,
+          "time_years": "13"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5768030.00",
+            "scenarios": {
+              "illustrated": "6611884.00"
+            }
+          },
+          "date": "2039-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "11462985.00"
+            }
+          },
+          "policy_year": 14,
+          "time_years": "14"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5861340.00",
+            "scenarios": {
+              "illustrated": "6799872.00"
+            }
+          },
+          "date": "2040-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "11601224.00"
+            }
+          },
+          "policy_year": 15,
+          "time_years": "15"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "5955840.00",
+            "scenarios": {
+              "illustrated": "6992828.00"
+            }
+          },
+          "date": "2041-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "11741128.00"
+            }
+          },
+          "policy_year": 16,
+          "time_years": "16"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6051540.00",
+            "scenarios": {
+              "illustrated": "7190880.00"
+            }
+          },
+          "date": "2042-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "11882727.00"
+            }
+          },
+          "policy_year": 17,
+          "time_years": "17"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6148430.00",
+            "scenarios": {
+              "illustrated": "7394136.00"
+            }
+          },
+          "date": "2043-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "12026055.00"
+            }
+          },
+          "policy_year": 18,
+          "time_years": "18"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6246470.00",
+            "scenarios": {
+              "illustrated": "7602646.00"
+            }
+          },
+          "date": "2044-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "12171108.00"
+            }
+          },
+          "policy_year": 19,
+          "time_years": "19"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6345570.00",
+            "scenarios": {
+              "illustrated": "7816436.00"
+            }
+          },
+          "date": "2045-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "12317941.00"
+            }
+          },
+          "policy_year": 20,
+          "time_years": "20"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6445640.00",
+            "scenarios": {
+              "illustrated": "8035494.00"
+            }
+          },
+          "date": "2046-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "12466558.00"
+            }
+          },
+          "policy_year": 21,
+          "time_years": "21"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6546540.00",
+            "scenarios": {
+              "illustrated": "8259759.00"
+            }
+          },
+          "date": "2047-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "12616983.00"
+            }
+          },
+          "policy_year": 22,
+          "time_years": "22"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6648130.00",
+            "scenarios": {
+              "illustrated": "8489162.00"
+            }
+          },
+          "date": "2048-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "12769248.00"
+            }
+          },
+          "policy_year": 23,
+          "time_years": "23"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6750270.00",
+            "scenarios": {
+              "illustrated": "8723634.00"
+            }
+          },
+          "date": "2049-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "12923385.00"
+            }
+          },
+          "policy_year": 24,
+          "time_years": "24"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6852800.00",
+            "scenarios": {
+              "illustrated": "8963061.00"
+            }
+          },
+          "date": "2050-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "13079414.00"
+            }
+          },
+          "policy_year": 25,
+          "time_years": "25"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "6955580.00",
+            "scenarios": {
+              "illustrated": "9207352.00"
+            }
+          },
+          "date": "2051-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "13237361.00"
+            }
+          },
+          "policy_year": 26,
+          "time_years": "26"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7058430.00",
+            "scenarios": {
+              "illustrated": "9456358.00"
+            }
+          },
+          "date": "2052-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "13397254.00"
+            }
+          },
+          "policy_year": 27,
+          "time_years": "27"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7161170.00",
+            "scenarios": {
+              "illustrated": "9709909.00"
+            }
+          },
+          "date": "2053-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "13559109.00"
+            }
+          },
+          "policy_year": 28,
+          "time_years": "28"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7263590.00",
+            "scenarios": {
+              "illustrated": "9967801.00"
+            }
+          },
+          "date": "2054-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "13722967.00"
+            }
+          },
+          "policy_year": 29,
+          "time_years": "29"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7365490.00",
+            "scenarios": {
+              "illustrated": "10229822.00"
+            }
+          },
+          "date": "2055-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "13888855.00"
+            }
+          },
+          "policy_year": 30,
+          "time_years": "30"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7466640.00",
+            "scenarios": {
+              "illustrated": "10495710.00"
+            }
+          },
+          "date": "2056-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "14056805.00"
+            }
+          },
+          "policy_year": 31,
+          "time_years": "31"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7566840.00",
+            "scenarios": {
+              "illustrated": "10765235.00"
+            }
+          },
+          "date": "2057-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "14226856.00"
+            }
+          },
+          "policy_year": 32,
+          "time_years": "32"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7665880.00",
+            "scenarios": {
+              "illustrated": "11038113.00"
+            }
+          },
+          "date": "2058-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "14399017.00"
+            }
+          },
+          "policy_year": 33,
+          "time_years": "33"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7763550.00",
+            "scenarios": {
+              "illustrated": "11314081.00"
+            }
+          },
+          "date": "2059-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "14573334.00"
+            }
+          },
+          "policy_year": 34,
+          "time_years": "34"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7859670.00",
+            "scenarios": {
+              "illustrated": "11592877.00"
+            }
+          },
+          "date": "2060-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "14749827.00"
+            }
+          },
+          "policy_year": 35,
+          "time_years": "35"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "7954050.00",
+            "scenarios": {
+              "illustrated": "11874231.00"
+            }
+          },
+          "date": "2061-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "14928534.00"
+            }
+          },
+          "policy_year": 36,
+          "time_years": "36"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8046530.00",
+            "scenarios": {
+              "illustrated": "12157889.00"
+            }
+          },
+          "date": "2062-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "15109481.00"
+            }
+          },
+          "policy_year": 37,
+          "time_years": "37"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8136940.00",
+            "scenarios": {
+              "illustrated": "12443575.00"
+            }
+          },
+          "date": "2063-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "15292696.00"
+            }
+          },
+          "policy_year": 38,
+          "time_years": "38"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8225100.00",
+            "scenarios": {
+              "illustrated": "12730986.00"
+            }
+          },
+          "date": "2064-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "15478214.00"
+            }
+          },
+          "policy_year": 39,
+          "time_years": "39"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8310860.00",
+            "scenarios": {
+              "illustrated": "13019836.00"
+            }
+          },
+          "date": "2065-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "15666052.00"
+            }
+          },
+          "policy_year": 40,
+          "time_years": "40"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8394040.00",
+            "scenarios": {
+              "illustrated": "13309799.00"
+            }
+          },
+          "date": "2066-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "15856249.00"
+            }
+          },
+          "policy_year": 41,
+          "time_years": "41"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8474460.00",
+            "scenarios": {
+              "illustrated": "13600535.00"
+            }
+          },
+          "date": "2067-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "16048851.00"
+            }
+          },
+          "policy_year": 42,
+          "time_years": "42"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8551920.00",
+            "scenarios": {
+              "illustrated": "13891628.00"
+            }
+          },
+          "date": "2068-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "16243870.00"
+            }
+          },
+          "policy_year": 43,
+          "time_years": "43"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8626270.00",
+            "scenarios": {
+              "illustrated": "14182759.00"
+            }
+          },
+          "date": "2069-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "16441358.00"
+            }
+          },
+          "policy_year": 44,
+          "time_years": "44"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8697340.00",
+            "scenarios": {
+              "illustrated": "14473534.00"
+            }
+          },
+          "date": "2070-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "16641334.00"
+            }
+          },
+          "policy_year": 45,
+          "time_years": "45"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8765040.00",
+            "scenarios": {
+              "illustrated": "14763692.00"
+            }
+          },
+          "date": "2071-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "16843839.00"
+            }
+          },
+          "policy_year": 46,
+          "time_years": "46"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8829350.00",
+            "scenarios": {
+              "illustrated": "15053065.00"
+            }
+          },
+          "date": "2072-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "17048894.00"
+            }
+          },
+          "policy_year": 47,
+          "time_years": "47"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8890360.00",
+            "scenarios": {
+              "illustrated": "15341685.00"
+            }
+          },
+          "date": "2073-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "17256540.00"
+            }
+          },
+          "policy_year": 48,
+          "time_years": "48"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "8948300.00",
+            "scenarios": {
+              "illustrated": "15629808.00"
+            }
+          },
+          "date": "2074-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "17466791.00"
+            }
+          },
+          "policy_year": 49,
+          "time_years": "49"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9003470.00",
+            "scenarios": {
+              "illustrated": "15917859.00"
+            }
+          },
+          "date": "2075-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "17679693.00"
+            }
+          },
+          "policy_year": 50,
+          "time_years": "50"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9056280.00",
+            "scenarios": {
+              "illustrated": "16206438.00"
+            }
+          },
+          "date": "2076-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "17895248.00"
+            }
+          },
+          "policy_year": 51,
+          "time_years": "51"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9107160.00",
+            "scenarios": {
+              "illustrated": "16496255.00"
+            }
+          },
+          "date": "2077-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "18113501.00"
+            }
+          },
+          "policy_year": 52,
+          "time_years": "52"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9156540.00",
+            "scenarios": {
+              "illustrated": "16788015.00"
+            }
+          },
+          "date": "2078-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "18334452.00"
+            }
+          },
+          "policy_year": 53,
+          "time_years": "53"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9204830.00",
+            "scenarios": {
+              "illustrated": "17082445.00"
+            }
+          },
+          "date": "2079-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "18558132.00"
+            }
+          },
+          "policy_year": 54,
+          "time_years": "54"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9252380.00",
+            "scenarios": {
+              "illustrated": "17380210.00"
+            }
+          },
+          "date": "2080-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "18784583.00"
+            }
+          },
+          "policy_year": 55,
+          "time_years": "55"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9299550.00",
+            "scenarios": {
+              "illustrated": "17682002.00"
+            }
+          },
+          "date": "2081-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "19013825.00"
+            }
+          },
+          "policy_year": 56,
+          "time_years": "56"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9346750.00",
+            "scenarios": {
+              "illustrated": "17988656.00"
+            }
+          },
+          "date": "2082-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "19245894.00"
+            }
+          },
+          "policy_year": 57,
+          "time_years": "57"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9394570.00",
+            "scenarios": {
+              "illustrated": "18301372.00"
+            }
+          },
+          "date": "2083-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "19480798.00"
+            }
+          },
+          "policy_year": 58,
+          "time_years": "58"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9443970.00",
+            "scenarios": {
+              "illustrated": "18622162.00"
+            }
+          },
+          "date": "2084-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "19718574.00"
+            }
+          },
+          "policy_year": 59,
+          "time_years": "59"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9496530.00",
+            "scenarios": {
+              "illustrated": "18954345.00"
+            }
+          },
+          "date": "2085-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "19959232.00"
+            }
+          },
+          "policy_year": 60,
+          "time_years": "60"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9554940.00",
+            "scenarios": {
+              "illustrated": "19303608.00"
+            }
+          },
+          "date": "2086-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "20202752.00"
+            }
+          },
+          "policy_year": 61,
+          "time_years": "61"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9623660.00",
+            "scenarios": {
+              "illustrated": "19679486.00"
+            }
+          },
+          "date": "2087-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "20449066.00"
+            }
+          },
+          "policy_year": 62,
+          "time_years": "62"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9710310.00",
+            "scenarios": {
+              "illustrated": "20098389.00"
+            }
+          },
+          "date": "2088-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "20697990.00"
+            }
+          },
+          "policy_year": 63,
+          "time_years": "63"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "9828010.00",
+            "scenarios": {
+              "illustrated": "20588766.00"
+            }
+          },
+          "date": "2089-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "20949069.00"
+            }
+          },
+          "policy_year": 64,
+          "time_years": "64"
+        },
+        {
+          "cash_surrender_value": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "21201275.00"
+            }
+          },
+          "date": "2090-12-31",
+          "death_benefit": {
+            "guaranteed": "10000000.00",
+            "scenarios": {
+              "illustrated": "21201275.00"
+            }
+          },
+          "policy_year": 65,
+          "time_years": "65"
+        }
+      ],
+      "scenario_definitions": {
+        "illustrated": {
+          "guaranteed": false,
+          "label": "情景2非保证红利利益演示"
+        }
+      },
+      "timing": {
+        "benefit_timing": "projection_date",
+        "issue_date": "2026-01-01",
+        "premium_timing": "explicit_dates"
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "confidence": 0.99,
+      "content_sha256": "51c917c77b1c7d693c5b367f9f650d33903246bc006a3133bed58e2558f683f1",
+      "document_sha256": "c3906411321de04fcbc486ab6908fa62c98cfd53b9facd6c9cc0b0ba4153c0ec",
+      "evidence_id": "ev-rate-row",
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "locator": {
+        "rate": "525.44",
+        "row": "official pricing coordinate"
+      },
+      "page": 1,
+      "raw_text": "官网费率行，十年交公开定价坐标；费率 525.44，单位口径 10000 元基本保险金额。",
+      "reason_codes": [
+        "official_table",
+        "deterministic_row_match"
+      ],
+      "source_id": "src-wwb-rates"
+    },
+    {
+      "confidence": 0.99,
+      "content_sha256": "742d83b8b0ebd8cb9864d26339cd2e2ad8d56eb08ec3a8d0a25ea75fa8ef0053",
+      "document_sha256": "9505ded94c03d190a802bce473363cf5d9b9c3e76c58d90b0ea29279344de211",
+      "evidence_id": "ev-cash-row",
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "locator": {
+        "row": "official annual cash-value coordinate",
+        "value_count": 75
+      },
+      "page": 2,
+      "raw_text": "官网现金价值完整行，第1至第75保单年度；共75个连续数值。",
+      "reason_codes": [
+        "official_table",
+        "deterministic_row_match"
+      ],
+      "source_id": "src-wwb-cash"
+    },
+    {
+      "confidence": 0.99,
+      "content_sha256": "f89de24238686fae0317902269053285e097d81b9f81889a6f83d7a7e2a2c0f7",
+      "document_sha256": "ca3c9f3be79a1f9f9563a5a0c0c49bac4a967163617b44186f3009d85647380d",
+      "evidence_id": "ev-death-rule",
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "locator": {
+        "clause": "ordinary death benefit"
+      },
+      "page": 2,
+      "raw_text": "合同普通身故责任按基本保险金额或累计应交保险费年龄比例取大；阶段变化依条款逐年展开。",
+      "reason_codes": [
+        "official_table",
+        "deterministic_row_match"
+      ],
+      "source_id": "src-wwb-terms"
+    },
+    {
+      "confidence": 1.0,
+      "content_sha256": "fa2f32aa1fd767594182bf1a5dba3f69166ff1ce9e06ce17bf8d10f04076bc4b",
+      "document_sha256": "fa2f32aa1fd767594182bf1a5dba3f69166ff1ce9e06ce17bf8d10f04076bc4b",
+      "evidence_id": "ev-standard-benchmark",
+      "extractor": "registered_standard_benchmark",
+      "extractor_version": "1.0.0",
+      "page": 1,
+      "raw_text": "LLPI standard product experiment: ten annual CNY 100,000 payments at times 0 through 9; benefits observed at each policy-year end; 2% base inflation assumption; no customer suitability inference.",
+      "reason_codes": [
+        "registered_benchmark"
+      ],
+      "source_id": "src-standard-benchmark"
+    },
+    {
+      "confidence": 0.99,
+      "content_sha256": "6f9fbbf286d736390e954c88faea4885eab13eda6a7c6ba8c2f2889ed90146fa",
+      "document_sha256": "f1b48215e69a790219c22bd3f893449482182b9ae7eee5a47bafb5840f89bcb1",
+      "evidence_id": "ev-formal-illustration",
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "locator": {
+        "plan": 1,
+        "table": "comprehensive benefit illustration",
+        "value_count": 65
+      },
+      "page": 8,
+      "raw_text": "正式综合利益演示表计划1，第1至65保单年度；保证值与情景2非保证演示值分列。",
+      "reason_codes": [
+        "official_table",
+        "deterministic_row_match"
+      ],
+      "source_id": "src-wwb-illustration"
+    }
+  ],
+  "product": {
+    "currency": "CNY",
+    "insurer": "汇丰人寿保险有限公司",
+    "jurisdiction": "CN",
+    "name": "WWB 汇丰汇传卓悦2025终身寿险（分红型）计划1",
+    "participating": true,
+    "product_id": "wwb-bonjour-2025-plan-1",
+    "product_type": "participating_whole_life"
+  },
+  "provenance": {
+    "/cases/0/amount_scale": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/0/basis": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/0/inflation_rate": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/0/premium_cashflows": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/0/projection": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-rate-row",
+        "ev-cash-row",
+        "ev-death-rule"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/0/scenario_definitions": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/0/timing": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/1/amount_scale": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-formal-illustration"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/1/basis": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-formal-illustration",
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/1/inflation_rate": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/1/premium_cashflows": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-formal-illustration"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/1/projection": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-formal-illustration"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/1/scenario_definitions": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-formal-illustration"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/cases/1/timing": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-standard-benchmark"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    },
+    "/product": {
+      "confidence": 0.99,
+      "evidence_ids": [
+        "ev-death-rule"
+      ],
+      "extractor": "official_pdf_reference_importer",
+      "extractor_version": "1.0.0",
+      "reason_codes": [
+        "official_source",
+        "deterministic_normalization"
+      ],
+      "status": "accepted"
+    }
+  },
+  "schema_version": "1.0.0",
+  "sources": [
+    {
+      "document_sha256": "ca3c9f3be79a1f9f9563a5a0c0c49bac4a967163617b44186f3009d85647380d",
+      "kind": "contract",
+      "source_id": "src-wwb-terms",
+      "title": "汇丰汇传卓悦2025终身寿险（分红型）条款",
+      "uri": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/terms/wwb-huichuan-bonjour-2025-whole-life-insurance-terms.pdf",
+      "version": "2026-07 WWB"
+    },
+    {
+      "document_sha256": "c3906411321de04fcbc486ab6908fa62c98cfd53b9facd6c9cc0b0ba4153c0ec",
+      "kind": "rate_table",
+      "source_id": "src-wwb-rates",
+      "title": "汇丰汇传卓悦2025终身寿险（分红型）费率表",
+      "uri": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/rates/wwb-huichuan-bonjour-2025-whole-life-insurance-rates.pdf",
+      "version": "2025"
+    },
+    {
+      "document_sha256": "9505ded94c03d190a802bce473363cf5d9b9c3e76c58d90b0ea29279344de211",
+      "kind": "cash_value_table",
+      "source_id": "src-wwb-cash",
+      "title": "汇丰汇传卓悦2025终身寿险（分红型）现金价值表",
+      "uri": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/cashvalue/wwb-huichuan-bonjour-2025-whole-life-insurance-cashvalue.pdf",
+      "version": "2025"
+    },
+    {
+      "document_sha256": "f1b48215e69a790219c22bd3f893449482182b9ae7eee5a47bafb5840f89bcb1",
+      "kind": "illustration",
+      "source_id": "src-wwb-illustration",
+      "title": "汇丰汇传卓悦2025终身寿险（分红型）产品说明书及利益测算书",
+      "uri": "https://www.hsbcinsurance.com.cn/content/dam/hsbc/insh/docs/about-us/information-disclosure/basic-information/description/wwb-huichuan-bonjour-2025-whole-life-insurance-description.pdf",
+      "version": "2026"
+    },
+    {
+      "document_sha256": "fa2f32aa1fd767594182bf1a5dba3f69166ff1ce9e06ce17bf8d10f04076bc4b",
+      "kind": "synthetic_benchmark",
+      "source_id": "src-standard-benchmark",
+      "title": "LLPI ten-pay standard product experiment",
+      "version": "1.0.0"
+    }
+  ]
+}

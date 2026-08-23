@@ -24,12 +24,13 @@ PDF / JSON / CSV
 ## 核心能力
 
 - 保证身故杠杆曲线；
-- Death IRR 与 ACT/365F Death XIRR；
+- 条件身故 IRR 与 ACT/365F 条件身故 XIRR（兼容旧字段名）；
 - 保证及各演示情景的现金价值 IRR/XIRR；
 - 首次回本与持续回本年度；
-- 身故利益、现金价值分别计算的非保证依赖度；
-- 保证身故金/保证退保现金价值的保障—流动性取向；
-- 使用显式基准通胀率计算的实际（通胀调整后）身故金；
+- 现金价值 IRR 首次达到 1%/2%/3% 的观察年度；
+- 身故利益、现金价值分别计算的非保证依赖度（`NGR`）；
+- `DeathBenefit/CV` 保障—流动性取向；
+- 显式基准通胀率及 0%/2%/3%/4% 固定压力下的身故金实际购买力；
 - 版本化、确定性产品指纹；
 - 统一 benchmark hash 和币种下的逐指标 peer comparator；
 - source SHA-256、页码、bbox、原文、字段 JSON Pointer、提取器与置信度审计。
@@ -72,6 +73,17 @@ python3 scripts/llpi.py compare \
 python3 scripts/llpi.py benchmark
 ```
 
+仓库还附带 WWA、WWB 计划一/二及安联 A-E 费率等级的官方参考数据。用本地官方 PDF 可确定性重建全部逐年数据：
+
+```bash
+python3 scripts/build_reference_products.py \
+  --source-dir /path/to/official-pdfs
+
+python3 scripts/render_reference_report.py
+```
+
+生成文件位于 `assets/reference-products/`；示例决策报告位于仓库 `reports/leveraged_life_product_intelligence_v1_0_0/`。原始 PDF 不进入仓库，输出保留官方 URL、文件 SHA-256、页码、行坐标及规范化证据。
+
 stdout 默认只有一行稳定、排序后的 JSON 摘要；完整结果写入 `--output`。如确需将完整 JSON 发到 stdout，可加 `--full-stdout`。
 
 `analyze` 和 `compare` 默认采用严格证据门禁：关键事实缺少已接受来源时不生成正式指标或排名。仅在资料整理阶段，可对 `analyze` 显式使用 `--allow-unverified-evidence` 查看带警告的探索性计算；`compare` 即使接收非严格报告也会拒绝排名。
@@ -104,6 +116,8 @@ python3 scripts/llpi.py extract \
 
 canonical root 固定为 `analysis_scope: product_only`。货币金额使用十进制字符串；每一笔保费和每一个 projection point 同时提供显式 `time_years` 与日期，因此 IRR 和 XIRR 不会互相冒充。非保证演示支持多个具名 scenario。
 
+`document_illustration` 中的非保证 scenario 必须由 `kind: illustration` 的正式利益演示来源支持；费率表、现金价值表或条款不能单独支撑演示曲线。缺少正式演示时，NGR 保持未知而不是按零处理。
+
 v1 的 `extensions` 为保留空对象，不能用来夹带客户画像或绕过 closed schema。标准 benchmark ID 由引擎注册表锁定币种、时点、通胀与保费表；改动这些坐标必须改用独立的 `document_illustration` case ID。
 
 Schema 和字段说明见：
@@ -121,7 +135,7 @@ python3 -m unittest discover -v
 python3 /path/to/skill-creator/scripts/quick_validate.py .
 ```
 
-金标覆盖单缴解析解、三缴现金流、闰年 XIRR、零现金价值、多个 IRR 可能根、非保证依赖度、证据哈希、禁止客户字段、同基准比较、顺序无关性与 compact stdout。
+金标覆盖单缴解析解、三缴与十缴现金流、闰年 XIRR、零现金价值、多个 IRR 可能根、条件身故 IRR、NGR、IRR 门槛年、通胀压力、官方逐年参考数据、证据哈希、禁止客户字段、同基准比较、顺序无关性与 compact stdout。
 
 ## 重要限制
 

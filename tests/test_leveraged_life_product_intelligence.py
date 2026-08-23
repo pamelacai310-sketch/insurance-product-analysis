@@ -47,6 +47,7 @@ def load(path: Path) -> dict:
 
 
 FIXTURES = SKILL_ROOT / "assets" / "benchmarks"
+REFERENCE_PRODUCTS = SKILL_ROOT / "assets" / "reference-products"
 GOLD = REPO_ROOT / "tests" / "gold" / "leveraged_life"
 
 
@@ -189,6 +190,7 @@ class LeveragedLifeMetricsTests(unittest.TestCase):
         case = data["cases"][0]
         case["case_id"] = "LLPI-DOC-SPARSE-FINGERPRINT-v1"
         case["basis"]["kind"] = "document_illustration"
+        data["sources"][0]["kind"] = "illustration"
         case["premium_cashflows"].append(
             {"date": "2046-01-01", "time_years": "20", "amount": "100000.00"}
         )
@@ -239,6 +241,132 @@ class LeveragedLifeMetricsTests(unittest.TestCase):
         self.assertEqual(breakeven["first"]["value"], 3)
         self.assertEqual(breakeven["sustained"]["value"], 10)
 
+    def test_conditional_death_and_illustrated_curves_are_explicit(self):
+        report = analyze_product(
+            load(FIXTURES / "three-pay-non-guaranteed.json"),
+            strict_evidence=True,
+        )
+        case = report["case_reports"][0]
+        year_ten = next(row for row in case["rows"] if row["policy_year"] == 10)
+        guaranteed = year_ten["guaranteed"]
+        illustrated = year_ten["scenarios"]["current"]
+
+        self.assertEqual(
+            guaranteed["conditional_death_irr"], guaranteed["death_irr"]
+        )
+        self.assertEqual(
+            guaranteed["conditional_death_xirr"], guaranteed["death_xirr"]
+        )
+        self.assertEqual(
+            guaranteed["death_benefit_cv_ratio"],
+            guaranteed["protection_liquidity_ratio"],
+        )
+        for name in (
+            "death_leverage",
+            "conditional_death_irr",
+            "conditional_death_xirr",
+            "cash_value_irr",
+            "cash_value_xirr",
+            "cash_value_premium_recovery",
+            "death_benefit_cv_ratio",
+            "inflation_adjusted_death_benefit",
+            "death_benefit_purchasing_power_retention",
+            "death_benefit_purchasing_power_stress",
+        ):
+            self.assertIn(name, illustrated)
+        self.assertEqual(
+            illustrated["death_ngr"],
+            illustrated["death_non_guaranteed_dependency"],
+        )
+        self.assertEqual(
+            illustrated["cash_value_ngr"],
+            illustrated["cash_value_non_guaranteed_dependency"],
+        )
+
+    def test_irr_breakeven_and_purchasing_power_retention(self):
+        report = analyze_product(
+            load(FIXTURES / "single-pay-alpha.json"), strict_evidence=True
+        )
+        case = report["case_reports"][0]
+        thresholds = case["summary"]["guaranteed_cash_value_irr_breakeven"]
+        self.assertEqual(thresholds["0.01"]["first"]["value"], 5)
+        self.assertEqual(thresholds["0.02"]["first"]["value"], 10)
+        self.assertEqual(thresholds["0.03"]["first"]["value"], 10)
+        self.assertEqual(thresholds["0.03"]["sustained"]["value"], 10)
+
+        year_ten = next(row for row in case["rows"] if row["policy_year"] == 10)
+        retention = year_ten["guaranteed"][
+            "death_benefit_purchasing_power_retention"
+        ]
+        self.assertEqual(retention["status"], "ok")
+        self.assertRate(retention["value"], 1 / (1.02**10))
+        stress = year_ten["guaranteed"][
+            "death_benefit_purchasing_power_stress"
+        ]
+        self.assertEqual(set(stress), {"0.00", "0.02", "0.03", "0.04"})
+        self.assertEqual(stress["0.00"]["purchasing_power_retention"], 1.0)
+        self.assertRate(
+            stress["0.04"]["purchasing_power_retention"], 1 / (1.04**10)
+        )
+
+
+class LeveragedLifeReferenceProductTests(unittest.TestCase):
+    def test_official_reference_products_are_complete_and_strict(self):
+        paths = sorted(REFERENCE_PRODUCTS.glob("*.json"))
+        paths = [path for path in paths if path.name != "manifest.json"]
+        self.assertEqual(len(paths), 8)
+        for path in paths:
+            with self.subTest(path=path.name):
+                data = load(path)
+                result = validate_product(data, strict_evidence=True)
+                self.assertTrue(result.ok, result.to_dict())
+                standard = data["cases"][0]
+                expected = 76 if path.name.startswith("allianz-") else 75
+                self.assertEqual(len(standard["projection"]), expected)
+
+    def test_standard_reference_year_ten_values_and_death_rules(self):
+        expected = {
+            "wwa-fortune-life-2025.json": ("945201.00", "2885170.23"),
+            "wwb-bonjour-2025-plan-1.json": ("944503.65", "1903166.87"),
+            "wwb-bonjour-2025-plan-2.json": ("938536.73", "2620476.40"),
+            "allianz-prosperous-legacy-c-5-grade-c.json": (
+                "433298.99",
+                "2060581.08",
+            ),
+        }
+        for filename, values in expected.items():
+            with self.subTest(filename=filename):
+                case = load(REFERENCE_PRODUCTS / filename)["cases"][0]
+                row = next(
+                    item for item in case["projection"] if item["policy_year"] == 10
+                )
+                self.assertEqual(
+                    row["cash_surrender_value"]["guaranteed"], values[0]
+                )
+                self.assertEqual(row["death_benefit"]["guaranteed"], values[1])
+
+    def test_formal_illustration_drives_dual_curves_and_ngr(self):
+        data = load(REFERENCE_PRODUCTS / "wwb-bonjour-2025-plan-1.json")
+        report = analyze_product(data, strict_evidence=True)
+        case = next(
+            item
+            for item in report["case_reports"]
+            if item["case_id"] == "WWB-DOC-P1-2026-v1"
+        )
+        self.assertEqual(len(case["rows"]), 65)
+        row = next(item for item in case["rows"] if item["policy_year"] == 20)
+        self.assertEqual(row["guaranteed"]["cash_surrender_value"], "6345570.00")
+        illustrated = row["scenarios"]["illustrated"]
+        self.assertEqual(illustrated["cash_surrender_value"], "7816436.00")
+        self.assertAlmostEqual(
+            illustrated["cash_value_ngr"]["value"],
+            (7816436 - 6345570) / 7816436,
+            places=10,
+        )
+        self.assertIn(
+            "illustration", {source["kind"] for source in data["sources"]}
+        )
+
 
 class LeveragedLifeValidationTests(unittest.TestCase):
     def test_all_benchmarks_pass_strict_evidence_validation(self):
@@ -247,6 +375,23 @@ class LeveragedLifeValidationTests(unittest.TestCase):
                 result = validate_product(load(path), strict_evidence=True)
                 self.assertTrue(result.ok, result.to_dict())
                 self.assertEqual(result.warnings, [])
+
+    def test_document_illustration_scenarios_require_illustration_source(self):
+        data = load(FIXTURES / "three-pay-non-guaranteed.json")
+        data["cases"][0]["case_id"] = "LLPI-DOC-ILLUSTRATION-SOURCE-v1"
+        data["cases"][0]["basis"]["kind"] = "document_illustration"
+        invalid = validate_product(data, strict_evidence=True)
+        self.assertIn(
+            "scenario_requires_illustration_source",
+            {issue.code for issue in invalid.errors},
+        )
+
+        data["sources"][0]["kind"] = "illustration"
+        valid = validate_product(data, strict_evidence=True)
+        self.assertNotIn(
+            "scenario_requires_illustration_source",
+            {issue.code for issue in valid.errors},
+        )
 
     def test_customer_profile_keys_are_rejected(self):
         data = load(FIXTURES / "single-pay-alpha.json")
@@ -457,10 +602,32 @@ class LeveragedLifeComparatorAndCliTests(unittest.TestCase):
             all(item["rank"] is None for item in orientation["observations"])
         )
         self.assertIn("guaranteed_death_irr", first["horizons"][0]["metrics"])
+        self.assertIn(
+            "guaranteed_conditional_death_irr",
+            first["horizons"][0]["metrics"],
+        )
+        self.assertIn("death_benefit_cv_ratio", first["horizons"][0]["metrics"])
+        self.assertIn(
+            "guaranteed_real_death_benefit_inflation_0.04",
+            first["horizons"][0]["metrics"],
+        )
         self.assertIn("guaranteed_cash_value_irr", first["horizons"][0]["metrics"])
         self.assertIn(
             "guaranteed_cash_value_premium_recovery",
             first["horizons"][0]["metrics"],
+        )
+        self.assertIn(
+            "guaranteed_death_benefit_purchasing_power_retention",
+            first["horizons"][0]["metrics"],
+        )
+        self.assertIsNone(first["decision_scope"]["overall_winner"])
+        self.assertEqual(
+            first["decision_scope"]["ranking_unit"],
+            "metric_by_policy_year_and_named_scenario",
+        )
+        self.assertEqual(
+            set(first["guaranteed_cash_value_irr_breakeven"]),
+            {"0.01", "0.02", "0.03"},
         )
 
     def test_basis_mismatch_refuses_ranking(self):
@@ -469,6 +636,7 @@ class LeveragedLifeComparatorAndCliTests(unittest.TestCase):
         for data in (alpha, beta):
             data["cases"][0]["case_id"] = "LLPI-DOC-BASIS-TEST-v1"
             data["cases"][0]["basis"]["kind"] = "document_illustration"
+            data["sources"][0]["kind"] = "illustration"
         beta["cases"][0]["premium_cashflows"][0]["amount"] = "110000.00"
         comparison = compare_reports(
             [analyze_product(alpha), analyze_product(beta)],
@@ -548,6 +716,7 @@ class LeveragedLifeComparatorAndCliTests(unittest.TestCase):
             data = copy.deepcopy(source)
             data["cases"][0]["case_id"] = "LLPI-DOC-SCALE-TEST-v1"
             data["cases"][0]["basis"]["kind"] = "document_illustration"
+            data["sources"][0]["kind"] = "illustration"
             return data
 
         def scaled(source):

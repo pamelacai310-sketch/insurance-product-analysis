@@ -26,7 +26,7 @@
 | 不利情景 | 零分红、按保证现金价值提前退出的损失和IRR |
 | 材料透明度 | 页码、表头、行列、单位、版本及SHA-256审计 |
 
-只有一只产品在全部声明的主要指标中均列第一，且所有产品资料完整时，报告才会写“综合领先”；否则只展示各维度取舍。
+报告只描述明确年份、利益口径和指标集合下的“窗口领先”，不得把局部结果外推为“综合领先”或全周期冠军；其余情况只展示各维度取舍。
 
 ## 快速开始
 
@@ -53,7 +53,7 @@ python3 skills/compare-insurance-products/scripts/insurance_compare.py compare \
 
 ## 杠杆寿险产品智能 v1.0.0
 
-[`$leveraged-life-product-intelligence`](skills/leveraged-life-product-intelligence/) 是独立的 product-only Skill：它不依赖客户年龄、收入、资产负债、家庭责任、健康或风险偏好，只在显式标准基准现金流下重建保证/演示利益，计算身故杠杆、Death IRR/XIRR、现金价值 IRR/XIRR、回本、非保证依赖度、保障—流动性比和通胀调整身故金。
+[`$leveraged-life-product-intelligence`](skills/leveraged-life-product-intelligence/) 是独立的 product-only Skill：它不依赖客户收入、资产负债、家庭责任、健康或风险偏好，只在显式标准基准现金流下重建保证/演示利益，计算身故杠杆、条件身故 IRR/XIRR、现金价值 IRR/XIRR、多档 IRR 回本年、`DeathBenefit/CV`、NGR 和 0%/2%/3%/4% 通胀购买力。
 
 ```bash
 python3 skills/leveraged-life-product-intelligence/scripts/llpi.py benchmark
@@ -62,9 +62,11 @@ python3 skills/leveraged-life-product-intelligence/scripts/llpi.py analyze \
   --input skills/leveraged-life-product-intelligence/assets/benchmarks/single-pay-alpha.json \
   --strict-evidence \
   --output outputs/leveraged_life_analysis.json
+
+python3 skills/leveraged-life-product-intelligence/scripts/render_reference_report.py
 ```
 
-PDF 先经 PyMuPDF/Camelot/Docling 的延迟导入分层解析；LLM 兜底默认关闭且只处理未解决字段，所有数学仍由确定性 Decimal 引擎完成。完整安装、schema、公式、benchmark 和许可说明见[Skill README](skills/leveraged-life-product-intelligence/README.md)。
+PDF 先经 PyMuPDF/Camelot/Docling 的延迟导入分层解析；LLM 兜底默认关闭且只处理未解决字段，所有数学仍由确定性 Decimal 引擎完成。仓库已附 WWA、WWB 两个保障计划和安联 A-E 费率等级的完整逐年参考数据，以及 WWB 正式保证/演示双曲线；示例结果见[杠杆寿险决策报告](reports/leveraged_life_product_intelligence_v1_0_0/decision_data.md)。完整安装、schema、公式、benchmark 和许可说明见[Skill README](skills/leveraged-life-product-intelligence/README.md)。
 
 ## 条款报告衔接
 

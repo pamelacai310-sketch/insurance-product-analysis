@@ -26,6 +26,8 @@ Money is a non-negative decimal string and `amount_scale` must be `currency_unit
 
 `death_benefit.guaranteed` and `cash_surrender_value.guaranteed` are source facts. Each illustrated total belongs under a named `scenarios` key. Never place a dividend, account value, fund value, or bonus balance into `cash_surrender_value` unless the source explicitly identifies it as net surrender value.
 
+For `basis.kind: document_illustration`, every scenario value must resolve through provenance to at least one source whose `kind` is `illustration`. A contract, rate table, or cash-value table may support guaranteed values but cannot establish a non-guaranteed illustrated total. Missing formal illustrations therefore produce no scenario and no NGR.
+
 ## Provenance
 
 Provenance keys are RFC 6901 JSON pointers. A table-level record may point to `/cases/0/projection`; a field-level record may point to `/cases/0/projection/4/death_benefit/guaranteed`. Currency, benchmark/timing/scale assumptions, inflation, premiums, projection coordinates, and every guaranteed or illustrated benefit used by the engine are critical fields. Each must resolve to accepted evidence with effective confidence of at least 0.85. A provenance record cannot claim confidence above its strongest referenced evidence, and LLM-only evidence is capped below auto-accept.

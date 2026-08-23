@@ -235,6 +235,21 @@ STANDARD_BENCHMARKS = {
             {"date": "2028-01-01", "time_years": "2", "amount": "100000.00"},
         ],
     },
+    "LLPI-STD-10PAY-100K-v1": {
+        "benchmark_version": "1.0.0",
+        "currency": "CNY",
+        "issue_date": "2026-01-01",
+        "amount_scale": "currency_unit",
+        "inflation_rate": "0.02",
+        "premium_cashflows": [
+            {
+                "date": f"{2026 + index}-01-01",
+                "time_years": str(index),
+                "amount": "100000.00",
+            }
+            for index in range(10)
+        ],
+    },
 }
 
 ROOT_KEYS = {
@@ -841,6 +856,7 @@ def validate_product(data: Any, strict_evidence: bool = False) -> ValidationResu
         )
     source_id_set, evidence_id_set = set(source_ids), set(evidence_ids)
     source_hashes = {}
+    source_kinds: Dict[str, str] = {}
     for index, item in enumerate(sources):
         path = f"/sources/{index}"
         if not isinstance(item, dict):
@@ -893,7 +909,10 @@ def validate_product(data: Any, strict_evidence: bool = False) -> ValidationResu
             )
         if isinstance(item.get("source_id"), str) and item.get("source_id"):
             source_hashes[item.get("source_id")] = document_hash
+            if isinstance(item.get("kind"), str):
+                source_kinds[item["source_id"]] = item["kind"]
     evidence_confidence_by_id: Dict[str, float] = {}
+    evidence_source_by_id: Dict[str, str] = {}
     for index, item in enumerate(evidence):
         path = f"/evidence/{index}"
         if not isinstance(item, dict):
@@ -1026,6 +1045,8 @@ def validate_product(data: Any, strict_evidence: bool = False) -> ValidationResu
             evidence_id = item.get("evidence_id")
             if isinstance(evidence_id, str) and evidence_id:
                 evidence_confidence_by_id[evidence_id] = float(confidence)
+                if isinstance(evidence_source_id, str):
+                    evidence_source_by_id[evidence_id] = evidence_source_id
             extractor = str(item.get("extractor", "")).lower()
             if extractor.startswith("llm") and confidence > 0.69:
                 _issue(
@@ -1632,6 +1653,34 @@ def validate_product(data: Any, strict_evidence: bool = False) -> ValidationResu
                 path,
                 "Critical source fact requires accepted provenance with confidence of at least 0.85.",
             )
+
+    for case_index, case in enumerate(cases):
+        if not isinstance(case, dict):
+            continue
+        basis = case.get("basis", {})
+        if not isinstance(basis, dict) or basis.get("kind") != "document_illustration":
+            continue
+        case_prefix = f"/cases/{case_index}/"
+        for path in _critical_paths(data):
+            if not path.startswith(case_prefix) or "/scenarios/" not in path:
+                continue
+            record = _provenance_record(provenance, path)
+            evidence_refs = (
+                record.get("evidence_ids", []) if isinstance(record, dict) else []
+            )
+            supporting_kinds = {
+                source_kinds.get(evidence_source_by_id.get(evidence_id, ""))
+                for evidence_id in evidence_refs
+                if isinstance(evidence_id, str)
+            }
+            if "illustration" not in supporting_kinds:
+                _issue(
+                    issues,
+                    missing_severity,
+                    "scenario_requires_illustration_source",
+                    path,
+                    "A document-illustration scenario must be supported by evidence from a source whose kind is illustration.",
+                )
 
     try:
         json.dumps(data, allow_nan=False)

@@ -9,7 +9,7 @@ dependencies:
 
 正式分析必须使用 `skills/compare-insurance-products/` 的规范和确定性计算器。
 
-若任务明确要求“不使用客户资料，只分析杠杆终身寿险产品自身经济价值”，应改用独立的 `skills/leveraged-life-product-intelligence/`。该 Skill 使用标准 benchmark、证据/置信度路由和确定性 Death IRR/XIRR 引擎，不执行客户适配或保障缺口分析。
+若任务明确要求“不使用客户资料，只分析杠杆终身寿险产品自身经济价值”，应改用独立的 `skills/leveraged-life-product-intelligence/`。该 Skill 使用标准 benchmark、证据/置信度路由和确定性引擎，输出条件身故 IRR/XIRR、`DeathBenefit/CV`、多档 IRR 回本年、通胀购买力，以及正式利益演示支持的保证/演示双曲线和 NGR；不执行客户适配或保障缺口分析。
 
 ## 工作流
 
@@ -37,6 +37,6 @@ python3 unified_analysis.py --comparison-case case.json --output-dir results
 
 ## 综合结论
 
-仅当一只产品在全部声明主要指标中唯一领先，且所有产品资料完整、正式、同条件时，才可称为“综合领先”。其余情况必须写明各维度取舍或“资料不足，无法判断”。
+只允许描述明确保单年度、保证/演示口径和指标集合下的“窗口领先”。不得把单一年份或少数指标的领先写成“综合领先”或全周期冠军；其余情况必须写明各维度取舍或“资料不足，无法判断”。
 
 条款报告本身只能通过 `unified_analysis.py --clause-report` 生成资料准备度审计，不能直接产生正式精算排名。

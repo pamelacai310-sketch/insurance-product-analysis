@@ -11,7 +11,7 @@ import math
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 
 SCHEMA_VERSION = "1.0"
@@ -1142,9 +1142,9 @@ def _build_conclusion(comparison: Dict[str, Any], products: List[Dict[str, Any]]
         return {"status": "single_product", "text": "仅有一只可比产品，不生成相对胜负结论。", "leader": None}
     keys = {product["scenario_key"] for product in products}
     if len(keys) != 1:
-        return {"status": "scenario_mismatch", "text": "产品类别或投保条件不完全一致，不生成综合胜负结论。", "leader": None}
+        return {"status": "scenario_mismatch", "text": "产品类别或投保条件不完全一致，不生成同窗口胜负结论。", "leader": None}
     if any(product["provisional"] for product in products):
-        return {"status": "provisional_data", "text": "存在单位覆盖后的暂定数据，不生成综合胜负结论。", "leader": None}
+        return {"status": "provisional_data", "text": "存在单位覆盖后的暂定数据，不生成同窗口胜负结论。", "leader": None}
     year = comparison.get("primary_policy_year", max(comparison["selected_policy_years"]))
     metrics = comparison.get("primary_metrics", ["cash_value", "surrender_irr", "death_benefit"])
     group_key = products[0]["scenario_key"]
@@ -1152,13 +1152,27 @@ def _build_conclusion(comparison: Dict[str, Any], products: List[Dict[str, Any]]
     for metric in metrics:
         rows = [row for row in rankings if row["policy_year"] == year and row["metric"] == metric and row["scenario_key"] == group_key]
         if len(rows) != len(products):
-            return {"status": "incomplete", "text": "主要指标资料不完整，无法判断综合领先者。", "leader": None}
+            return {"status": "incomplete", "text": f"第{year}保单年度末主要指标资料不完整，无法判断该窗口领先者。", "leader": None, "policy_year": year, "metrics": metrics}
         leaders.append({row["product"] for row in rows if row["rank"] == 1})
     common = set.intersection(*leaders) if leaders else set()
     if len(common) == 1:
         leader = next(iter(common))
-        return {"status": "overall_leader", "text": f"{leader}在声明的全部主要指标中均列第一，可称为综合领先。", "leader": leader}
-    return {"status": "tradeoff", "text": "各产品在主要指标上各有取舍，不存在综合领先者。", "leader": None}
+        return {
+            "status": "window_leader",
+            "text": f"{leader}仅在第{year}保单年度末及声明的主要指标窗口内均列第一；该结论不得外推为全周期综合领先。",
+            "leader": leader,
+            "policy_year": year,
+            "metrics": metrics,
+            "overall_winner": None,
+        }
+    return {
+        "status": "tradeoff",
+        "text": f"第{year}保单年度末的声明指标存在取舍，未形成同窗口单一领先者；不生成全周期综合胜负结论。",
+        "leader": None,
+        "policy_year": year,
+        "metrics": metrics,
+        "overall_winner": None,
+    }
 
 
 def _fmt_money(value: Optional[float]) -> str:
@@ -1578,9 +1592,11 @@ def run_self_test() -> None:
     challenger["death_benefit"]["phases"][0]["expression"] = {"op": "const", "value": 2_500_000}
     ranking_data["products"].append(challenger)
     ranked = calculate_case(ranking_data)
-    if ranked["conclusion"]["status"] != "overall_leader" or ranked["conclusion"]["leader"] != male_product["name"]:
-        raise AssertionError("Relative overall leader logic failed")
-    checks.append("同条件相对排名")
+    if ranked["conclusion"]["status"] != "window_leader" or ranked["conclusion"]["leader"] != male_product["name"]:
+        raise AssertionError("Relative window leader logic failed")
+    if ranked["conclusion"].get("overall_winner") is not None:
+        raise AssertionError("A horizon-scoped result must not create an overall winner")
+    checks.append("同条件同窗口相对排名")
 
     mismatch_data = copy.deepcopy(ranking_data)
     mismatch_data["products"][1]["category"] = "annuity"

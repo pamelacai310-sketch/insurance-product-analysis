@@ -21,11 +21,13 @@ Periodic IRR solves:
 
 XIRR uses the same cashflows with exponent `(date_i - first_date).days / 365` (`ACT/365F`). Death proceeds and net cash surrender value are calculated separately. A result requires both cashflow signs. Multiple possible roots return `ambiguous`; the engine never silently chooses one.
 
-Death IRR is a mechanical return conditional on death at the stated endpoint. It is not an investment forecast or a survival-weighted expected return.
+The explicit output names are `conditional_death_irr` and `conditional_death_xirr`; `death_irr` and `death_xirr` remain compatibility aliases. This is a mechanical return conditional on death at the stated endpoint. It is not an investment forecast, an unconditional expected return, or a survival-weighted return.
 
 ## Breakeven
 
 First observed breakeven is the earliest disclosed projection row where net cash surrender value is at least cumulative premium. Sustained breakeven is the earliest such row for which every later disclosed row also qualifies. v1 does not interpolate between rows.
+
+The same observed-year rule is applied to guaranteed and named-scenario cash-value IRR thresholds of 1%, 2%, and 3%. `first` is the first disclosed row at or above the threshold; `sustained` requires every later disclosed row to remain at or above it. A missing result means the threshold was not observed within the disclosed horizon.
 
 ## Non-guaranteed dependency
 
@@ -35,7 +37,7 @@ For each named scenario and each value type `X`:
 dependency(X,t) = (scenario_total(X,t) - guaranteed(X,t)) / scenario_total(X,t)
 ```
 
-Death benefit and cash value are reported separately. A missing scenario is unknown (`null`), not zero. A scenario total below the same-basis guaranteed value is a validation error.
+The aliases `death_ngr` and `cash_value_ngr` expose the same formula as non-guaranteed ratio (`NGR`). Death benefit and cash value are reported separately. A missing scenario is unknown (`null`), not zero. A scenario total below the same-basis guaranteed value is a validation error. A `document_illustration` scenario must be supported by evidence whose source kind is `illustration`.
 
 ## Protection-liquidity ratio
 
@@ -44,6 +46,8 @@ guaranteed death benefit(t) / guaranteed cash surrender value(t)
 ```
 
 This is an orientation: a higher result is more protection-weighted and a lower result is more liquidity-weighted. It is not a universal preference score. Zero cash value returns `null / zero_liquidity` with `unbounded: true` when death benefit is positive; JSON infinity is forbidden.
+
+The explicit alias is `death_benefit_cv_ratio`; `protection_liquidity_ratio` remains available for compatibility.
 
 ## Real death benefit
 
@@ -54,6 +58,8 @@ nominal death benefit(t) / (1 + explicit benchmark inflation rate)^t
 ```
 
 No default inflation rate is supplied. Missing inflation returns `null / inflation_missing`. The assumption is benchmark metadata, not a product guarantee or customer input.
+
+Each annual row also reports `death_benefit_purchasing_power_stress` at fixed 0%, 2%, 3%, and 4% inflation. Each stress contains the real amount and retained purchasing-power fraction. These stresses do not alter the contractual benefit and are not insurer projections.
 
 ## Audit lineage
 
