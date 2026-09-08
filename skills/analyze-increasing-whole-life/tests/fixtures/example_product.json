@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "analysis_mode": "core",
+  "product": {
+    "name": "Golden Example",
+    "product_type": "increasing_whole_life",
+    "currency": "CNY",
+    "entry_age": 40,
+    "gender": "M",
+    "underwriting_class": "standard",
+    "payment_period_years": 5,
+    "premium_frequency": "annual",
+    "benefit_option": "standard"
+  },
+  "premium_schedule": {
+    "annual_amount": 200000,
+    "years": 5,
+    "first_time_years": 0,
+    "interval_years": 1
+  },
+  "policy_values": [
+    {"year": 1, "guaranteed_cash_value": 120000, "guaranteed_death_benefit": 1000000, "source_ref": "benefit_table"},
+    {"year": 2, "guaranteed_cash_value": 310000, "guaranteed_death_benefit": 1000000, "source_ref": "benefit_table"},
+    {"year": 3, "guaranteed_cash_value": 515000, "guaranteed_death_benefit": 1000000, "source_ref": "benefit_table"},
+    {"year": 4, "guaranteed_cash_value": 730000, "guaranteed_death_benefit": 1000000, "source_ref": "benefit_table"},
+    {"year": 5, "guaranteed_cash_value": 930000, "guaranteed_death_benefit": 1100000, "source_ref": "benefit_table"},
+    {"year": 6, "guaranteed_cash_value": 1015000, "guaranteed_death_benefit": 1150000, "source_ref": "benefit_table"},
+    {"year": 10, "guaranteed_cash_value": 1200000, "guaranteed_death_benefit": 1350000, "source_ref": "benefit_table"},
+    {"year": 20, "guaranteed_cash_value": 1550000, "guaranteed_death_benefit": 1680000, "source_ref": "benefit_table"},
+    {"year": 30, "guaranteed_cash_value": 2010000, "guaranteed_death_benefit": 2100000, "source_ref": "benefit_table"},
+    {"year": 60, "guaranteed_cash_value": 4000000, "guaranteed_death_benefit": 4050000, "source_ref": "benefit_table"}
+  ],
+  "partial_surrender_rule": {
+    "allowed": true,
+    "earliest_year": 5,
+    "annual_limit_ratio": null,
+    "frequency_per_year": null,
+    "minimum_remaining_basic_amount": null,
+    "contractual": true,
+    "source_ref": "terms_reduction"
+  },
+  "policy_loan_rule": {
+    "allowed": true,
+    "max_cash_value_ratio": 0.8,
+    "rate_rule": "per insurer announcement / contract",
+    "term_days": 180,
+    "source_ref": "terms_loan"
+  },
+  "sources": {
+    "benefit_table": {"file": "illustration.pdf", "page": 8, "section": "利益演示表"},
+    "terms_reduction": {"file": "terms.pdf", "page": 21, "section": "基本保险金额的减少"},
+    "terms_loan": {"file": "terms.pdf", "page": 24, "section": "保单贷款"}
+  }
+}

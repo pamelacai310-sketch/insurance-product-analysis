@@ -1,0 +1,13 @@
+{
+  "irr_stability_bps": 10.0,
+  "irr_stability_consecutive_years": 5,
+  "key_years": [5, 10, 20, 30],
+  "ranking_tolerance": 1e-10,
+  "pareto_metrics": {
+    "liquidity.break_even_year": "min",
+    "liquidity.surrender_gap_ratio_y5": "min",
+    "growth.guaranteed_cv_irr_y20": "max",
+    "growth.guaranteed_cv_irr_y30": "max",
+    "protection.death_cv_ratio_y20": "max"
+  }
+}

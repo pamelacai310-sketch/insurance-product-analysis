@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Increasing Whole Life Analysis Result",
+  "type": "object",
+  "required": ["schema_version", "product", "metrics", "series", "warnings"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "product": {"type": "object"},
+    "analysis_mode": {"enum": ["core", "full"]},
+    "metrics": {
+      "type": "object",
+      "required": ["liquidity", "growth", "protection", "flexibility", "certainty"]
+    },
+    "series": {"type": "array"},
+    "sources": {"type": "object"},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "method_notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}
